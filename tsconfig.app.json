@@ -4,7 +4,7 @@
     "target": "es2023",
     "lib": ["ES2023", "DOM"],
     "module": "esnext",
-    "types": ["vite/client"],
+    "types": ["node", "@react-router/dev/vite", "vite/client"],
     "allowArbitraryExtensions": true,
     "skipLibCheck": true,
 
@@ -15,6 +15,7 @@
     "moduleDetection": "force",
     "noEmit": true,
     "jsx": "react-jsx",
+    "rootDirs": [".", "./.react-router/types"],
 
     /* Linting */
     "strict": true,
@@ -26,5 +27,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"]
+  "include": ["src", ".react-router/types/**/*"]
 }
