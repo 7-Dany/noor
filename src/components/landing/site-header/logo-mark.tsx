@@ -6,7 +6,7 @@ export function LogoMark({ className }: { className?: string }) {
       aria-hidden="true"
       className={className}
     >
-      <g strokeWidth="1.275" className="stroke-terra-500">
+      <g strokeWidth="1.275" className="stroke-terracotta">
         <path
           className="fill-accent"
           d="M17 26.95a5.95 5.95 0 1 0 0-11.9 5.95 5.95 0 0 0 0 11.9Z"

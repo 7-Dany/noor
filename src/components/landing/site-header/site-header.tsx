@@ -45,7 +45,7 @@ export function SiteHeader() {
             <a
               key={link.href}
               href={link.href}
-              className="flex h-9.5 items-center rounded-lg px-3 text-body font-medium text-foreground transition-colors hover:text-terra hover:underline hover:decoration-terra hover:underline-offset-5"
+              className="flex h-9.5 items-center rounded-lg px-3 text-body font-medium text-foreground transition-colors hover:text-terracotta hover:underline hover:decoration-terracotta hover:underline-offset-5"
             >
               {link.label}
             </a>

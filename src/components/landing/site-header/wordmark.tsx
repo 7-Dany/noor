@@ -11,7 +11,7 @@ export function Wordmark() {
       aria-label="Noor home"
     >
       <LogoMark className="h-10.5 w-8.5 transition-transform duration-500 motion-reduce:transition-none group-hover:rotate-90" />
-      <span className="font-serif text-2xl font-medium text-terra italic">
+      <span className="font-serif text-2xl font-medium text-terracotta italic">
         Noor
       </span>
     </Link>
