@@ -1,6 +1,5 @@
 @import "tailwindcss";
 @import "tw-animate-css";
-@import "shadcn/tailwind.css";
 @import "@fontsource/dm-sans/400.css";
 @import "@fontsource/dm-sans/500.css";
 @import "@fontsource/dm-sans/600.css";
@@ -15,142 +14,129 @@
 @import "@fontsource/cairo/600.css";
 @import "@fontsource/cairo/700.css";
 
-@custom-variant dark (&:is(.dark *));
+/* Noor theme. Same contract as shadcn: `name` / `name-foreground`, OKLCH values.
+   Edit the variables here; every component follows. */
+:root {
+  --radius: 0.875rem;
+
+  --font-dm-sans: "DM Sans", "Cairo", ui-sans-serif, system-ui, sans-serif;
+  --font-fraunces: "Fraunces", Georgia, serif;
+  --font-dm-mono: "DM Mono", ui-monospace, monospace;
+  --font-amiri: "Amiri", "Noto Naskh Arabic", serif;
+
+  /* Warm neutrals */
+  --background: oklch(0.975 0.011 77);
+  --foreground: oklch(0.276 0.014 73);
+  --card: oklch(0.988 0.006 85);
+  --card-foreground: oklch(0.276 0.014 73);
+  --popover: oklch(0.988 0.006 85);
+  --popover-foreground: oklch(0.276 0.014 73);
+  --primary: oklch(0.276 0.014 73);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.949 0.007 68);
+  --secondary-foreground: oklch(0.333 0.025 72);
+  --muted: oklch(0.949 0.007 68);
+  --muted-foreground: oklch(0.535 0.036 73);
+  --accent: oklch(0.949 0.007 68);
+  --accent-foreground: oklch(0.276 0.014 73);
+  --destructive: oklch(0.577 0.245 27);
+  --border: oklch(0.9 0.014 78);
+  --input: oklch(0.9 0.014 78);
+  --ring: oklch(0.535 0.159 38);
+
+  /* Brand: sun (highlights, Premium band) */
+  --sun: oklch(0.89 0.103 90);
+  --sun-foreground: oklch(0.276 0.014 73);
+  --sun-deep: oklch(0.806 0.147 83);
+
+  /* Tones: one flat colour plus a gradient pair per tone.
+     Consumed through the `tone` variant on Deck and Receipt. */
+  --tone-foreground: oklch(1 0 0);
+  --terracotta: oklch(0.535 0.159 38);
+  --terracotta-from: oklch(0.682 0.147 48);
+  --terracotta-to: oklch(0.493 0.138 38);
+  --blue: oklch(0.556 0.143 272);
+  --blue-from: oklch(0.654 0.113 274);
+  --blue-to: oklch(0.399 0.118 272);
+  --rose: oklch(0.576 0.155 3);
+  --rose-from: oklch(0.673 0.124 360);
+  --rose-to: oklch(0.427 0.122 3);
+  --ink: oklch(0.422 0.031 71);
+  --ink-from: oklch(0.505 0.031 71);
+  --ink-to: oklch(0.266 0.015 73);
+
+  /* Receipt ruled paper (used by the receipt-ruled utility). */
+  --receipt-pad: calc(var(--spacing) * 6);
+  --receipt-rule: 1.375rem;
+  --receipt-rulec: color-mix(in oklab, var(--foreground) 9%, transparent);
+}
 
 @theme inline {
-  --font-heading: var(--font-sans);
-  --font-sans: "DM Sans", "Cairo", ui-sans-serif, system-ui, sans-serif;
-  --font-serif: "Fraunces", Georgia, serif;
-  --font-mono: "DM Mono", ui-monospace, monospace;
-  --font-quran: "Amiri", serif;
-  --text-body: 15px;
-  --text-micro: 10px;
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-foreground: var(--foreground);
   --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
   --color-sun: var(--sun);
-  --color-sun-500: var(--sun-500);
-  --color-sun-50: var(--sun-50);
-  --color-terra: var(--terra);
-  --color-terra-700: var(--terra-700);
-  --color-terra-500: var(--terra-500);
-  --color-terra-400: var(--terra-400);
-  --color-terra-foreground: var(--terra-foreground);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
+  --color-sun-foreground: var(--sun-foreground);
+  --color-sun-deep: var(--sun-deep);
+
+  /* Tone colours */
+  --color-tone-foreground: var(--tone-foreground);
+  --color-terracotta: var(--terracotta);
+  --color-blue: var(--blue);
+  --color-rose: var(--rose);
+  --color-ink: var(--ink);
+
+  /* Type scale */
+  --text-micro: 10px;
+  --text-tiny: 11px;
+  --text-caption: 13px;
+  --text-body: 15px;
+  --text-premium: 22px;
+  --text-lead: 1rem;
+  --text-display: 2.75rem;
+  --text-arabic: 46px;
+  --text-hero: clamp(2.375rem, 5.4vw, 3.75rem);
+  --leading-hero: 1.08;
+  --leading-lead: 1.65;
+  --leading-arabic: 1.35;
+  --leading-premium: 1.2;
+  --leading-display: 1.1;
+  --leading-copy: 1.6;
+  --tracking-eyebrow: 0.12em;
+  --container-hero: 52ch;
+  --container-lead: 36ch;
+
+  --shadow-deck: 0 26px 50px
+    color-mix(in oklab, var(--tone-to) 32%, transparent);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
-}
+  --radius-xl: calc(var(--radius) + 4px);
 
-:root {
-  --background: hsl(35, 60%, 96%);
-  --foreground: hsl(33, 15%, 15%);
-  --card: hsl(0, 0%, 100%);
-  --card-foreground: hsl(33, 15%, 15%);
-  --popover: hsl(0, 0%, 100%);
-  --popover-foreground: hsl(33, 15%, 15%);
-  --primary: hsl(33, 15%, 15%);
-  --primary-foreground: hsl(0, 0%, 100%);
-  --secondary: hsl(40, 60%, 98%);
-  --secondary-foreground: hsl(33, 15%, 15%);
-  --muted: hsl(30, 24%, 93%);
-  --muted-foreground: hsl(33, 17%, 41%);
-  --accent: hsl(44, 84%, 75%);
-  --accent-foreground: hsl(33, 15%, 15%);
-  --destructive: hsl(340, 48%, 52%);
-  --border: hsl(36, 22%, 86%);
-  --input: hsl(36, 22%, 86%);
-  --ring: hsl(15, 74%, 41%);
-  --sun: hsl(44, 84%, 75%);
-  --sun-500: hsl(42, 83%, 58%);
-  --sun-50: hsl(41, 100%, 93%);
-  --terra: hsl(15, 74%, 41%);
-  --terra-700: hsl(15, 69%, 37%);
-  --terra-500: hsl(18, 62%, 47%);
-  --terra-400: hsl(22, 72%, 56%);
-  --terra-foreground: hsl(0, 0%, 100%);
-  --chart-1: hsl(44, 84%, 75%);
-  --chart-2: hsl(15, 74%, 41%);
-  --chart-3: hsl(230, 49%, 56%);
-  --chart-4: hsl(340, 48%, 52%);
-  --chart-5: hsl(33, 17%, 41%);
-  --radius: 1rem;
-  --sidebar: hsl(35, 60%, 96%);
-  --sidebar-foreground: hsl(33, 15%, 15%);
-  --sidebar-primary: hsl(33, 15%, 15%);
-  --sidebar-primary-foreground: hsl(0, 0%, 100%);
-  --sidebar-accent: hsl(30, 24%, 93%);
-  --sidebar-accent-foreground: hsl(33, 15%, 15%);
-  --sidebar-border: hsl(36, 22%, 86%);
-  --sidebar-ring: hsl(15, 74%, 41%);
-}
+  /* next/font variables are set in app/layout.tsx */
+  --font-sans: var(--font-dm-sans, ui-sans-serif, system-ui, sans-serif);
+  --font-serif: var(--font-fraunces, ui-serif, Georgia, serif);
+  --font-mono: var(--font-dm-mono, ui-monospace, monospace);
+  --font-arabic: var(--font-amiri, "Noto Naskh Arabic", serif);
+  --font-quran: var(--font-arabic);
 
-.dark {
-  --background: hsl(33, 15%, 15%);
-  --foreground: hsl(35, 60%, 96%);
-  --card: hsl(33, 22%, 20%);
-  --card-foreground: hsl(35, 60%, 96%);
-  --popover: hsl(33, 22%, 20%);
-  --popover-foreground: hsl(35, 60%, 96%);
-  --primary: hsl(35, 60%, 96%);
-  --primary-foreground: hsl(33, 15%, 15%);
-  --secondary: hsl(33, 22%, 20%);
-  --secondary-foreground: hsl(35, 60%, 96%);
-  --muted: hsl(32, 20%, 29%);
-  --muted-foreground: hsl(36, 22%, 86%);
-  --accent: hsl(44, 84%, 75%);
-  --accent-foreground: hsl(33, 15%, 15%);
-  --destructive: hsl(340, 48%, 62%);
-  --border: hsl(32, 20%, 29%);
-  --input: hsl(32, 20%, 29%);
-  --ring: hsl(44, 84%, 75%);
-  --sun: hsl(44, 84%, 75%);
-  --terra: hsl(22, 72%, 56%);
-  --terra-foreground: hsl(33, 15%, 15%);
-  --chart-1: hsl(44, 84%, 75%);
-  --chart-2: hsl(22, 72%, 56%);
-  --chart-3: hsl(230, 49%, 66%);
-  --chart-4: hsl(340, 48%, 62%);
-  --chart-5: hsl(36, 22%, 86%);
-  --sidebar: hsl(33, 22%, 20%);
-  --sidebar-foreground: hsl(35, 60%, 96%);
-  --sidebar-primary: hsl(35, 60%, 96%);
-  --sidebar-primary-foreground: hsl(33, 15%, 15%);
-  --sidebar-accent: hsl(32, 20%, 29%);
-  --sidebar-accent-foreground: hsl(35, 60%, 96%);
-  --sidebar-border: hsl(32, 20%, 29%);
-  --sidebar-ring: hsl(44, 84%, 75%);
+  --ease-spring: cubic-bezier(0.34, 1.25, 0.5, 1);
 }
 
 @layer base {
@@ -158,19 +144,19 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-sans text-foreground;
   }
-  button:not(:disabled),
-  [role="button"]:not(:disabled) {
-    cursor: pointer;
-  }
-  html {
-    @apply font-sans;
-    scroll-behavior: smooth;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    html {
-      scroll-behavior: auto;
-    }
-  }
+}
+
+/* Ruled paper: a 1px rule at --receipt-rule inside every 1.75rem row,
+   offset by the receipt padding. */
+@utility receipt-ruled {
+  background-image: linear-gradient(
+    transparent var(--receipt-rule),
+    var(--receipt-rulec) var(--receipt-rule),
+    var(--receipt-rulec) calc(var(--receipt-rule) + 1px),
+    transparent calc(var(--receipt-rule) + 1px)
+  );
+  background-size: 100% 1.75rem;
+  background-position: 0 var(--receipt-pad);
 }
