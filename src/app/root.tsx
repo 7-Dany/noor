@@ -1,3 +1,4 @@
+import type { ReactNode } from "react"
 import {
   isRouteErrorResponse,
   Links,
@@ -16,7 +17,7 @@ export async function loader({ request }: Route.LoaderArgs) {
   return { theme: await themeSession.getTheme(request) }
 }
 
-export function Layout({ children }: { children: React.ReactNode }) {
+export function Layout({ children }: { children: ReactNode }) {
   const data = useRouteLoaderData<typeof loader>("root")
   return (
     <html
