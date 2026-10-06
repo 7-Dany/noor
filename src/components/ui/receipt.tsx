@@ -1,29 +1,17 @@
-import * as React from "react"
+import { type ComponentProps } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "cn"
 import { Separator } from "@/components/ui/separator"
 
-/* -------------------------------------------------------------------------- */
-/*  Receipt                                                                   */
-/*  A paper-slip surface, composed like Card:                                 */
-/*  Receipt > ReceiptHeader, ReceiptTitle, ReceiptSpecimen, ReceiptDivider,   */
-/*            ReceiptList > ReceiptItem, ReceiptTotal, ReceiptFooter          */
-/*  It knows nothing about stacks or materials: content comes from children.  */
-/*                                                                            */
-/*  Grid contract: the slip is 15 rows of h-7 (1.75rem). Rules sit at         */
-/*  --receipt-rule from each row top (see receipt-ruled in index.css); text   */
-/*  styles are nudged (top-*) so their baselines land ~1px above it. Nudges   */
-/*  are tuned for DM Sans / DM Mono / Fraunces: re-measure if a typeface      */
-/*  changes. Dividers are zero-height lines drawn ON a rule, so they cost no  */
-/*  row. Specimen = 4 rows, list = 5 (min-h-35), total/footer = 2 rows each   */
-/*  (the air above them is on purpose).                                       */
-/* -------------------------------------------------------------------------- */
+/* Receipt: a ruled paper slip, composed like Card. Rows are h-7 on a 1.75rem grid
+   (see receipt-ruled in index.css); the top-* nudges seat text on the rules
+   (tuned for DM Sans, DM Mono and Fraunces). */
 
 // A tone is three CSS vars; add one line + three vars in index.css.
 const receiptVariants = cva(
   [
-    "relative flex flex-col rounded-xl border bg-card receipt-ruled p-(--receipt-pad) text-card-foreground shadow-xl shadow-foreground/10",
+    "relative flex flex-col rounded-xl border bg-card receipt-ruled p-(--receipt-pad) text-card-foreground shadow-xl shadow-foreground/10 dark:shadow-black/30",
     "transition-transform duration-700 ease-spring motion-reduce:transition-none",
   ],
   {
@@ -34,11 +22,10 @@ const receiptVariants = cva(
         right: "rotate-4",
       },
       tone: {
-        terracotta:
-          "[--tone-from:var(--terracotta-from)] [--tone-to:var(--terracotta-to)] [--tone:var(--terracotta)]",
-        blue: "[--tone-from:var(--blue-from)] [--tone-to:var(--blue-to)] [--tone:var(--blue)]",
-        rose: "[--tone-from:var(--rose-from)] [--tone-to:var(--rose-to)] [--tone:var(--rose)]",
-        ink: "[--tone-from:var(--ink-from)] [--tone-to:var(--ink-to)] [--tone:var(--ink)]",
+        terracotta: "tone-terracotta",
+        blue: "tone-blue",
+        rose: "tone-rose",
+        ink: "tone-ink",
       },
     },
     defaultVariants: { tilt: "none", tone: "terracotta" },
@@ -50,7 +37,7 @@ function Receipt({
   tilt = "none",
   tone,
   ...props
-}: React.ComponentProps<"article"> & VariantProps<typeof receiptVariants>) {
+}: ComponentProps<"article"> & VariantProps<typeof receiptVariants>) {
   return (
     <article
       data-slot="receipt"
@@ -61,13 +48,12 @@ function Receipt({
   )
 }
 
-/** One row, two short spans. Last child right-aligned. */
-function ReceiptHeader({ className, ...props }: React.ComponentProps<"div">) {
+function ReceiptHeader({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="receipt-header"
       className={cn(
-        "flex h-7 items-baseline justify-between gap-4 font-mono text-(length:--text-micro) leading-7 tracking-eyebrow text-muted-foreground uppercase [&>*]:relative [&>*]:top-1 [&>:last-child]:text-right",
+        "flex h-7 items-baseline justify-between gap-4 font-mono text-(length:--text-micro) leading-7 tracking-eyebrow text-muted-foreground uppercase *:relative *:top-1 *:text-right",
         className
       )}
       {...props}
@@ -75,7 +61,7 @@ function ReceiptHeader({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function ReceiptTitle({ className, ...props }: React.ComponentProps<"h3">) {
+function ReceiptTitle({ className, ...props }: ComponentProps<"h3">) {
   return (
     <h3
       data-slot="receipt-title"
@@ -85,13 +71,12 @@ function ReceiptTitle({ className, ...props }: React.ComponentProps<"h3">) {
   )
 }
 
-/** Small mono caption. Takes the receipt's tone colour. */
-function ReceiptLabel({ className, ...props }: React.ComponentProps<"span">) {
+function ReceiptLabel({ className, ...props }: ComponentProps<"span">) {
   return (
     <span
       data-slot="receipt-label"
       className={cn(
-        "relative top-0.75 truncate font-mono text-(length:--text-micro) leading-7 tracking-eyebrow text-(--tone) uppercase",
+        "relative top-0.75 truncate font-mono text-(length:--text-micro) leading-7 tracking-eyebrow text-(--tone-text) uppercase",
         className
       )}
       {...props}
@@ -99,9 +84,7 @@ function ReceiptLabel({ className, ...props }: React.ComponentProps<"span">) {
   )
 }
 
-/* Specimen: a large Arabic glyph beside a 4-row caption -------------------- */
-
-function ReceiptSpecimen({ className, ...props }: React.ComponentProps<"div">) {
+function ReceiptSpecimen({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="receipt-specimen"
@@ -111,14 +94,14 @@ function ReceiptSpecimen({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-function ReceiptGlyph({ className, ...props }: React.ComponentProps<"p">) {
+function ReceiptGlyph({ className, ...props }: ComponentProps<"p">) {
   return (
     <p
       data-slot="receipt-glyph"
       lang="ar"
       dir="rtl"
       className={cn(
-        "h-28 max-w-40 min-w-24 flex-none text-center font-arabic text-(length:--text-arabic) leading-28 whitespace-nowrap text-(--tone)",
+        "h-28 max-w-40 min-w-24 flex-none text-center font-arabic text-(length:--text-arabic) leading-28 whitespace-nowrap text-(--tone-text)",
         className
       )}
       {...props}
@@ -126,11 +109,10 @@ function ReceiptGlyph({ className, ...props }: React.ComponentProps<"p">) {
   )
 }
 
-/** Caption column: label (1 row), title (1 row), description (2 rows). */
 function ReceiptSpecimenBody({
   className,
   ...props
-}: React.ComponentProps<"div">) {
+}: ComponentProps<"div">) {
   return (
     <div
       data-slot="receipt-specimen-body"
@@ -143,7 +125,7 @@ function ReceiptSpecimenBody({
 function ReceiptSpecimenTitle({
   className,
   ...props
-}: React.ComponentProps<"p">) {
+}: ComponentProps<"p">) {
   return (
     <p
       data-slot="receipt-specimen-title"
@@ -153,11 +135,10 @@ function ReceiptSpecimenTitle({
   )
 }
 
-/** Two lines on the ruled grid (13px on 28px leading). */
 function ReceiptSpecimenDescription({
   className,
   ...props
-}: React.ComponentProps<"p">) {
+}: ComponentProps<"p">) {
   return (
     <p
       data-slot="receipt-specimen-description"
@@ -170,16 +151,13 @@ function ReceiptSpecimenDescription({
   )
 }
 
-/* Divider: always a Separator, never a bordered div ------------------------ */
-
-// Zero-height line pulled up onto the previous row's rule (28px - 22px = 6px = top-1.5).
-// Solid sits mid-gap between two rules (8px below the row boundary).
+// Zero height, pulled onto the previous rule; solid sits mid-gap.
 // dashed / solid styling lives in Separator's variants.
 function ReceiptDivider({
   className,
   variant = "dashed",
   ...props
-}: React.ComponentProps<typeof Separator>) {
+}: ComponentProps<typeof Separator>) {
   return (
     <Separator
       data-slot="receipt-divider"
@@ -190,9 +168,7 @@ function ReceiptDivider({
   )
 }
 
-/* Line items --------------------------------------------------------------- */
-
-function ReceiptList({ className, ...props }: React.ComponentProps<"ul">) {
+function ReceiptList({ className, ...props }: ComponentProps<"ul">) {
   return (
     <ul
       data-slot="receipt-list"
@@ -202,7 +178,7 @@ function ReceiptList({ className, ...props }: React.ComponentProps<"ul">) {
   )
 }
 
-function ReceiptItem({ className, ...props }: React.ComponentProps<"li">) {
+function ReceiptItem({ className, ...props }: ComponentProps<"li">) {
   return (
     <li
       data-slot="receipt-item"
@@ -218,7 +194,7 @@ function ReceiptItem({ className, ...props }: React.ComponentProps<"li">) {
 function ReceiptItemValue({
   className,
   ...props
-}: React.ComponentProps<"span">) {
+}: ComponentProps<"span">) {
   return (
     <span
       data-slot="receipt-item-value"
@@ -231,9 +207,7 @@ function ReceiptItemValue({
   )
 }
 
-/* Total + footer ----------------------------------------------------------- */
-
-function ReceiptTotal({ className, ...props }: React.ComponentProps<"div">) {
+function ReceiptTotal({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="receipt-total"
@@ -249,7 +223,7 @@ function ReceiptTotal({ className, ...props }: React.ComponentProps<"div">) {
 function ReceiptTotalLabel({
   className,
   ...props
-}: React.ComponentProps<"span">) {
+}: ComponentProps<"span">) {
   return (
     <span
       data-slot="receipt-total-label"
@@ -265,12 +239,12 @@ function ReceiptTotalLabel({
 function ReceiptTotalValue({
   className,
   ...props
-}: React.ComponentProps<"span">) {
+}: ComponentProps<"span">) {
   return (
     <span
       data-slot="receipt-total-value"
       className={cn(
-        "relative -top-1.5 font-serif text-3xl leading-7 text-(--tone)",
+        "relative -top-1.5 font-serif text-3xl leading-7 text-(--tone-text)",
         className
       )}
       {...props}
@@ -278,7 +252,7 @@ function ReceiptTotalValue({
   )
 }
 
-function ReceiptFooter({ className, ...props }: React.ComponentProps<"div">) {
+function ReceiptFooter({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="receipt-footer"
@@ -288,13 +262,12 @@ function ReceiptFooter({ className, ...props }: React.ComponentProps<"div">) {
   )
 }
 
-/** Footer lead-in: the emphasised word. One row, tone-coloured serif italic (echoes the deck's "Material one,"). */
-function ReceiptPremium({ className, ...props }: React.ComponentProps<"p">) {
+function ReceiptPremium({ className, ...props }: ComponentProps<"p">) {
   return (
     <p
       data-slot="receipt-premium"
       className={cn(
-        "font-serif text-(length:--text-premium) leading-7 text-(--tone) italic",
+        "font-serif text-(length:--text-premium) leading-7 text-(--tone-text) italic",
         className
       )}
       {...props}
@@ -302,8 +275,7 @@ function ReceiptPremium({ className, ...props }: React.ComponentProps<"p">) {
   )
 }
 
-/** Footer detail line under ReceiptPremium. */
-function ReceiptPerks({ className, ...props }: React.ComponentProps<"p">) {
+function ReceiptPerks({ className, ...props }: ComponentProps<"p">) {
   return (
     <p
       data-slot="receipt-perks"
@@ -316,8 +288,7 @@ function ReceiptPerks({ className, ...props }: React.ComponentProps<"p">) {
   )
 }
 
-/** Decorative barcode (same bars as the HTML). Hidden from assistive tech. */
-function Barcode({ className, ...props }: React.ComponentProps<"svg">) {
+function Barcode({ className, ...props }: ComponentProps<"svg">) {
   return (
     <svg
       data-slot="barcode"

@@ -14,6 +14,8 @@
 @import "@fontsource/cairo/600.css";
 @import "@fontsource/cairo/700.css";
 
+@custom-variant dark (&:is(.dark *));
+
 /* Noor theme. Same contract as shadcn: `name` / `name-foreground`, OKLCH values.
    Edit the variables here; every component follows. */
 :root {
@@ -65,10 +67,79 @@
   --ink-from: oklch(0.505 0.031 71);
   --ink-to: oklch(0.266 0.015 73);
 
+  /* Tone as text on a card (receipt accents). Same as the flat tone in
+     light; .dark lifts them for contrast. */
+  --terracotta-text: var(--terracotta);
+  --blue-text: var(--blue);
+  --rose-text: var(--rose);
+  --ink-text: var(--ink);
+
+  /* Terracotta as brand text on the page (hero accent word, wordmark).
+     Dark uses the lit end of the card gradient so they match. */
+  --terracotta-accent: var(--terracotta);
+
   /* Receipt ruled paper (used by the receipt-ruled utility). */
   --receipt-pad: calc(var(--spacing) * 6);
   --receipt-rule: 1.375rem;
   --receipt-rulec: color-mix(in oklab, var(--foreground) 9%, transparent);
+
+  --sun-disc: oklch(0.806 0.148 83);
+
+  /* Moon (shown instead of the sun in dark mode): ink hue and chroma, lifted
+     so it reads on the page and on every card tone. */
+  --moon: oklch(0.88 0.022 72);
+  --moon-disc: oklch(0.8 0.028 71);
+}
+
+/* Dark mode: deep warm charcoal. `d`/cookie flip `.dark` on <html> (see
+   theme-store.ts). Surfaces step up: background < card < popover. Blue,
+   rose and ink dim toward the page (>= 4.2:1 against white); terracotta
+   and tone-foreground keep light-mode values. Derived values (receipt
+   rules, tone glow) follow via color-mix. */
+.dark {
+  color-scheme: dark;
+
+  --background: oklch(0.2 0.01 70);
+  --foreground: oklch(0.89 0.01 80);
+  --card: oklch(0.25 0.011 70);
+  --card-foreground: oklch(0.89 0.01 80);
+  --popover: oklch(0.28 0.012 70);
+  --popover-foreground: oklch(0.89 0.01 80);
+  --primary: oklch(0.89 0.01 80);
+  --primary-foreground: oklch(0.2 0.01 70);
+  --secondary: oklch(0.29 0.012 70);
+  --secondary-foreground: oklch(0.87 0.01 78);
+  --muted: oklch(0.29 0.012 70);
+  --muted-foreground: oklch(0.7 0.018 75);
+  --accent: oklch(0.32 0.013 70);
+  --accent-foreground: oklch(0.89 0.01 80);
+  --destructive: oklch(0.68 0.17 25);
+  --border: oklch(0.35 0.012 72);
+  --input: oklch(0.35 0.012 72);
+  --ring: oklch(0.7 0.13 45);
+
+  --sun: oklch(0.84 0.09 90);
+  --sun-foreground: oklch(0.2 0.01 70);
+  --sun-deep: oklch(0.76 0.13 83);
+  --sun-disc: oklch(0.76 0.13 83);
+
+  --blue: oklch(0.45 0.07 273);
+  --blue-from: oklch(0.54 0.07 274);
+  --blue-to: oklch(0.38 0.07 272);
+  --rose: oklch(0.47 0.075 2);
+  --rose-from: oklch(0.55 0.075 360);
+  --rose-to: oklch(0.4 0.07 3);
+  --ink: oklch(0.46 0.024 71);
+  --ink-from: oklch(0.52 0.025 71);
+  --ink-to: oklch(0.4 0.022 71);
+
+  /* About 7.5:1 on the dark card; the flat tones above are for fills. */
+  --terracotta-text: oklch(0.773 0.12 42);
+  --blue-text: oklch(0.765 0.09 273);
+  --rose-text: oklch(0.774 0.1 3);
+  --ink-text: oklch(0.763 0.03 71);
+
+  --terracotta-accent: var(--terracotta-from);
 }
 
 @theme inline {
@@ -93,10 +164,12 @@
   --color-sun: var(--sun);
   --color-sun-foreground: var(--sun-foreground);
   --color-sun-deep: var(--sun-deep);
+  --color-moon: var(--moon);
 
   /* Tone colours */
   --color-tone-foreground: var(--tone-foreground);
   --color-terracotta: var(--terracotta);
+  --color-terracotta-accent: var(--terracotta-accent);
   --color-blue: var(--blue);
   --color-rose: var(--rose);
   --color-ink: var(--ink);
@@ -109,6 +182,7 @@
   --text-premium: 22px;
   --text-lead: 1rem;
   --text-display: 2.75rem;
+  --text-watermark: 11rem;
   --text-arabic: 46px;
   --text-hero: clamp(2.375rem, 5.4vw, 3.75rem);
   --leading-hero: 1.08;
@@ -159,4 +233,47 @@
   );
   background-size: 100% 1.75rem;
   background-position: 0 var(--receipt-pad);
+}
+
+/* Word-cycle slot mask: clips sliding words top/bottom, keeps italic
+   side overhang visible (see hero-heading.tsx). */
+@utility slot-mask {
+  clip-path: inset(0 -0.12em -0.22em -0.12em);
+}
+
+/* Sun/moon swap: fades, rotates and scales at once (see sun-moon.tsx). */
+@utility transition-swap {
+  transition-property: opacity, rotate, scale;
+}
+
+/* Tone treatments: wire the three gradient vars plus both flats. Surfaces
+   read --tone-from/--tone-to for gradients; text accents read --tone-text,
+   which tracks --tone in light mode and lifts for contrast in dark mode.
+   Consumed through the `tone` variant on Deck and Receipt. */
+@utility tone-terracotta {
+  --tone-from: var(--terracotta-from);
+  --tone-to: var(--terracotta-to);
+  --tone: var(--terracotta);
+  --tone-text: var(--terracotta-text);
+}
+
+@utility tone-blue {
+  --tone-from: var(--blue-from);
+  --tone-to: var(--blue-to);
+  --tone: var(--blue);
+  --tone-text: var(--blue-text);
+}
+
+@utility tone-rose {
+  --tone-from: var(--rose-from);
+  --tone-to: var(--rose-to);
+  --tone: var(--rose);
+  --tone-text: var(--rose-text);
+}
+
+@utility tone-ink {
+  --tone-from: var(--ink-from);
+  --tone-to: var(--ink-to);
+  --tone: var(--ink);
+  --tone-text: var(--ink-text);
 }

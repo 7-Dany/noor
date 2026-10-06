@@ -41,7 +41,7 @@ const SHRINK_STEP = 0.035 // scale lost per card
 // Card look. A tone is three CSS vars; add one line + three vars in index.css.
 const deckCardVariants = cva(
   [
-    "absolute inset-0 flex cursor-grab flex-col justify-between gap-4 rounded-xl bg-linear-160 from-(--tone-from) to-(--tone-to) px-6.5 py-6 text-tone-foreground shadow-deck",
+    "absolute inset-0 flex cursor-grab flex-col justify-between gap-4 rounded-xl bg-linear-160 from-(--tone-from) to-(--tone-to) px-6.5 py-6 text-tone-foreground shadow-deck dark:shadow-black/40",
     "before:absolute before:inset-x-6 before:top-3.5 before:border-t before:border-dashed before:border-tone-foreground/40",
     "z-(--deck-z) translate-x-(--deck-x) translate-y-(--deck-y) scale-(--deck-scale) rotate-(--deck-rotate)",
     "transition duration-700 ease-spring motion-reduce:transition-none",
@@ -51,11 +51,10 @@ const deckCardVariants = cva(
   {
     variants: {
       tone: {
-        terracotta:
-          "[--tone-from:var(--terracotta-from)] [--tone-to:var(--terracotta-to)] [--tone:var(--terracotta)]",
-        blue: "[--tone-from:var(--blue-from)] [--tone-to:var(--blue-to)] [--tone:var(--blue)]",
-        rose: "[--tone-from:var(--rose-from)] [--tone-to:var(--rose-to)] [--tone:var(--rose)]",
-        ink: "[--tone-from:var(--ink-from)] [--tone-to:var(--ink-to)] [--tone:var(--ink)]",
+        terracotta: "tone-terracotta",
+        blue: "tone-blue",
+        rose: "tone-rose",
+        ink: "tone-ink",
       },
     },
     defaultVariants: {
