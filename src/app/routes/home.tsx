@@ -1,6 +1,6 @@
-import { SiteHeader } from "@/components/landing/site-header/site-header"
-import { HeroHeading } from "@/components/landing/hero/hero-heading"
-import { MaterialStack } from "@/components/landing/hero/material-stack"
+import { SiteHeader } from "@/pages/landing/header/site-header"
+import { HeroHeading } from "@/pages/landing/hero/hero-heading"
+import { MaterialStack } from "@/pages/landing/material-stack/material-stack"
 
 export function meta() {
   return [{ title: "Noor · Free teaching material for Arabic & Quran" }]
