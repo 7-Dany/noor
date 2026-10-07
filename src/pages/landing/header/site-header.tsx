@@ -1,10 +1,11 @@
 import { useState } from "react"
+import { Link, NavLink } from "react-router"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
   ArrowRight01Icon,
   BookOpen01Icon,
   Cancel01Icon,
-  HelpCircleIcon,
+  Home01Icon,
   Menu01Icon,
   Tag01Icon,
 } from "@hugeicons/core-free-icons"
@@ -19,16 +20,17 @@ import {
 } from "@/components/ui/sheet"
 import { Wordmark } from "./wordmark"
 
+// Pages only: the header navigates between routes, never to page sections.
 const NAV_LINKS = [
-  { href: "#materials", label: "Materials", icon: BookOpen01Icon },
-  { href: "#why", label: "Why Noor", icon: HelpCircleIcon },
-  { href: "#pricing", label: "Pricing", icon: Tag01Icon },
+  { to: "/", label: "Home", icon: Home01Icon },
+  { to: "/materials", label: "Materials", icon: BookOpen01Icon },
+  { to: "/pricing", label: "Pricing", icon: Tag01Icon },
 ] as const
 
 /**
- * Landing header. Sticky translucent bar: brand left, quiet nav with
- * terracotta hover, outline Log in + solid Start free pills right.
- * Mobile collapses to a burger opening a sheet menu.
+ * Site header. Sticky translucent bar: brand left, quiet page nav with
+ * terracotta hover and active state, outline Log in + solid Start free
+ * pills right. Mobile collapses to a burger opening a sheet menu.
  */
 export function SiteHeader() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -46,29 +48,30 @@ export function SiteHeader() {
           className="ml-3 hidden items-center gap-1 md:flex"
         >
           {NAV_LINKS.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="flex h-9.5 items-center rounded-lg px-3 text-body font-medium text-foreground transition-colors hover:text-terracotta hover:underline hover:decoration-terracotta hover:underline-offset-5"
+            <NavLink
+              key={link.to}
+              to={link.to}
+              end
+              className="flex h-9.5 items-center rounded-lg px-3 text-body font-medium text-foreground transition-colors hover:text-terracotta hover:underline hover:decoration-terracotta hover:underline-offset-5 aria-[current=page]:text-terracotta aria-[current=page]:underline aria-[current=page]:decoration-terracotta aria-[current=page]:underline-offset-5"
             >
               {link.label}
-            </a>
+            </NavLink>
           ))}
         </nav>
         <div className="ml-auto hidden items-center gap-2.5 md:flex">
-          <a
-            href="#pricing"
+          <Link
+            to="/login"
             className={buttonVariants({ variant: "outline", size: "pill" })}
           >
             Log in
-          </a>
-          <a
-            href="#pricing"
+          </Link>
+          <Link
+            to="/signup"
             className={buttonVariants({ variant: "default", size: "pill" })}
           >
             Start free
             <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
-          </a>
+          </Link>
         </div>
         <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
           <SheetTrigger
@@ -106,11 +109,12 @@ export function SiteHeader() {
               </div>
               <nav aria-label="Menu" className="mt-4 grid gap-1">
                 {NAV_LINKS.map((link) => (
-                  <a
-                    key={link.href}
-                    href={link.href}
+                  <NavLink
+                    key={link.to}
+                    to={link.to}
+                    end
                     onClick={closeMenu}
-                    className="flex h-12 items-center gap-3 rounded-xl px-3 text-body font-medium transition-colors hover:bg-card"
+                    className="flex h-12 items-center gap-3 rounded-xl px-3 text-body font-medium transition-colors hover:bg-card aria-[current=page]:bg-card aria-[current=page]:text-terracotta"
                   >
                     <HugeiconsIcon
                       icon={link.icon}
@@ -118,12 +122,12 @@ export function SiteHeader() {
                       className="text-muted-foreground"
                     />
                     {link.label}
-                  </a>
+                  </NavLink>
                 ))}
               </nav>
               <div className="mt-auto grid gap-2.5 pb-4">
-                <a
-                  href="#pricing"
+                <Link
+                  to="/login"
                   onClick={closeMenu}
                   className={buttonVariants({
                     variant: "outline",
@@ -131,9 +135,9 @@ export function SiteHeader() {
                   })}
                 >
                   Log in
-                </a>
-                <a
-                  href="#pricing"
+                </Link>
+                <Link
+                  to="/signup"
                   onClick={closeMenu}
                   className={buttonVariants({
                     variant: "default",
@@ -141,7 +145,7 @@ export function SiteHeader() {
                   })}
                 >
                   Start free
-                </a>
+                </Link>
                 <p className="pt-2 text-center font-mono text-micro tracking-widest text-muted-foreground uppercase">
                   © {new Date().getFullYear()} Noor · Free for teachers
                 </p>

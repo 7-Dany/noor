@@ -8,7 +8,7 @@ import {
   DeckIndicator,
   DeckNext,
   DeckPrevious,
-} from "@/components/ui/deck"
+} from "@/components/custom/deck"
 import { SunMoon } from "@/components/icons/sun-moon"
 
 import { MATERIALS, type Material } from "./data"

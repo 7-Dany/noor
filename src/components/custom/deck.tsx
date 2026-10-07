@@ -29,7 +29,8 @@ const TAP_SLOP_PX = 6
 // events, so they are matched by selector instead of defaultPrevented.
 const INTERACTIVE_SELECTOR = "button, a, [data-deck-interactive]"
 
-// Stack geometry: card k (0 = top) offsets by k × step.
+// Stack geometry: card k (0 = top) offsets by k × step. A parent can tune it
+// with --deck-spread, --deck-tilt-step and --deck-zoom (whole-stack scale).
 const SPREAD_PX = 18 // sideways px per card
 const RISE_PX = 14 // upward px per card
 const TILT_DEG = 4 // top-card rotation
@@ -325,10 +326,10 @@ function DeckCard({
       aria-hidden={!isActive}
       style={
         {
-          "--deck-x": `${position * SPREAD_PX}px`,
+          "--deck-x": `calc(${position} * var(--deck-spread, ${SPREAD_PX}px))`,
           "--deck-y": `${position * -RISE_PX}px`,
-          "--deck-rotate": `${TILT_DEG + position * TILT_STEP_DEG}deg`,
-          "--deck-scale": 1 - position * SHRINK_STEP,
+          "--deck-rotate": `calc(${TILT_DEG}deg + ${position} * var(--deck-tilt-step, ${TILT_STEP_DEG}deg))`,
+          "--deck-scale": `calc(${1 - position * SHRINK_STEP} * var(--deck-zoom, 1))`,
           "--deck-z": meta.count - position,
           "--deck-leave-ms": `${LEAVE_MS}ms`,
           ...style,

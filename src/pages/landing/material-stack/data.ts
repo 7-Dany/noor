@@ -1,4 +1,4 @@
-import type { DeckItem } from "@/components/ui/deck"
+import type { DeckItem } from "@/components/custom/deck"
 
 export type Material = DeckItem & {
   title: string
@@ -28,7 +28,7 @@ export const MATERIALS: readonly Material[] = [
     note: "Material one,",
     summary:
       "Ten chapters, about 167 lessons: letters, harakat, madd, sukoon, shaddah, tanween and hamza, plus 43 reading passages and games.",
-    watermark: "ب",
+    watermark: "ن",
     stats: [
       { value: "10", label: "Chapters" },
       { value: "~167", label: "Lessons" },
@@ -57,7 +57,7 @@ export const MATERIALS: readonly Material[] = [
     note: "Material two,",
     summary:
       "Five chapters, 21 lessons of ready-to-teach slides on the rules of recitation.",
-    watermark: "ن",
+    watermark: "ت",
     stats: [
       { value: "5", label: "Chapters" },
       { value: "21", label: "Lessons" },

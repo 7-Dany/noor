@@ -19,6 +19,9 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         overlay:
           "border-white/50 bg-white/10 text-white hover:bg-white/25 hover:text-white",
+        // Solid light button for tone surfaces (PriceCard): dark text.
+        light:
+          "bg-tone-foreground text-primary hover:bg-tone-foreground/90 dark:text-primary-foreground",
         // Solid light button for tone surfaces (Deck cards): reads --tone.
         tone: "bg-tone-foreground text-(--tone) hover:bg-tone-foreground/90",
       },

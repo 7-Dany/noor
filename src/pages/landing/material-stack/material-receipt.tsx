@@ -1,8 +1,8 @@
 import { useEffect, useState, type ComponentProps } from "react"
 
-import { useDeck } from "@/components/ui/deck"
+import { useDeck } from "@/components/custom/deck"
+import { Barcode } from "@/components/icons/barcode"
 import {
-  Barcode,
   Receipt,
   ReceiptDivider,
   ReceiptFooter,
@@ -22,7 +22,7 @@ import {
   ReceiptTotal,
   ReceiptTotalLabel,
   ReceiptTotalValue,
-} from "@/components/ui/receipt"
+} from "@/components/custom/receipt"
 
 import { getMaterial } from "./data"
 

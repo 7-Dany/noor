@@ -27,14 +27,14 @@ export function HeroHeading() {
         >
           <em
             ref={currentRef}
-            className="inline-block font-serif whitespace-nowrap text-terracotta italic"
+            className="inline-block font-serif whitespace-nowrap text-terracotta-accent italic"
           >
             {WORDS[index]}.
           </em>
           {entering !== null && (
             <em
               ref={enteringRef}
-              className="absolute top-0 left-0 inline-block font-serif whitespace-nowrap text-terracotta italic"
+              className="absolute top-0 left-0 inline-block font-serif whitespace-nowrap text-terracotta-accent italic"
             >
               {WORDS[entering]}.
             </em>

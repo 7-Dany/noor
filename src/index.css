@@ -52,6 +52,9 @@
   --sun: oklch(0.89 0.103 90);
   --sun-foreground: oklch(0.276 0.014 73);
   --sun-deep: oklch(0.806 0.147 83);
+  /* CTA band: sun in both modes (matches the mockup screenshots). */
+  --cta: var(--sun);
+  --cta-foreground: var(--sun-foreground);
 
   /* Tones: one flat colour plus a gradient pair per tone.
      Consumed through the `tone` variant on Deck and Receipt. */
@@ -122,6 +125,8 @@
 
   --sun: oklch(0.84 0.09 90);
   --sun-foreground: oklch(0.2 0.01 70);
+  --cta: var(--sun);
+  --cta-foreground: var(--sun-foreground);
   --sun-deep: oklch(0.76 0.13 83);
   --sun-disc: oklch(0.76 0.13 83);
 
@@ -167,6 +172,8 @@
   --color-sun-foreground: var(--sun-foreground);
   --color-sun-deep: var(--sun-deep);
   --color-moon: var(--moon);
+  --color-cta: var(--cta);
+  --color-cta-foreground: var(--cta-foreground);
 
   /* Tone colours */
   --color-tone-foreground: var(--tone-foreground);
