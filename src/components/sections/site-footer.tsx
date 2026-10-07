@@ -19,7 +19,7 @@ const FOOTER_LINKS = [
 function SiteFooter({ className, ...props }: React.ComponentProps<"footer">) {
   return (
     <footer data-slot="site-footer" className={cn("w-full", className)} {...props}>
-      <div className="mt-10 w-full border-t border-border max-sm:mt-6">
+      <div className="mt-10 w-full border-t border-border/50 max-sm:mt-6">
         <div className="px-4 sm:px-10">
           <div className="mx-auto flex max-w-280 flex-wrap items-center justify-between gap-x-6 gap-y-4 py-6">
             <div className="flex items-center gap-2.5">
@@ -43,7 +43,7 @@ function SiteFooter({ className, ...props }: React.ComponentProps<"footer">) {
       </div>
       <div
         data-slot="site-copyright"
-        className="w-full border-t border-border"
+        className="w-full border-t border-border/50"
       >
         <div className="px-4 sm:px-10">
           <p className="mx-auto max-w-280 py-3 text-center font-mono text-tiny tracking-eyebrow text-muted-foreground uppercase">

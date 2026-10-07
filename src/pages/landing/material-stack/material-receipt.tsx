@@ -24,7 +24,7 @@ import {
   ReceiptTotalValue,
 } from "@/components/custom/receipt"
 
-import { getMaterial } from "./data"
+import { getMaterial } from "@/data/materials"
 
 // Lags `value` by `ms` so the old content can fade out before the swap.
 function useSettled<T>(value: T, ms = 150) {

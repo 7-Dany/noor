@@ -1,26 +1,24 @@
-import {
-  Empty,
-  EmptyDescription,
-  EmptyHeader,
-  EmptyTitle,
-} from "@/components/ui/empty"
+import { SiteCta } from "@/components/sections/site-cta"
+import { MaterialGrid } from "@/pages/materials/material-grid"
+import { MaterialsHeading } from "@/pages/materials/materials-heading"
 
 export function meta() {
-  return [{ title: "Materials · Noor" }]
+  return [
+    { title: "Materials · Noor" },
+    {
+      name: "description",
+      content:
+        "Choose a material: Noor Al-Bayan, Tajweed Mastery, Vocab & Grammar and the Quran Library. Free for teachers.",
+    },
+  ]
 }
 
-// Placeholder until the MaterialCard grid is built (checklist step 2).
 export default function Materials() {
   return (
-    <main className="px-4 pt-12 sm:px-10 sm:pt-14">
-      <Empty>
-        <EmptyHeader>
-          <EmptyTitle>Materials</EmptyTitle>
-          <EmptyDescription>
-            The material catalog is coming next.
-          </EmptyDescription>
-        </EmptyHeader>
-      </Empty>
+    <main className="overflow-x-clip px-4 pt-12 pb-18 sm:px-10 sm:pt-14">
+      <MaterialsHeading />
+      <MaterialGrid />
+      <SiteCta className="mt-18" />
     </main>
   )
 }

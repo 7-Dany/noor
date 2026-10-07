@@ -11,7 +11,7 @@ import {
 } from "@/components/custom/deck"
 import { SunMoon } from "@/components/icons/sun-moon"
 
-import { MATERIALS, type Material } from "./data"
+import { MATERIALS, type Material } from "@/data/materials"
 
 function MaterialCard({ material }: { material: Material }) {
   return (

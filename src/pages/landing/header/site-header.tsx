@@ -38,7 +38,7 @@ export function SiteHeader() {
   return (
     <header
       data-slot="site-header"
-      className="sticky top-0 z-40 border-b border-border bg-background/88 backdrop-blur-md"
+      className="sticky top-0 z-40 border-b border-border/50 bg-background/88 backdrop-blur-md"
     >
       <div className="mx-auto flex max-w-295 items-center gap-7 px-4 py-2.5 sm:px-10">
         <Wordmark />
@@ -52,7 +52,7 @@ export function SiteHeader() {
               key={link.to}
               to={link.to}
               end
-              className="flex h-9.5 items-center rounded-lg px-3 text-body font-medium text-foreground transition-colors hover:text-terracotta hover:underline hover:decoration-terracotta hover:underline-offset-5 aria-[current=page]:text-terracotta aria-[current=page]:underline aria-[current=page]:decoration-terracotta aria-[current=page]:underline-offset-5"
+              className="flex h-9.5 items-center rounded-lg px-3 text-body font-medium text-foreground transition-colors hover:text-terracotta hover:underline hover:decoration-terracotta hover:underline-offset-5 aria-[current=page]:text-terracotta-accent aria-[current=page]:underline aria-[current=page]:decoration-terracotta aria-[current=page]:underline-offset-5"
             >
               {link.label}
             </NavLink>

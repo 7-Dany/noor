@@ -3,7 +3,7 @@ import type { ComponentProps } from "react"
 import { cn } from "cn"
 import { DeckProvider } from "@/components/custom/deck"
 
-import { MATERIALS } from "./data"
+import { MATERIALS } from "@/data/materials"
 import { MaterialDeck } from "./material-deck"
 import { MaterialReceipt } from "./material-receipt"
 
