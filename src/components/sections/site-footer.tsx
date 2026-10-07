@@ -18,13 +18,17 @@ const FOOTER_LINKS = [
 
 function SiteFooter({ className, ...props }: React.ComponentProps<"footer">) {
   return (
-    <footer data-slot="site-footer" className={cn("w-full", className)} {...props}>
+    <footer
+      data-slot="site-footer"
+      className={cn("w-full", className)}
+      {...props}
+    >
       <div className="mt-10 w-full border-t border-border/50 max-sm:mt-6">
         <div className="px-4 sm:px-10">
           <div className="mx-auto flex max-w-280 flex-wrap items-center justify-between gap-x-6 gap-y-4 py-6">
             <div className="flex items-center gap-2.5">
               <SunMoon className="size-7" />
-              <span className="font-serif text-[26px] font-medium text-terracotta-accent italic">
+              <span className="font-serif text-wordmark font-medium text-terracotta-accent italic">
                 Noor
               </span>
             </div>

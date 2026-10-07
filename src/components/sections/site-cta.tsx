@@ -40,7 +40,7 @@ function SunOrb({ className, ...props }: React.ComponentProps<"svg">) {
         cx={127}
         cy={129}
         r={62}
-        className="fill-[color-mix(in_oklab,var(--sun-disc)_70%,#b86b00)]"
+        className="fill-sun-shade"
       />
       <circle cx={120} cy={120} r={62} className="fill-(--sun-disc)" />
     </svg>
@@ -54,7 +54,7 @@ function MoonOrb({ className, ...props }: React.ComponentProps<"svg">) {
       aria-hidden="true"
       viewBox="0 0 240 240"
       className={cn(
-        "-rotate-40 scale-70 opacity-0 transition-swap! duration-900! ease-spring! motion-reduce:transition-none! dark:rotate-0 dark:scale-100 dark:opacity-100",
+        "scale-70 -rotate-40 opacity-0 transition-swap! duration-900! ease-spring! motion-reduce:transition-none! dark:scale-100 dark:rotate-0 dark:opacity-100",
         className
       )}
       {...props}
@@ -63,10 +63,10 @@ function MoonOrb({ className, ...props }: React.ComponentProps<"svg">) {
         cx={127}
         cy={129}
         r={62}
-        className="fill-[color-mix(in_oklab,var(--moon-disc)_75%,#000)]"
+        className="fill-moon-shade"
       />
       <circle cx={120} cy={120} r={62} className="fill-(--moon-disc)" />
-      <g className="fill-[color-mix(in_oklab,var(--moon-disc)_78%,#000)]">
+      <g className="fill-moon-crater">
         <circle cx={98} cy={98} r={11} />
         <circle cx={142} cy={140} r={15} />
         <circle cx={100} cy={142} r={7} />
@@ -82,7 +82,7 @@ function SiteCta({ className, ...props }: React.ComponentProps<"section">) {
     <section
       data-slot="site-cta"
       className={cn(
-        "relative mx-auto flex w-full max-w-280 flex-wrap items-center justify-between gap-6 overflow-hidden rounded-[calc(var(--radius)+6px)] bg-cta px-6 py-8 text-cta-foreground sm:px-10 sm:py-9",
+        "relative mx-auto flex w-full max-w-280 flex-wrap items-center justify-between gap-6 overflow-hidden rounded-band bg-cta px-6 py-8 text-cta-foreground sm:px-10 sm:py-9",
         className
       )}
       {...props}
@@ -90,7 +90,7 @@ function SiteCta({ className, ...props }: React.ComponentProps<"section">) {
       <SunOrb className="pointer-events-none absolute -top-27.5 -right-25 size-60 max-sm:-top-24 max-sm:-right-18 max-sm:size-52" />
       <MoonOrb className="pointer-events-none absolute -top-27.5 -right-25 size-60 max-sm:-top-24 max-sm:-right-18 max-sm:size-52" />
       <div className="relative max-sm:pr-20">
-        <h2 className="font-serif text-[clamp(1.6rem,3vw,2.1rem)] leading-[1.15] font-normal">
+        <h2 className="font-serif text-cta-title leading-cta-title font-normal">
           Ready for your next class?
         </h2>
         <p className="mt-1 opacity-85">

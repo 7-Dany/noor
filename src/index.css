@@ -94,6 +94,13 @@
      so it reads on the page and on every card tone. */
   --moon: oklch(0.88 0.022 72);
   --moon-disc: oklch(0.8 0.028 71);
+
+  /* Orb shading for the CTA band: the disc colour darkened. Declared on
+     :root so they follow the .dark override of --sun-disc / --moon-disc
+     (both classes sit on <html>). */
+  --sun-shade: color-mix(in oklab, var(--sun-disc) 70%, #b86b00);
+  --moon-shade: color-mix(in oklab, var(--moon-disc) 75%, #000);
+  --moon-crater: color-mix(in oklab, var(--moon-disc) 78%, #000);
 }
 
 /* Dark mode: deep warm charcoal. `d`/cookie flip `.dark` on <html> (see
@@ -172,6 +179,9 @@
   --color-sun-foreground: var(--sun-foreground);
   --color-sun-deep: var(--sun-deep);
   --color-moon: var(--moon);
+  --color-sun-shade: var(--sun-shade);
+  --color-moon-shade: var(--moon-shade);
+  --color-moon-crater: var(--moon-crater);
   --color-cta: var(--cta);
   --color-cta-foreground: var(--cta-foreground);
 
@@ -193,12 +203,19 @@
   --text-display: 2.75rem;
   --text-watermark: 11rem;
   --text-arabic: 46px;
+  --text-stat: 40px;
+  --text-wordmark: 26px;
+  --text-card-title: clamp(2rem, 3.4vw, 2.75rem);
+  --text-card-watermark: 150px;
+  --text-cta-title: clamp(1.6rem, 3vw, 2.1rem);
   --text-hero: clamp(2.375rem, 5.4vw, 3.75rem);
   --leading-hero: 1.08;
   --leading-lead: 1.65;
   --leading-arabic: 1.35;
   --leading-premium: 1.2;
   --leading-display: 1.1;
+  --leading-summary: 1.55;
+  --leading-cta-title: 1.15;
   --leading-copy: 1.6;
   --tracking-eyebrow: 0.12em;
   --container-hero: 52ch;
@@ -207,10 +224,14 @@
   --shadow-deck: 0 26px 50px
     color-mix(in oklab, var(--tone-to) 32%, transparent);
 
+  --shadow-card: 0 14px 26px -16px
+    color-mix(in oklab, var(--tone-to) 45%, transparent);
+
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --radius-band: calc(var(--radius) + 6px);
 
   /* Font stacks. The --font-* names below resolve the families from :root. */
   --font-sans: var(--font-dm-sans, ui-sans-serif, system-ui, sans-serif);
@@ -249,6 +270,14 @@
    side overhang visible (see hero-heading.tsx). */
 @utility slot-mask {
   clip-path: inset(0 -0.12em -0.22em -0.12em);
+}
+
+/* Tighter deck on narrow screens: smaller spread, tilt and zoom (see
+   material-stack.tsx). Use as `max-[900px]:deck-compact`. */
+@utility deck-compact {
+  --deck-spread: 6px;
+  --deck-tilt-step: 2deg;
+  --deck-zoom: 0.88;
 }
 
 /* Sun/moon swap: fades, rotates and scales at once (see sun-moon.tsx). */

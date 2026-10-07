@@ -21,7 +21,7 @@ function MaterialStack({ className, ...props }: ComponentProps<"section">) {
         {...props}
       >
         <MaterialReceipt className="order-2 -rotate-2 max-[900px]:scale-95 min-[901px]:absolute min-[901px]:top-0 min-[901px]:left-0 min-[901px]:h-117.5 min-[901px]:w-100 min-[901px]:-rotate-4" />
-        <MaterialDeck className="order-1 mt-9 mb-2 h-125 max-[900px]:-mb-3 max-[900px]:[--deck-spread:6px] max-[900px]:[--deck-tilt-step:2deg] max-[900px]:[--deck-zoom:.88] min-[901px]:absolute min-[901px]:top-0 min-[901px]:left-106 min-[901px]:m-0 min-[901px]:h-117.5 min-[901px]:w-106.25" />
+        <MaterialDeck className="order-1 mt-9 mb-2 h-125 max-[900px]:-mb-3 max-[900px]:deck-compact min-[901px]:absolute min-[901px]:top-0 min-[901px]:left-106 min-[901px]:m-0 min-[901px]:h-117.5 min-[901px]:w-106.25" />
       </section>
     </DeckProvider>
   )

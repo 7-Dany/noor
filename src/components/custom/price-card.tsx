@@ -144,7 +144,10 @@ function PriceCardTotal({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="price-card-total"
-      className={cn("flex flex-wrap items-end justify-between gap-x-4 gap-y-2", className)}
+      className={cn(
+        "flex flex-wrap items-end justify-between gap-x-4 gap-y-2",
+        className
+      )}
       {...props}
     />
   )

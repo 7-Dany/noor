@@ -24,7 +24,7 @@ import { cn } from "cn"
 
 // A tone is three CSS vars; add one line here + three vars in index.css.
 const materialCardVariants = cva(
-  "relative isolate flex min-h-100 flex-col overflow-hidden rounded-xl bg-linear-155 from-(--tone-from) to-(--tone-to) px-7 pt-5.5 pb-7 text-tone-foreground shadow-[0_14px_26px_-16px_color-mix(in_oklab,var(--tone-to)_45%,transparent)]",
+  "relative isolate flex min-h-100 flex-col overflow-hidden rounded-xl bg-linear-155 from-(--tone-from) to-(--tone-to) px-7 pt-5.5 pb-7 text-tone-foreground shadow-card",
   {
     variants: {
       tone: {
@@ -76,7 +76,7 @@ function MaterialCardWatermark({
       data-slot="material-card-watermark"
       aria-hidden="true"
       className={cn(
-        "pointer-events-none absolute right-6 -bottom-2.5 -z-10 font-arabic text-[150px] leading-none font-bold text-tone-foreground/15 select-none",
+        "pointer-events-none absolute right-6 -bottom-2.5 -z-10 font-arabic text-card-watermark leading-none font-bold text-tone-foreground/15 select-none",
         className
       )}
       {...props}
@@ -99,7 +99,7 @@ function MaterialCardTitle({ className, ...props }: ComponentProps<"h3">) {
     <h3
       data-slot="material-card-title"
       className={cn(
-        "mt-1.5 mb-3.5 font-serif text-[clamp(2rem,3.4vw,2.75rem)] leading-[1.1] font-medium italic",
+        "mt-1.5 mb-3.5 font-serif text-card-title leading-display font-medium italic",
         className
       )}
       {...props}
@@ -111,7 +111,7 @@ function MaterialCardSummary({ className, ...props }: ComponentProps<"p">) {
   return (
     <p
       data-slot="material-card-summary"
-      className={cn("max-w-lead leading-[1.55] opacity-92", className)}
+      className={cn("max-w-lead leading-summary opacity-92", className)}
       {...props}
     />
   )
@@ -147,7 +147,7 @@ function MaterialCardStat({
       )}
       {...props}
     >
-      <p className="font-serif text-[40px] leading-none">{value}</p>
+      <p className="font-serif text-stat leading-none">{value}</p>
       <p className="mt-1.5 font-mono text-micro tracking-eyebrow uppercase opacity-85">
         {label}
       </p>
