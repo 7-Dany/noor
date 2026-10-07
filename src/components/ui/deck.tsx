@@ -1,5 +1,3 @@
-"use client"
-
 import {
   createContext,
   use,
@@ -355,7 +353,7 @@ function DeckIndicator({
     <p
       data-slot="deck-indicator"
       className={cn(
-        "font-mono text-(length:--text-micro) tracking-widest uppercase opacity-85",
+        "font-mono text-micro tracking-widest uppercase opacity-85",
         className
       )}
       {...props}

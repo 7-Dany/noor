@@ -3,6 +3,7 @@ import { createCookieSessionStorage, type SessionStorage } from "react-router"
 import { ThemeStore, type ThemePreference } from "./theme-store"
 
 const THEME_COOKIE_NAME = "theme"
+const THEME_COOKIE_MAX_AGE = 60 * 60 * 24 * 365 // one year, in seconds
 
 /**
  * Server-side theme persistence. Owns the signed cookie: reads the stored
@@ -39,6 +40,7 @@ class ThemeSession {
         cookie: {
           name: THEME_COOKIE_NAME,
           path: "/",
+          maxAge: THEME_COOKIE_MAX_AGE,
           httpOnly: true,
           sameSite: "lax",
           secure: process.env.NODE_ENV === "production",

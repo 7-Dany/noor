@@ -109,10 +109,7 @@ function ReceiptGlyph({ className, ...props }: ComponentProps<"p">) {
   )
 }
 
-function ReceiptSpecimenBody({
-  className,
-  ...props
-}: ComponentProps<"div">) {
+function ReceiptSpecimenBody({ className, ...props }: ComponentProps<"div">) {
   return (
     <div
       data-slot="receipt-specimen-body"
@@ -122,10 +119,7 @@ function ReceiptSpecimenBody({
   )
 }
 
-function ReceiptSpecimenTitle({
-  className,
-  ...props
-}: ComponentProps<"p">) {
+function ReceiptSpecimenTitle({ className, ...props }: ComponentProps<"p">) {
   return (
     <p
       data-slot="receipt-specimen-title"
@@ -191,10 +185,7 @@ function ReceiptItem({ className, ...props }: ComponentProps<"li">) {
   )
 }
 
-function ReceiptItemValue({
-  className,
-  ...props
-}: ComponentProps<"span">) {
+function ReceiptItemValue({ className, ...props }: ComponentProps<"span">) {
   return (
     <span
       data-slot="receipt-item-value"
@@ -220,10 +211,7 @@ function ReceiptTotal({ className, ...props }: ComponentProps<"div">) {
   )
 }
 
-function ReceiptTotalLabel({
-  className,
-  ...props
-}: ComponentProps<"span">) {
+function ReceiptTotalLabel({ className, ...props }: ComponentProps<"span">) {
   return (
     <span
       data-slot="receipt-total-label"
@@ -236,10 +224,7 @@ function ReceiptTotalLabel({
   )
 }
 
-function ReceiptTotalValue({
-  className,
-  ...props
-}: ComponentProps<"span">) {
+function ReceiptTotalValue({ className, ...props }: ComponentProps<"span">) {
   return (
     <span
       data-slot="receipt-total-value"

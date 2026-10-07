@@ -3,8 +3,11 @@ export type ResolvedTheme = "light" | "dark"
 
 const SYSTEM_QUERY = "(prefers-color-scheme: dark)"
 
-/** Global shortcut that toggles the theme. Change to any key you want. */
-export const THEME_TOGGLE_HOTKEY = "d"
+/**
+ * Global shortcut that toggles the theme, as a physical key (KeyboardEvent.code)
+ * so it works on any keyboard layout, Arabic included.
+ */
+export const THEME_TOGGLE_HOTKEY = "KeyD"
 
 const VALID_PREFERENCES: ReadonlySet<string> = new Set([
   "light",
@@ -188,7 +191,7 @@ export class ThemeStore {
     if (isEditableTarget(event.target)) {
       return
     }
-    if (event.key.toLowerCase() !== THEME_TOGGLE_HOTKEY) {
+    if (event.code !== THEME_TOGGLE_HOTKEY) {
       return
     }
     this.toggle()

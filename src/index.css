@@ -7,6 +7,8 @@
 @import "@fontsource/dm-mono/500.css";
 @import "@fontsource/fraunces/400.css";
 @import "@fontsource/fraunces/400-italic.css";
+@import "@fontsource/fraunces/500.css";
+@import "@fontsource/fraunces/500-italic.css";
 @import "@fontsource/amiri/400.css";
 @import "@fontsource/amiri/700.css";
 @import "@fontsource/cairo/400.css";
@@ -203,8 +205,9 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
 
-  /* next/font variables are set in app/layout.tsx */
+  /* Font stacks. The --font-* names below resolve the families from :root. */
   --font-sans: var(--font-dm-sans, ui-sans-serif, system-ui, sans-serif);
+  --font-heading: var(--font-sans);
   --font-serif: var(--font-fraunces, ui-serif, Georgia, serif);
   --font-mono: var(--font-dm-mono, ui-monospace, monospace);
   --font-arabic: var(--font-amiri, "Noto Naskh Arabic", serif);

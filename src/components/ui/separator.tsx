@@ -1,5 +1,3 @@
-"use client"
-
 import { Separator as SeparatorPrimitive } from "@base-ui/react/separator"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "cn"

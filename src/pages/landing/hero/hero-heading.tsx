@@ -7,8 +7,9 @@ const WORDS = ["material", "slides", "lessons", "passages", "quizzes"]
  * paragraph. The receipt + deck stage is a separate component.
  */
 export function HeroHeading() {
-  const { index, entering, slotRef, currentRef, enteringRef } =
-    useCyclingWord(WORDS.length)
+  const { index, entering, slotRef, currentRef, enteringRef } = useCyclingWord(
+    WORDS.length
+  )
 
   return (
     <div data-slot="hero-heading" className="text-center">
@@ -18,10 +19,10 @@ export function HeroHeading() {
       <h1 className="mx-auto mt-4 max-w-none font-serif text-hero leading-hero">
         Teach with beautiful,
         <br />
-        ready-made{" "}
+        ready-made <span className="sr-only">{WORDS[0]}.</span>
         <span
           ref={slotRef}
-          aria-live="polite"
+          aria-hidden="true"
           className="relative inline-block border-b-2 border-dashed border-terracotta/45 slot-mask"
         >
           <em
@@ -33,7 +34,6 @@ export function HeroHeading() {
           {entering !== null && (
             <em
               ref={enteringRef}
-              aria-hidden="true"
               className="absolute top-0 left-0 inline-block font-serif whitespace-nowrap text-terracotta italic"
             >
               {WORDS[entering]}.

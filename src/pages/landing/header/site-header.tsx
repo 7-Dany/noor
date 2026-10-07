@@ -9,9 +9,13 @@ import {
   Tag01Icon,
 } from "@hugeicons/core-free-icons"
 
+import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Sheet,
+  SheetClose,
   SheetContent,
+  SheetTitle,
+  SheetTrigger,
 } from "@/components/ui/sheet"
 import { Wordmark } from "./wordmark"
 
@@ -54,79 +58,94 @@ export function SiteHeader() {
         <div className="ml-auto hidden items-center gap-2.5 md:flex">
           <a
             href="#pricing"
-            className="flex h-9.5 items-center rounded-full border border-border bg-card px-4 text-sm font-medium transition-colors hover:bg-muted"
+            className={buttonVariants({ variant: "outline", size: "pill" })}
           >
             Log in
           </a>
           <a
             href="#pricing"
-            className="flex h-9.5 items-center gap-1.5 rounded-full bg-primary px-4 text-sm font-medium text-primary-foreground transition-colors hover:opacity-90"
+            className={buttonVariants({ variant: "default", size: "pill" })}
           >
             Start free
             <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
           </a>
         </div>
         <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-          <button
-            type="button"
-            data-slot="site-header-menu"
-            aria-label="Open menu"
-            onClick={() => setMenuOpen(true)}
-            className="ml-auto grid size-9.5 place-items-center rounded-lg border border-border bg-card md:hidden"
+          <SheetTrigger
+            render={
+              <Button
+                variant="outline"
+                size="icon-lg"
+                aria-label="Open menu"
+                className="ml-auto md:hidden"
+              />
+            }
           >
             <HugeiconsIcon icon={Menu01Icon} size={20} />
-          </button>
+          </SheetTrigger>
           <SheetContent
             side="left"
             showCloseButton={false}
             className="w-full max-w-xs"
           >
+            <SheetTitle className="sr-only">Menu</SheetTitle>
             <div className="flex h-full flex-col bg-background px-4">
-            <div className="flex items-center justify-between py-3">
-              <Wordmark />
-              <button
-                type="button"
-                aria-label="Close menu"
-                onClick={closeMenu}
-                className="grid size-9 place-items-center rounded-lg border border-border bg-card transition-colors hover:bg-muted"
-              >
-                <HugeiconsIcon icon={Cancel01Icon} size={18} />
-              </button>
-            </div>
-            <nav aria-label="Menu" className="mt-4 grid gap-1">
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={closeMenu}
-                  className="flex h-12 items-center gap-3 rounded-xl px-3 text-body font-medium transition-colors hover:bg-card"
+              <div className="flex items-center justify-between py-3">
+                <Wordmark />
+                <SheetClose
+                  render={
+                    <Button
+                      variant="outline"
+                      size="icon-lg"
+                      aria-label="Close menu"
+                    />
+                  }
                 >
-                  <HugeiconsIcon
-                    icon={link.icon}
-                    size={20}
-                    className="text-muted-foreground"
-                  />
-                  {link.label}
+                  <HugeiconsIcon icon={Cancel01Icon} size={18} />
+                </SheetClose>
+              </div>
+              <nav aria-label="Menu" className="mt-4 grid gap-1">
+                {NAV_LINKS.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={closeMenu}
+                    className="flex h-12 items-center gap-3 rounded-xl px-3 text-body font-medium transition-colors hover:bg-card"
+                  >
+                    <HugeiconsIcon
+                      icon={link.icon}
+                      size={20}
+                      className="text-muted-foreground"
+                    />
+                    {link.label}
+                  </a>
+                ))}
+              </nav>
+              <div className="mt-auto grid gap-2.5 pb-4">
+                <a
+                  href="#pricing"
+                  onClick={closeMenu}
+                  className={buttonVariants({
+                    variant: "outline",
+                    size: "pill-lg",
+                  })}
+                >
+                  Log in
                 </a>
-              ))}
-            </nav>
-            <div className="mt-auto grid gap-2.5 pb-4">
-              <a
-                href="#pricing"
-                className="flex h-12 items-center justify-center rounded-full border border-border bg-card text-sm font-medium"
-              >
-                Log in
-              </a>
-              <a
-                href="#pricing"
-                className="flex h-12 items-center justify-center rounded-full bg-primary text-sm font-medium text-primary-foreground"
-              >
-                Start free
-              </a>
-              <p className="pt-2 text-center font-mono text-micro tracking-widest text-muted-foreground uppercase">
-                © 2026 Noor · Free for teachers
-              </p>
-            </div>
+                <a
+                  href="#pricing"
+                  onClick={closeMenu}
+                  className={buttonVariants({
+                    variant: "default",
+                    size: "pill-lg",
+                  })}
+                >
+                  Start free
+                </a>
+                <p className="pt-2 text-center font-mono text-micro tracking-widest text-muted-foreground uppercase">
+                  © {new Date().getFullYear()} Noor · Free for teachers
+                </p>
+              </div>
             </div>
           </SheetContent>
         </Sheet>

@@ -1,4 +1,4 @@
-import { Link } from "react-router"
+import { data, Link } from "react-router"
 
 import { buttonVariants } from "@/components/ui/button"
 import {
@@ -11,6 +11,11 @@ import {
 
 export function meta() {
   return [{ title: "Page not found" }]
+}
+
+// The splat route matches every unknown URL, so it must say 404 itself.
+export function loader() {
+  return data(null, { status: 404 })
 }
 
 export default function NotFound() {

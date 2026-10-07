@@ -1,5 +1,6 @@
 import { Fragment, type ComponentProps } from "react"
 
+import { Button } from "@/components/ui/button"
 import {
   DeckCard,
   DeckContent,
@@ -17,7 +18,7 @@ function MaterialCard({ material }: { material: Material }) {
     <DeckCard value={material.id}>
       <span
         aria-hidden="true"
-        className="pointer-events-none absolute right-2 bottom-20 -z-10 font-arabic text-watermark leading-none text-white/13 select-none"
+        className="pointer-events-none absolute right-2 bottom-20 -z-10 font-arabic text-watermark leading-none text-tone-foreground/13 select-none"
       >
         {material.watermark}
       </span>
@@ -43,14 +44,14 @@ function MaterialCard({ material }: { material: Material }) {
               {i > 0 && (
                 <span
                   aria-hidden="true"
-                  className="border-l border-dashed border-white/45"
+                  className="border-l border-dashed border-tone-foreground/45"
                 />
               )}
               <div>
                 <p className="font-serif text-display leading-none">
                   {stat.value}
                 </p>
-                <p className="mt-1.5 font-mono text-(length:--text-micro) tracking-eyebrow uppercase opacity-85">
+                <p className="mt-1.5 font-mono text-micro tracking-eyebrow uppercase opacity-85">
                   {stat.label}
                 </p>
               </div>
@@ -58,13 +59,13 @@ function MaterialCard({ material }: { material: Material }) {
           ))}
         </div>
         <div className="flex items-center justify-between">
-          <button
-            type="button"
-            disabled={material.disabled}
-            className="h-9 rounded-full bg-white px-4 text-sm font-medium text-(--tone) disabled:cursor-default disabled:opacity-60"
-          >
-            {material.cta}
-          </button>
+          {/* Wrapper keeps taps on a disabled (pointer-events-none) button
+              from flipping the card; see INTERACTIVE_SELECTOR in deck.tsx. */}
+          <div data-deck-interactive>
+            <Button variant="tone" size="pill" disabled={material.disabled}>
+              {material.cta}
+            </Button>
+          </div>
           <DeckControls>
             <DeckPrevious />
             <DeckNext />

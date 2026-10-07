@@ -8,7 +8,7 @@ import {
   ScrollRestoration,
   useRouteLoaderData,
 } from "react-router"
-import { AppProvider } from "@/context/app/app-provider"
+import { AppProvider, APP_DIRECTION } from "@/context/app/app-provider"
 import { themeSession } from "@/context/theme/theme-session.server"
 import "../index.css"
 import type { Route } from "./+types/root"
@@ -19,10 +19,14 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export function Layout({ children }: { children: ReactNode }) {
   const data = useRouteLoaderData<typeof loader>("root")
+  // Only resolved themes become a class; "system" is resolved by theme-init.js.
+  const themeClass =
+    data?.theme === "light" || data?.theme === "dark" ? data.theme : undefined
   return (
     <html
       lang="en"
-      className={data?.theme ?? undefined}
+      dir={APP_DIRECTION}
+      className={themeClass}
       suppressHydrationWarning
     >
       <head>

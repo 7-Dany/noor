@@ -1,5 +1,3 @@
-"use client"
-
 import { useEffect, useState, type ComponentProps } from "react"
 
 import { useDeck } from "@/components/ui/deck"
@@ -41,6 +39,11 @@ function useSettled<T>(value: T, ms = 150) {
   return { shown, swapping: value !== shown }
 }
 
+// Zero-pads to at least two digits (wider if the total needs it): "No. 03 of 12".
+function pad(value: number, total: number) {
+  return String(value).padStart(Math.max(2, String(total).length), "0")
+}
+
 // Prints the active deck card, so it must render inside <DeckProvider>.
 function MaterialReceipt(props: ComponentProps<"article">) {
   const { state, meta } = useDeck()
@@ -52,12 +55,13 @@ function MaterialReceipt(props: ComponentProps<"article">) {
     <Receipt tone={material.tone} {...props}>
       <div
         data-swapping={swapping ? "" : undefined}
-        className="flex flex-col transition duration-150 data-[swapping]:translate-y-1 data-[swapping]:opacity-0 motion-reduce:transition-none"
+        className="flex flex-col transition duration-150 data-swapping:translate-y-1 data-swapping:opacity-0 motion-reduce:transition-none"
       >
         <ReceiptHeader>
           <span>Contents · Free to teach</span>
           <span>
-            No. 0{meta.indexOf(shown) + 1} of 0{meta.count}
+            No. {pad(meta.indexOf(shown) + 1, meta.count)} of{" "}
+            {pad(meta.count, meta.count)}
           </span>
         </ReceiptHeader>
         <ReceiptTitle>{material.title}</ReceiptTitle>

@@ -1,21 +1,32 @@
-# React + TypeScript + Vite + shadcn/ui
+# Noor web
 
-This is a template for a new Vite project with React, TypeScript, and shadcn/ui.
+Landing site for Noor: free teaching material for Arabic & Quran.
 
-## Adding components
+Stack: React Router (SSR) · Vite · Tailwind v4 · shadcn/ui (Base UI) · Bun.
 
-To add components to your app, run the following command:
+## Setup
 
 ```bash
-npx shadcn@latest add button
+cp .env.example .env   # set SESSION_SECRET
+bun install
+bun run dev
 ```
 
-This will place the ui components in the `src/components` directory.
+## Scripts
 
-## Using components
+| Script              | Purpose                          |
+| ------------------- | -------------------------------- |
+| `bun run dev`       | Dev server                       |
+| `bun run build`     | Production build                 |
+| `bun run start`     | Serve the build                  |
+| `bun run lint`      | ESLint (includes design rules)   |
+| `bun run typecheck` | Route typegen + `tsc -b`         |
+| `bun run format`    | Prettier                         |
 
-To use the components in your app, import them as follows:
+## Conventions
 
-```tsx
-import { Button } from "@/components/ui/button"
-```
+- Design values live as tokens in `src/index.css`; app code uses no raw
+  colors, arbitrary values or inline styles (enforced by ESLint).
+- `src/components/ui` holds self-contained shadcn-style components. App code
+  composes them and never restyles them: add a variant instead.
+- Text direction is set once in `APP_DIRECTION` (`src/context/app`).
