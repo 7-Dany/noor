@@ -28,6 +28,7 @@ import {
 } from "@/components/ui/empty"
 import { getChapters } from "@/data/chapters"
 import { MATERIALS, type Material } from "@/data/materials"
+import { pad } from "@/lib/utils"
 
 // Same material card as the grid, full width and shorter, with no action.
 function MaterialDetailPage({ material }: { material: Material }) {
@@ -82,7 +83,15 @@ function MaterialDetailPage({ material }: { material: Material }) {
             {chapters.map((chapter, i) => (
               <Card key={chapter.id} tone={chapter.tone} pattern="chapter">
                 <CardHeader pattern="chapter">
-                  <span>Chapter {String(i + 1).padStart(2, "0")}</span>
+                  <span
+                    aria-hidden="true"
+                    className="font-serif text-3xl leading-none"
+                  >
+                    {pad(i + 1, chapters.length)}
+                  </span>
+                  <span className="sr-only">
+                    Chapter {i + 1} of {chapters.length}
+                  </span>
                 </CardHeader>
                 <CardWatermark pattern="chapter">{chapter.glyph}</CardWatermark>
                 <CardTitle pattern="chapter">{chapter.title}</CardTitle>
