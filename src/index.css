@@ -11,10 +11,8 @@
 @import "@fontsource/fraunces/500-italic.css";
 @import "@fontsource/amiri/400.css";
 @import "@fontsource/amiri/700.css";
-@import "@fontsource/cairo/400.css";
-@import "@fontsource/cairo/500.css";
-@import "@fontsource/cairo/600.css";
-@import "@fontsource/cairo/700.css";
+@import "@fontsource/scheherazade-new/400.css";
+@import "@fontsource/scheherazade-new/700.css";
 
 @custom-variant dark (&:is(.dark *));
 
@@ -23,10 +21,12 @@
 :root {
   --radius: 0.875rem;
 
-  --font-dm-sans: "DM Sans", "Cairo", ui-sans-serif, system-ui, sans-serif;
+  --font-dm-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
   --font-fraunces: "Fraunces", Georgia, serif;
   --font-dm-mono: "DM Mono", ui-monospace, monospace;
   --font-amiri: "Amiri", "Noto Naskh Arabic", serif;
+  /* Quranic display (deck + card glyphs); Amiri stays for lesson text. */
+  --font-scheherazade-new: "Scheherazade New", "Amiri", serif;
 
   /* Warm neutrals */
   --background: oklch(0.975 0.011 77);
@@ -204,7 +204,10 @@
   --text-stat: 40px;
   --text-wordmark: 26px;
   --text-card-title: clamp(2rem, 3.4vw, 2.75rem);
-  --text-card-watermark: 170px;
+  --text-card-watermark: 190px;
+  --text-card-watermark-lg: 240px;
+  --text-deck-watermark: 166px;
+  --text-chapter-watermark: 120px;
   --text-cta-title: clamp(1.6rem, 3vw, 2.1rem);
   --text-hero: clamp(2.375rem, 5.4vw, 3.75rem);
   /* Leading */
@@ -237,6 +240,7 @@
   --font-serif: var(--font-fraunces, ui-serif, Georgia, serif);
   --font-mono: var(--font-dm-mono, ui-monospace, monospace);
   --font-arabic: var(--font-amiri, "Noto Naskh Arabic", serif);
+  --font-quran: var(--font-scheherazade-new, "Amiri", serif);
 
   --ease-spring: cubic-bezier(0.34, 1.25, 0.5, 1);
 }

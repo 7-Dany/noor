@@ -101,7 +101,7 @@ function ReceiptGlyph({ className, ...props }: ComponentProps<"p">) {
       lang="ar"
       dir="rtl"
       className={cn(
-        "h-28 max-w-40 min-w-24 flex-none text-center font-arabic text-(length:--text-arabic) leading-28 whitespace-nowrap text-(--tone-text)",
+        "h-28 max-w-40 min-w-24 flex-none text-center font-quran text-(length:--text-arabic) leading-28 whitespace-nowrap text-(--tone-text)",
         className
       )}
       {...props}

@@ -5,8 +5,9 @@ import { cn } from "cn"
 /* Card: one shell for every card. Omit `tone` for the neutral shadcn
    surface (dashboard, dialogs); set it for a tone slip (materials,
    plans, deck). `pattern` picks the baked layout: "material" (catalog
-   card) or "price" (plan slip). "deck" is the swipe-stack frame: same
-   surface contract, pose arrives as --deck-* vars.
+   card), "chapter" (light surface, tone only as an accent) or "price"
+   (plan slip). "deck" is the swipe-stack frame: same surface contract,
+   pose arrives as --deck-* vars.
 
    All visual classes live in this file (generated-component rule), so
    app code passes structure only — no layout classes on Card slots:
@@ -22,7 +23,7 @@ import { cn } from "cn"
       </Card> */
 
 // A tone is three CSS vars; add one line here + three vars in index.css.
-const cardVariants = cva("relative flex flex-col rounded-xl", {
+const cardVariants = cva("group/card relative flex flex-col rounded-xl", {
   variants: {
     tone: {
       terracotta: "tone-terracotta",
@@ -32,7 +33,9 @@ const cardVariants = cva("relative flex flex-col rounded-xl", {
     },
     pattern: {
       material:
-        "isolate min-h-100 overflow-hidden bg-linear-155 from-(--tone-from) to-(--tone-to) px-7 pt-5.5 pb-7 text-tone-foreground shadow-card",
+        "isolate min-h-100 overflow-hidden bg-linear-155 from-(--tone-from) to-(--tone-to) px-7 pt-5.5 pb-7 text-tone-foreground shadow-card data-[size=sm]:min-h-0",
+      chapter:
+        "isolate min-h-44 overflow-hidden border bg-card px-5 pt-4.5 pb-5 text-card-foreground",
       price:
         "min-h-107.5 bg-linear-155 from-(--tone-from) to-(--tone-to) px-5 pt-4 pb-5.5 text-tone-foreground shadow-xl shadow-foreground/10 sm:px-6.5 lg:h-107.5 dark:shadow-black/30",
       deck: [
@@ -82,6 +85,7 @@ const cardHeaderVariants = cva(
       pattern: {
         material:
           "border-b border-dashed border-tone-foreground/40 pb-3 text-tiny",
+        chapter: "text-(length:--text-tiny) text-(--tone-text)",
         price:
           "mb-3 box-content h-5 border-b border-dashed border-tone-foreground/40 pb-2 text-(length:--text-micro) text-tone-foreground/80",
       },
@@ -108,6 +112,7 @@ const cardTitleVariants = cva("font-serif", {
     pattern: {
       material:
         "mt-1.5 mb-3.5 text-card-title leading-display font-medium italic",
+      chapter: "mt-2 text-2xl leading-tight font-medium",
       price: "text-3xl leading-9",
     },
   },
@@ -132,6 +137,10 @@ const cardDescriptionVariants = cva("", {
   variants: {
     pattern: {
       material: "max-w-lead leading-summary opacity-92",
+      // Narrower than material: lines stop before the watermark glyph.
+      deck: "max-w-[28ch] leading-summary text-pretty opacity-92",
+      chapter:
+        "mt-1.5 max-w-lead text-(length:--text-caption) leading-summary text-muted-foreground",
       price:
         "mb-3 text-(length:--text-caption) leading-5 text-tone-foreground/80 lg:truncate",
     },
@@ -180,6 +189,8 @@ const cardFooterVariants = cva("flex", {
   variants: {
     pattern: {
       material: "mt-4.5",
+      chapter:
+        "mt-auto pt-5 font-mono text-(length:--text-tiny) tracking-eyebrow text-muted-foreground uppercase",
       price: "mt-auto flex-col gap-3",
     },
   },
@@ -201,19 +212,37 @@ function CardFooter({
   )
 }
 
-// One faint glyph behind the content, bleeding off the bottom edge.
-// Size uses text-(length:…) on purpose: a bare text-* token shares
-// tailwind-merge's group with the text color below and gets dropped,
-// leaving an inherited-size (invisible) glyph.
-function CardWatermark({ className, ...props }: React.ComponentProps<"span">) {
+// One faint glyph behind the content, set in Scheherazade New Bold.
+// Placement and size ride the `pattern` variant below. Size uses
+// text-(length:…) on purpose: a bare text-* token shares tailwind-merge's
+// group with the text color below and gets dropped, leaving an
+// inherited-size (invisible) glyph.
+const cardWatermarkVariants = cva(
+  "pointer-events-none absolute -z-10 font-quran leading-none font-bold select-none",
+  {
+    variants: {
+      pattern: {
+        material:
+          "right-3.75 -bottom-2 text-(length:--text-card-watermark) text-tone-foreground/15 group-data-[size=sm]/card:right-6 group-data-[size=sm]/card:bottom-5 group-data-[size=sm]/card:text-(length:--text-card-watermark-lg)",
+        deck: "right-3.75 bottom-12 text-(length:--text-deck-watermark) text-tone-foreground/15",
+        chapter:
+          "top-[calc(50%_-_14px)] right-4.75 -translate-y-1/2 text-(length:--text-chapter-watermark) text-(--tone-text)/15",
+      },
+    },
+    defaultVariants: { pattern: "material" },
+  }
+)
+
+function CardWatermark({
+  className,
+  pattern,
+  ...props
+}: React.ComponentProps<"span"> & VariantProps<typeof cardWatermarkVariants>) {
   return (
     <span
       data-slot="card-watermark"
       aria-hidden="true"
-      className={cn(
-        "pointer-events-none absolute right-6 -bottom-1 -z-10 font-arabic text-(length:--text-card-watermark) leading-none font-bold text-tone-foreground/15 select-none",
-        className
-      )}
+      className={cn(cardWatermarkVariants({ pattern }), className)}
       {...props}
     />
   )

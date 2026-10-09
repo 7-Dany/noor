@@ -11,6 +11,7 @@ import {
   CardStat,
   CardStats,
   CardTitle,
+  CardWatermark,
 } from "@/components/ui/card"
 import {
   DeckCard,
@@ -87,24 +88,17 @@ function Stack({
 function StackCard({ material }: { material: Material }) {
   return (
     <DeckCard value={material.id} tone={material.tone}>
-      <span
-        aria-hidden="true"
-        className="pointer-events-none absolute right-2 bottom-20 -z-10 font-arabic text-watermark leading-none text-tone-foreground/13 select-none"
-      >
-        {material.watermark}
-      </span>
+      <CardWatermark pattern="deck">{material.watermark}</CardWatermark>
       <SunMoon className="absolute top-7 right-6 size-18" />
-      <div className="flex flex-col gap-10">
+      <div className="flex flex-col gap-4">
         <DeckIndicator value={material.id}>Material</DeckIndicator>
         <div>
           <CardNote>{material.note}</CardNote>
           <CardTitle pattern="material">{material.title}.</CardTitle>
-          <CardDescription pattern="material">
-            {material.summary}
-          </CardDescription>
+          <CardDescription pattern="deck">{material.summary}</CardDescription>
         </div>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="absolute inset-x-6.5 bottom-6 flex flex-col gap-4">
         <CardStats>
           {material.stats.map((stat) => (
             <CardStat key={stat.label} value={stat.value} label={stat.label} />
