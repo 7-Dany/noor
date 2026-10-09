@@ -44,11 +44,34 @@ export function useCyclingWord(count: number) {
   const enteringRef = useRef<HTMLElement>(null)
   const busyRef = useRef(false)
   const indexRef = useRef(0)
+  // Word widths per ordered pair, measured once then reused: measuring
+  // forces a sync layout, so doing it every cycle janks the page.
+  const widthsRef = useRef(new Map<string, [number, number]>())
 
   // Ref mirror of the committed index, for the interval.
   useEffect(() => {
     indexRef.current = index
-  })
+  }, [index])
+
+  // Font loads change widths; drop the cache when they settle.
+  useEffect(() => {
+    let live = true
+    document.fonts?.ready
+      .then(() => {
+        if (live) widthsRef.current.clear()
+      })
+      .catch(() => {})
+    return () => {
+      live = false
+    }
+  }, [])
+
+  // Clamp() sizes track the viewport; stale widths mistween the slot.
+  useEffect(() => {
+    const onResize = () => widthsRef.current.clear()
+    window.addEventListener("resize", onResize)
+    return () => window.removeEventListener("resize", onResize)
+  }, [])
 
   const commit = useCallback((next: number) => {
     setIndex(next)
@@ -89,8 +112,16 @@ export function useCyclingWord(count: number) {
       [{ transform: "translateY(100%)" }, { transform: "translateY(0)" }],
       options
     )
-    const w0 = old.getBoundingClientRect().width
-    const w1 = next.getBoundingClientRect().width
+    const w0w1 = widthsRef.current.get(`${indexRef.current}->${entering}`)
+    let w0: number
+    let w1: number
+    if (w0w1) {
+      ;[w0, w1] = w0w1
+    } else {
+      w0 = old.getBoundingClientRect().width
+      w1 = next.getBoundingClientRect().width
+      widthsRef.current.set(`${indexRef.current}->${entering}`, [w0, w1])
+    }
     const widen = slot.animate(
       [{ width: `${w0}px` }, { width: `${w1}px` }],
       options

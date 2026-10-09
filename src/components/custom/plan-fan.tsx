@@ -2,7 +2,7 @@ import type { ComponentProps } from "react"
 import { cva, type VariantProps } from "class-variance-authority"
 
 import { cn } from "cn"
-import { SunMoon } from "@/components/icons/sun-moon"
+import { SunMoon } from "@/components/icons"
 
 /* PlanFan: two plans fanned from the middle. From lg, hover or focus spreads
    them apart and reveals the emblem behind; below lg they stack in a grid.

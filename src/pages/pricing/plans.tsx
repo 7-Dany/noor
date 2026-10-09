@@ -1,22 +1,21 @@
 import { Link } from "react-router"
 
 import { buttonVariants } from "@/components/ui/button"
-import { Barcode } from "@/components/icons/barcode"
-import { SunMoon } from "@/components/icons/sun-moon"
+import { Barcode, SunMoon } from "@/components/icons"
 import {
-  PriceCard,
-  PriceCardAmount,
-  PriceCardDescription,
-  PriceCardFeature,
-  PriceCardFeatures,
-  PriceCardFooter,
-  PriceCardHeader,
-  PriceCardLabel,
-  PriceCardTitle,
-  PriceCardTotal,
-  PriceCardUnit,
-  PriceCardValue,
-} from "@/components/custom/price-card"
+  Card,
+  CardAmount,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardLabel,
+  CardRow,
+  CardRows,
+  CardTitle,
+  CardTotal,
+  CardUnit,
+  CardValue,
+} from "@/components/ui/card"
 
 import {
   PlanFan,
@@ -27,8 +26,8 @@ import { PLANS, type Plan } from "./data"
 
 function PlanCard({ plan, index }: { plan: Plan; index: number }) {
   return (
-    <PriceCard tone={plan.tone} className="max-lg:h-full">
-      <PriceCardHeader>
+    <Card tone={plan.tone} pattern="price">
+      <CardHeader pattern="price">
         <span>
           Plan {index + 1} of {PLANS.length}
         </span>
@@ -37,30 +36,27 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
         ) : (
           <SunMoon className="size-5" />
         )}
-      </PriceCardHeader>
-      <PriceCardTitle>{plan.title}</PriceCardTitle>
-      <PriceCardDescription>{plan.description}</PriceCardDescription>
-      <PriceCardFeatures>
+      </CardHeader>
+      <CardTitle pattern="price">{plan.title}</CardTitle>
+      <CardDescription pattern="price">{plan.description}</CardDescription>
+      <CardRows>
         {plan.features.map((feature, i) => (
-          <PriceCardFeature
-            key={feature}
-            value={String(i + 1).padStart(2, "0")}
-          >
+          <CardRow key={feature} value={String(i + 1).padStart(2, "0")}>
             {feature}
-          </PriceCardFeature>
+          </CardRow>
         ))}
-      </PriceCardFeatures>
-      <PriceCardFooter>
-        <PriceCardTotal>
-          <PriceCardAmount>
-            <PriceCardLabel>Total</PriceCardLabel>
-            <PriceCardValue>
+      </CardRows>
+      <CardFooter pattern="price">
+        <CardTotal>
+          <CardAmount>
+            <CardLabel>Total</CardLabel>
+            <CardValue>
               {plan.price}
-              {plan.unit ? <PriceCardUnit>{plan.unit}</PriceCardUnit> : null}
-            </PriceCardValue>
-          </PriceCardAmount>
+              {plan.unit ? <CardUnit>{plan.unit}</CardUnit> : null}
+            </CardValue>
+          </CardAmount>
           <Barcode className="mb-1 text-tone-foreground" />
-        </PriceCardTotal>
+        </CardTotal>
         {/* No checkout yet, so both plans go to signup. */}
         <Link
           to="/signup"
@@ -72,12 +68,11 @@ function PlanCard({ plan, index }: { plan: Plan; index: number }) {
         >
           {plan.cta}
         </Link>
-      </PriceCardFooter>
-    </PriceCard>
+      </CardFooter>
+    </Card>
   )
 }
 
-// Free sits on the start side, Premium on the end side.
 const SIDES = ["start", "end"] as const
 
 function Plans() {

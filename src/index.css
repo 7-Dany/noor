@@ -52,12 +52,13 @@
   --sun: oklch(0.89 0.103 90);
   --sun-foreground: oklch(0.276 0.014 73);
   --sun-deep: oklch(0.806 0.147 83);
-  /* CTA band: sun in both modes (matches the mockup screenshots). */
+  --sun-disc: oklch(0.806 0.148 83);
+
   --cta: var(--sun);
   --cta-foreground: var(--sun-foreground);
 
-  /* Tones: one flat colour plus a gradient pair per tone.
-     Consumed through the `tone` variant on Deck and Receipt. */
+  /* Tones: one flat colour plus a gradient pair per tone, consumed
+     through `tone` on Card (the `tone-*` utilities below). */
   --tone-foreground: oklch(1 0 0);
   --terracotta: oklch(0.535 0.159 38);
   --terracotta-from: oklch(0.682 0.147 48);
@@ -87,8 +88,6 @@
   --receipt-pad: calc(var(--spacing) * 6);
   --receipt-rule: 1.375rem;
   --receipt-rulec: color-mix(in oklab, var(--foreground) 9%, transparent);
-
-  --sun-disc: oklch(0.806 0.148 83);
 
   /* Moon (shown instead of the sun in dark mode): ink hue and chroma, lifted
      so it reads on the page and on every card tone. */
@@ -132,8 +131,6 @@
 
   --sun: oklch(0.84 0.09 90);
   --sun-foreground: oklch(0.2 0.01 70);
-  --cta: var(--sun);
-  --cta-foreground: var(--sun-foreground);
   --sun-deep: oklch(0.76 0.13 83);
   --sun-disc: oklch(0.76 0.13 83);
 
@@ -178,7 +175,9 @@
   --color-sun: var(--sun);
   --color-sun-foreground: var(--sun-foreground);
   --color-sun-deep: var(--sun-deep);
+  --color-sun-disc: var(--sun-disc);
   --color-moon: var(--moon);
+  --color-moon-disc: var(--moon-disc);
   --color-sun-shade: var(--sun-shade);
   --color-moon-shade: var(--moon-shade);
   --color-moon-crater: var(--moon-crater);
@@ -193,30 +192,29 @@
   --color-rose: var(--rose);
   --color-ink: var(--ink);
 
-  /* Type scale */
+  /* Type scale: font sizes */
   --text-micro: 10px;
   --text-tiny: 11px;
   --text-caption: 13px;
   --text-body: 15px;
   --text-premium: 22px;
-  --text-lead: 1rem;
   --text-display: 2.75rem;
   --text-watermark: 11rem;
   --text-arabic: 46px;
   --text-stat: 40px;
   --text-wordmark: 26px;
   --text-card-title: clamp(2rem, 3.4vw, 2.75rem);
-  --text-card-watermark: 150px;
+  --text-card-watermark: 170px;
   --text-cta-title: clamp(1.6rem, 3vw, 2.1rem);
   --text-hero: clamp(2.375rem, 5.4vw, 3.75rem);
+  /* Leading */
   --leading-hero: 1.08;
   --leading-lead: 1.65;
-  --leading-arabic: 1.35;
-  --leading-premium: 1.2;
   --leading-display: 1.1;
   --leading-summary: 1.55;
   --leading-cta-title: 1.15;
   --leading-copy: 1.6;
+  /* Tracking, containers */
   --tracking-eyebrow: 0.12em;
   --container-hero: 52ch;
   --container-lead: 36ch;
@@ -239,7 +237,6 @@
   --font-serif: var(--font-fraunces, ui-serif, Georgia, serif);
   --font-mono: var(--font-dm-mono, ui-monospace, monospace);
   --font-arabic: var(--font-amiri, "Noto Naskh Arabic", serif);
-  --font-quran: var(--font-arabic);
 
   --ease-spring: cubic-bezier(0.34, 1.25, 0.5, 1);
 }
@@ -267,13 +264,13 @@
 }
 
 /* Word-cycle slot mask: clips sliding words top/bottom, keeps italic
-   side overhang visible (see hero-heading.tsx). */
+   side overhang visible (see landing/heading.tsx). */
 @utility slot-mask {
   clip-path: inset(0 -0.12em -0.22em -0.12em);
 }
 
 /* Tighter deck on narrow screens: smaller spread, tilt and zoom (see
-   material-stack.tsx). Use as `max-[900px]:deck-compact`. */
+   stack.tsx). Use as `max-[900px]:deck-compact`. */
 @utility deck-compact {
   --deck-spread: 6px;
   --deck-tilt-step: 2deg;
@@ -288,7 +285,7 @@
 /* Tone treatments: wire the three gradient vars plus both flats. Surfaces
    read --tone-from/--tone-to for gradients; text accents read --tone-text,
    which tracks --tone in light mode and lifts for contrast in dark mode.
-   Consumed through the `tone` variant on Deck and Receipt. */
+   Consumed through `tone` on Card. */
 @utility tone-terracotta {
   --tone-from: var(--terracotta-from);
   --tone-to: var(--terracotta-to);

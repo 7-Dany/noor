@@ -1,10 +1,8 @@
-import type { VariantProps } from "class-variance-authority"
-
-import type { priceCardVariants } from "@/components/custom/price-card"
+import type { Tone } from "@/components/ui/card"
 
 export type Plan = {
   id: string
-  tone: NonNullable<VariantProps<typeof priceCardVariants>["tone"]>
+  tone: Tone
   title: string
   kicker?: string // omit to show the SunMoon mark instead
   description: string

@@ -1,6 +1,7 @@
 import {
   createContext,
   use,
+  useCallback,
   useEffect,
   useMemo,
   useReducer,
@@ -12,19 +13,21 @@ import {
   type ReactNode,
   type SyntheticEvent,
 } from "react"
-import { cva, type VariantProps } from "class-variance-authority"
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons"
 
 import { cn } from "cn"
+import { Card, type Tone } from "@/components/ui/card"
 import { HugeiconsIcon } from "@hugeicons/react"
 
 /* Deck: stacked cards, one on top. Plain HTML only, no outside slots. */
 
 // Leave animation length (ms); mirrored as --deck-leave-ms per card.
 const LEAVE_MS = 240
+
 // Drag (px) that counts as a swipe; movement below this counts as a tap.
 const SWIPE_THRESHOLD_PX = 40
 const TAP_SLOP_PX = 6
+
 // Taps here never advance the deck. Disabled buttons swallow pointer
 // events, so they are matched by selector instead of defaultPrevented.
 const INTERACTIVE_SELECTOR = "button, a, [data-deck-interactive]"
@@ -37,32 +40,7 @@ const TILT_DEG = 4 // top-card rotation
 const TILT_STEP_DEG = 2.5 // extra rotation per card behind
 const SHRINK_STEP = 0.035 // scale lost per card
 
-// Card look. A tone is three CSS vars; add one line + three vars in index.css.
-const deckCardVariants = cva(
-  [
-    "absolute inset-0 flex cursor-grab flex-col justify-between gap-4 rounded-xl bg-linear-160 from-(--tone-from) to-(--tone-to) px-6.5 py-6 text-tone-foreground shadow-deck dark:shadow-black/40",
-    "before:absolute before:inset-x-6 before:top-3.5 before:border-t before:border-dashed before:border-tone-foreground/40",
-    "z-(--deck-z) translate-x-(--deck-x) translate-y-(--deck-y) scale-(--deck-scale) rotate-(--deck-rotate)",
-    "transition duration-700 ease-spring motion-reduce:transition-none",
-    // Top card flies off before dropping to the back.
-    "data-[leaving]:-translate-x-9/10 data-[leaving]:translate-y-4 data-[leaving]:-rotate-12 data-[leaving]:opacity-0 data-[leaving]:duration-(--deck-leave-ms) data-[leaving]:ease-in",
-  ],
-  {
-    variants: {
-      tone: {
-        terracotta: "tone-terracotta",
-        blue: "tone-blue",
-        rose: "tone-rose",
-        ink: "tone-ink",
-      },
-    },
-    defaultVariants: {
-      tone: "terracotta",
-    },
-  }
-)
-
-type DeckTone = NonNullable<VariantProps<typeof deckCardVariants>["tone"]>
+type DeckTone = Tone
 
 type DeckItem = { id: string; tone: DeckTone }
 
@@ -86,12 +64,29 @@ interface DeckMeta {
   positionOf: (id: string) => number // 0 = on top, 1 = next down, …
 }
 
-interface DeckContextValue {
+// Split so swipes (state) never re-render pure controls (actions).
+const DeckStateContext = createContext<{
   state: DeckState
-  actions: DeckActions
   meta: DeckMeta
+} | null>(null)
+
+const DeckActionsContext = createContext<{
+  actions: DeckActions
+} | null>(null)
+
+// Must be used inside <Deck>.
+function useDeckState() {
+  const context = use(DeckStateContext)
+  if (!context) throw new Error("useDeckState must be used within <Deck>.")
+  return context
 }
 
+// Must be used inside <Deck>.
+function useDeckActions() {
+  const context = use(DeckActionsContext)
+  if (!context) throw new Error("useDeckActions must be used within <Deck>.")
+  return context
+}
 // Minimal reducer state; everything else is derived.
 interface DeckMachine {
   activeId: string
@@ -144,15 +139,6 @@ function deckReducer(state: DeckMachine, action: DeckAction): DeckMachine {
   }
 }
 
-const DeckContext = createContext<DeckContextValue | null>(null)
-
-// Must be used inside <Deck>.
-function useDeck() {
-  const context = use(DeckContext)
-  if (!context) throw new Error("useDeck must be used within <Deck>.")
-  return context
-}
-
 type DeckProviderProps = {
   items: readonly DeckItem[] // stable reference (module const or memoised)
   defaultId?: string
@@ -178,7 +164,7 @@ function DeckProvider({ items, defaultId, children }: DeckProviderProps) {
     return () => window.clearTimeout(timer)
   }, [machine.leavingId, ids])
 
-  const value = useMemo<DeckContextValue>(() => {
+  const stateValue = useMemo(() => {
     const count = ids.length
     const activeIndex = Math.max(0, ids.indexOf(machine.activeId))
     const indexOf = (id: string) => ids.indexOf(id)
@@ -190,20 +176,31 @@ function DeckProvider({ items, defaultId, children }: DeckProviderProps) {
         activeId: ids[activeIndex],
         leavingId: machine.leavingId,
       },
-      actions: {
-        next: () => dispatch({ type: "START_NEXT" }),
-        previous: () => dispatch({ type: "PREVIOUS", ids }),
-        select: (id) => dispatch({ type: "SELECT", id, ids }),
-      },
       meta: {
         count,
         indexOf,
-        positionOf: (id) => (indexOf(id) - activeIndex + count) % count,
+        positionOf: (id: string) => (indexOf(id) - activeIndex + count) % count,
       },
     }
   }, [items, ids, machine])
 
-  return <DeckContext value={value}>{children}</DeckContext>
+  // Stable across swipes: dispatch never changes, ids only with `items`.
+  const actionsValue = useMemo(
+    () => ({
+      actions: {
+        next: () => dispatch({ type: "START_NEXT" }),
+        previous: () => dispatch({ type: "PREVIOUS", ids }),
+        select: (id: string) => dispatch({ type: "SELECT", id, ids }),
+      },
+    }),
+    [ids]
+  )
+
+  return (
+    <DeckStateContext value={stateValue}>
+      <DeckActionsContext value={actionsValue}>{children}</DeckActionsContext>
+    </DeckStateContext>
+  )
 }
 
 // Consumer handler runs first; ours is skipped on preventDefault().
@@ -217,13 +214,14 @@ function composeHandlers<E extends SyntheticEvent>(
   }
 }
 
-// Keyboard + pointer behavior for the deck surface.
+// Keyboard + pointer behavior for the deck surface. Memoised on `actions`
+// (stable across swipes) so consumers never rebind it mid-gesture.
 function useDeckGestures() {
-  const { actions } = useDeck()
+  const { actions } = useDeckActions()
   const startX = useRef<number | null>(null)
 
-  return {
-    onKeyDown(event: KeyboardEvent) {
+  const onKeyDown = useCallback(
+    (event: KeyboardEvent) => {
       if (event.key === "ArrowRight") {
         event.preventDefault()
         actions.next()
@@ -232,10 +230,13 @@ function useDeckGestures() {
         actions.previous()
       }
     },
-    onPointerDown(event: PointerEvent) {
-      startX.current = event.clientX
-    },
-    onPointerUp(event: PointerEvent) {
+    [actions]
+  )
+  const onPointerDown = useCallback((event: PointerEvent) => {
+    startX.current = event.clientX
+  }, [])
+  const onPointerUp = useCallback(
+    (event: PointerEvent) => {
       if (startX.current === null) return
       const dx = event.clientX - startX.current
       startX.current = null
@@ -248,10 +249,16 @@ function useDeckGestures() {
       )
         actions.next()
     },
-    onPointerCancel() {
-      startX.current = null
-    },
-  }
+    [actions]
+  )
+  const onPointerCancel = useCallback(() => {
+    startX.current = null
+  }, [])
+
+  return useMemo(
+    () => ({ onKeyDown, onPointerDown, onPointerUp, onPointerCancel }),
+    [onKeyDown, onPointerDown, onPointerUp, onPointerCancel]
+  )
 }
 
 type DeckProps = ComponentProps<"div"> & Omit<DeckProviderProps, "children">
@@ -300,24 +307,29 @@ function DeckContent({
   )
 }
 
-// One card. Pose arrives as --deck-* vars; tone comes from deck `items`.
+// One card: the Card swipe-stack frame. Pose arrives as --deck-* vars;
+// `tone` overrides the tone from deck `items` (prefer the prop: it keeps
+// data from depending on this file).
 function DeckCard({
   value,
+  tone,
   className,
   style,
   ...props
-}: ComponentProps<"div"> & { value: string }) {
-  const { state, meta } = useDeck()
-  const item = state.items[meta.indexOf(value)]
-  if (!item) {
+}: ComponentProps<"article"> & { value: string; tone?: DeckTone }) {
+  const { state, meta } = useDeckState()
+  const index = meta.indexOf(value)
+  if (index === -1) {
     throw new Error(`<DeckCard value="${value}"> is not in the deck's items.`)
   }
+  const item = state.items[index]
   const position = meta.positionOf(value)
   const isActive = position === 0
 
   return (
-    <div
-      data-slot="deck-card"
+    <Card
+      tone={tone ?? item.tone}
+      pattern="deck"
       data-position={position}
       data-leaving={state.leavingId === value ? "" : undefined}
       role="group"
@@ -335,7 +347,7 @@ function DeckCard({
           ...style,
         } as CSSProperties
       }
-      className={cn(deckCardVariants({ tone: item.tone }), className)}
+      className={className}
       {...props}
     />
   )
@@ -348,7 +360,7 @@ function DeckIndicator({
   children,
   ...props
 }: ComponentProps<"p"> & { value: string }) {
-  const { meta } = useDeck()
+  const { meta } = useDeckState()
 
   return (
     <p
@@ -398,7 +410,7 @@ function DeckPrevious({
   onClick,
   ...props
 }: ComponentProps<"button">) {
-  const { actions } = useDeck()
+  const { actions } = useDeckActions()
 
   return (
     <DeckControl
@@ -417,7 +429,7 @@ function DeckNext({
   onClick,
   ...props
 }: ComponentProps<"button">) {
-  const { actions } = useDeck()
+  const { actions } = useDeckActions()
 
   return (
     <DeckControl
@@ -440,9 +452,8 @@ export {
   DeckControls,
   DeckPrevious,
   DeckNext,
-  deckCardVariants,
-  useDeck,
+  useDeckState,
+  useDeckActions,
   type DeckItem,
   type DeckTone,
-  type DeckContextValue,
 }

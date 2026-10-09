@@ -1,6 +1,4 @@
-import { PricingHeading } from "@/pages/pricing/pricing-heading"
-import { Plans } from "@/pages/pricing/plans"
-import { PricingFaq } from "@/pages/pricing/pricing-faq"
+import { PricingPage } from "@/pages/pricing/page"
 
 export function meta() {
   return [
@@ -14,11 +12,5 @@ export function meta() {
 }
 
 export default function Pricing() {
-  return (
-    <main className="px-4 pt-12 pb-20 sm:px-10 sm:pt-14">
-      <PricingHeading />
-      <Plans />
-      <PricingFaq />
-    </main>
-  )
+  return <PricingPage />
 }

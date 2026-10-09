@@ -15,7 +15,7 @@ function Sun({ className, ...props }: ComponentProps<"svg">) {
     >
       <g strokeWidth="1.837" className="stroke-current">
         <path
-          className="fill-(--sun-disc)"
+          className="fill-sun-disc"
           d="M24.5 33.074a8.575 8.575 0 1 0 0-17.149 8.575 8.575 0 0 0 0 17.15Z"
         />
         <path

@@ -1,14 +1,7 @@
 import { Link } from "react-router"
 
 import { cn } from "cn"
-import { SunMoon } from "@/components/icons/sun-moon"
-
-/* SiteFooter: brand lockup and page nav on one row, then the copyright line
-   as its own slim section at the very bottom. Both sections run the full
-   width of the page (the divider lines are edge to edge); their content is
-   inset like the page <main> (px-4 / sm:px-10, max-w-280) so it lines up
-   with the CTA band above. The lockup is static on purpose: unlike the
-   header Wordmark, the footer carries no theme toggle. */
+import { SunMoon } from "@/components/icons"
 
 const FOOTER_LINKS = [
   { to: "/materials", label: "Materials" },
@@ -16,13 +9,11 @@ const FOOTER_LINKS = [
   { to: "/login", label: "Log in" },
 ] as const
 
-function SiteFooter({ className, ...props }: React.ComponentProps<"footer">) {
+const YEAR = new Date().getFullYear()
+
+function Footer({ className, ...props }: React.ComponentProps<"footer">) {
   return (
-    <footer
-      data-slot="site-footer"
-      className={cn("w-full", className)}
-      {...props}
-    >
+    <footer data-slot="footer" className={cn("w-full", className)} {...props}>
       <div className="mt-10 w-full border-t border-border/50 max-sm:mt-6">
         <div className="px-4 sm:px-10">
           <div className="mx-auto flex max-w-280 flex-wrap items-center justify-between gap-x-6 gap-y-4 py-6">
@@ -46,12 +37,12 @@ function SiteFooter({ className, ...props }: React.ComponentProps<"footer">) {
         </div>
       </div>
       <div
-        data-slot="site-copyright"
+        data-slot="footer-copyright"
         className="w-full border-t border-border/50"
       >
         <div className="px-4 sm:px-10">
           <p className="mx-auto max-w-280 py-3 text-center font-mono text-tiny tracking-eyebrow text-muted-foreground uppercase">
-            © {new Date().getFullYear()} Noor · Free for teachers
+            © {YEAR} Noor · Free for teachers
           </p>
         </div>
       </div>
@@ -59,4 +50,4 @@ function SiteFooter({ className, ...props }: React.ComponentProps<"footer">) {
   )
 }
 
-export { SiteFooter }
+export { Footer }

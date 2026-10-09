@@ -1,6 +1,4 @@
-import { SiteCta } from "@/components/sections/site-cta"
-import { MaterialGrid } from "@/pages/materials/material-grid"
-import { MaterialsHeading } from "@/pages/materials/materials-heading"
+import { MaterialsPage } from "@/pages/materials/page"
 
 export function meta() {
   return [
@@ -14,11 +12,5 @@ export function meta() {
 }
 
 export default function Materials() {
-  return (
-    <main className="overflow-x-clip px-4 pt-12 pb-18 sm:px-10 sm:pt-14">
-      <MaterialsHeading />
-      <MaterialGrid />
-      <SiteCta className="mt-18" />
-    </main>
-  )
+  return <MaterialsPage />
 }

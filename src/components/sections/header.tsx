@@ -27,25 +27,22 @@ const NAV_LINKS = [
   { to: "/pricing", label: "Pricing", icon: Tag01Icon },
 ] as const
 
-/**
- * Site header. Sticky translucent bar: brand left, quiet page nav with
- * terracotta hover and active state, outline Log in + solid Start free
- * pills right. Mobile collapses to a burger opening a sheet menu.
- */
-export function SiteHeader() {
+const YEAR = new Date().getFullYear()
+
+export function Header() {
   const [menuOpen, setMenuOpen] = useState(false)
   const closeMenu = () => setMenuOpen(false)
   return (
     <header
-      data-slot="site-header"
+      data-slot="header"
       className="sticky top-0 z-40 border-b border-border/50 bg-background/88 backdrop-blur-md"
     >
-      <div className="mx-auto flex max-w-295 items-center gap-7 px-4 py-2.5 sm:px-10">
+      <div className="relative mx-auto flex max-w-295 items-center gap-7 px-4 py-2.5 sm:px-10">
         <Wordmark />
         <nav
-          data-slot="site-header-nav"
+          data-slot="header-nav"
           aria-label="Primary"
-          className="ml-3 hidden items-center gap-1 md:flex"
+          className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 md:flex"
         >
           {NAV_LINKS.map((link) => (
             <NavLink
@@ -147,7 +144,7 @@ export function SiteHeader() {
                   Start free
                 </Link>
                 <p className="pt-2 text-center font-mono text-micro tracking-widest text-muted-foreground uppercase">
-                  © {new Date().getFullYear()} Noor · Free for teachers
+                  © {YEAR} Noor · Free for teachers
                 </p>
               </div>
             </div>

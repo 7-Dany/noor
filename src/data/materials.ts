@@ -1,11 +1,13 @@
-import type { DeckItem } from "@/components/custom/deck"
+import type { Tone } from "@/components/ui/card"
 
-export type Material = DeckItem & {
+export type Material = {
+  id: string
+  tone: Tone
   title: string
   note: string
   summary: string
-  watermark: string // one Arabic letter, drawn faint on the card
-  stats: { value: string; label: string }[] // two, shown as big numerals
+  watermark: string
+  stats: { value: string; label: string }[]
   cta: string
   disabled?: boolean
   receipt: {

@@ -1,15 +1,14 @@
 import { Link } from "react-router"
 
-import { SunMoon } from "@/components/icons/sun-moon"
+import { SunMoon } from "@/components/icons"
 import { useTheme } from "@/context/theme/theme-provider"
 
-// The sun (moon in dark mode) is the theme toggle; "Noor" is the home link.
-// They are siblings because a button can't sit inside a link.
+// Siblings because a button can't sit inside a link.
 export function Wordmark() {
   const { toggleTheme } = useTheme()
 
   return (
-    <div data-slot="site-header-brand" className="flex items-center gap-2">
+    <div data-slot="header-brand" className="flex items-center gap-2">
       <button
         type="button"
         data-slot="theme-toggle"

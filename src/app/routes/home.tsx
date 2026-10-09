@@ -1,6 +1,4 @@
-import { SiteCta } from "@/components/sections/site-cta"
-import { HeroHeading } from "@/pages/landing/hero/hero-heading"
-import { MaterialStack } from "@/pages/landing/material-stack/material-stack"
+import { LandingPage } from "@/pages/landing/page"
 
 export function meta() {
   return [
@@ -14,11 +12,5 @@ export function meta() {
 }
 
 export default function Home() {
-  return (
-    <main className="overflow-x-clip px-4 pt-12 pb-18 sm:px-10 sm:pt-14">
-      <HeroHeading />
-      <MaterialStack />
-      <SiteCta className="mt-18" />
-    </main>
-  )
+  return <LandingPage />
 }

@@ -5,7 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 
-// First question open; items open independently like the mockup's <details>.
+// First question open; items open independently.
 // Items are written out (not mapped) so each keeps a static value prop.
 export function PricingFaq() {
   return (
@@ -48,9 +48,9 @@ export function PricingFaq() {
           <AccordionTrigger>Can I cancel any time?</AccordionTrigger>
           <AccordionContent>
             <p className="text-muted-foreground">
-              {/* TODO: add the cancellation policy text here. */}
+              {/* TODO: cancellation policy text (undecided). */}
               <span className="rounded-md bg-secondary px-2">
-                I will add this later
+                Answer coming soon
               </span>
             </p>
           </AccordionContent>

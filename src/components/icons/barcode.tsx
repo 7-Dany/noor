@@ -2,7 +2,7 @@ import { type ComponentProps } from "react"
 
 import { cn } from "cn"
 
-// Decorative barcode. Shared leaf: Receipt and PriceCard both use it.
+// Decorative barcode. Shared leaf: Receipt and Card both use it.
 function Barcode({ className, ...props }: ComponentProps<"svg">) {
   return (
     <svg

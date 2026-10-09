@@ -16,7 +16,7 @@ function Moon({ className, ...props }: ComponentProps<"svg">) {
     >
       <g strokeWidth="1.837" strokeLinejoin="round" className="stroke-current">
         <path
-          className="fill-(--moon-disc)"
+          className="fill-moon-disc"
           d="M22.72 9.1A15.5 15.5 0 1 0 39.72 27.41 12.5 12.5 0 0 1 22.72 9.1Z"
         />
         <g className="fill-current" stroke="none">

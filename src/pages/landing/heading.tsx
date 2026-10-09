@@ -1,22 +1,24 @@
 import { useCyclingWord } from "@/hooks/use-cycling-word"
+import {
+  Heading,
+  HeadingEyebrow,
+  HeadingLead,
+  HeadingTitle,
+} from "@/components/sections/heading"
 
 const WORDS = ["material", "slides", "lessons", "passages", "quizzes"]
 
-/**
- * Hero heading: eyebrow, serif title with a cycling accent word, lead
- * paragraph. The receipt + deck stage is a separate component.
- */
 export function HeroHeading() {
   const { index, entering, slotRef, currentRef, enteringRef } = useCyclingWord(
     WORDS.length
   )
 
   return (
-    <div data-slot="hero-heading" className="text-center">
-      <p className="font-mono text-xs tracking-eyebrow text-muted-foreground uppercase">
+    <Heading data-slot="hero-heading">
+      <HeadingEyebrow>
         Free for teachers · Arabic reading &amp; Quran
-      </p>
-      <h1 className="mx-auto mt-4 max-w-none font-serif text-hero leading-hero">
+      </HeadingEyebrow>
+      <HeadingTitle>
         Teach with beautiful,
         <br />
         ready-made <span className="sr-only">{WORDS[0]}.</span>
@@ -40,11 +42,11 @@ export function HeroHeading() {
             </em>
           )}
         </span>
-      </h1>
-      <p className="mx-auto mt-6 max-w-hero text-base leading-lead text-muted-foreground">
+      </HeadingTitle>
+      <HeadingLead>
         Slides, lessons and reading passages for Noor Al-Bayan, tajweed,
         vocabulary and the Quran. Open one, project it, and teach.
-      </p>
-    </div>
+      </HeadingLead>
+    </Heading>
   )
 }

@@ -19,11 +19,14 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         overlay:
           "border-white/50 bg-white/10 text-white hover:bg-white/25 hover:text-white",
-        // Solid light button for tone surfaces (PriceCard): dark text.
-        light:
-          "bg-tone-foreground text-primary hover:bg-tone-foreground/90 dark:text-primary-foreground",
-        // Solid light button for tone surfaces (Deck cards): reads --tone.
-        tone: "bg-tone-foreground text-(--tone) hover:bg-tone-foreground/90",
+        // Solid light button for tone surfaces (Card): reads --tone.
+        // Keeps a visible 1px border like the header outline pill; the base
+        // is border-transparent, so every pill carries the same border size.
+        tone: "border-tone-foreground/40 bg-tone-foreground text-(--tone) hover:bg-tone-foreground/90",
+        // Dark pill for the sun band (Cta). The band stays yellow in
+        // both modes, so this pairs the band's foreground (dark in both
+        // modes) instead of flipping like `default`.
+        cta: "bg-cta-foreground text-cta hover:bg-cta-foreground/90",
       },
       size: {
         default:
