@@ -1,7 +1,8 @@
 import { type ComponentProps } from "react"
+import { Link } from "react-router"
 
 import { cn } from "cn"
-import { Button } from "@/components/ui/button"
+import { buttonVariants } from "@/components/ui/button"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons"
 import {
@@ -110,16 +111,13 @@ function StackCard({ material }: { material: Material }) {
           ))}
         </CardStats>
         <div className="flex items-center justify-between">
-          {/* Wrapper keeps taps on a disabled (pointer-events-none) button
-              from flipping the card; see INTERACTIVE_SELECTOR in deck.tsx. */}
-          <div data-deck-interactive>
-            <Button variant="tone" size="pill" disabled={material.disabled}>
-              {material.cta}
-              {material.disabled ? null : (
-                <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
-              )}
-            </Button>
-          </div>
+          <Link
+            to={`/materials/${material.id}`}
+            className={buttonVariants({ variant: "tone", size: "pill" })}
+          >
+            {material.cta}
+            <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
+          </Link>
           <DeckControls>
             <DeckPrevious />
             <DeckNext />

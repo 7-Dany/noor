@@ -41,8 +41,8 @@ Work top to bottom, one item at a time.
 - [x] `/materials` route with the card grid
 - [x] Coming-soon card state (Quran Library: disabled button for now)
 - [x] Page meta (title, description)
-- [ ] "Open material" button does nothing yet: link it to a placeholder or lessons-coming-soon state
-- [ ] Optional: "Coming soon" badge on Quran Library instead of only a disabled button
+- [x] Card CTAs link to `/materials/:id` detail pages (loader 404s unknown ids, per-material meta)
+- [x] Quran Library routes like the rest (disabled state removed; detail page is the placeholder)
 
 ## 3. Pricing page
 

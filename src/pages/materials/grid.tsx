@@ -1,4 +1,6 @@
-import { Button } from "@/components/ui/button"
+import { Link } from "react-router"
+
+import { buttonVariants } from "@/components/ui/button"
 import { SunMoon } from "@/components/icons"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { ArrowRight01Icon } from "@hugeicons/core-free-icons"
@@ -47,13 +49,13 @@ function MaterialGrid() {
             ))}
           </CardStats>
           <CardFooter pattern="material">
-            {/* No material route to link to; plain button. */}
-            <Button variant="tone" size="pill" disabled={material.disabled}>
+            <Link
+              to={`/materials/${material.id}`}
+              className={buttonVariants({ variant: "tone", size: "pill" })}
+            >
               {material.cta}
-              {material.disabled ? null : (
-                <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
-              )}
-            </Button>
+              <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
+            </Link>
           </CardFooter>
         </Card>
       ))}

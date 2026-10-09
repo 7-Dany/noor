@@ -9,7 +9,6 @@ export type Material = {
   watermark: string
   stats: { value: string; label: string }[]
   cta: string
-  disabled?: boolean
   receipt: {
     glyph: string
     label: string
@@ -120,8 +119,7 @@ export const MATERIALS: readonly Material[] = [
       { value: "30", label: "Juz" },
       { value: "604", label: "Pages" },
     ],
-    cta: "Coming soon",
-    disabled: true,
+    cta: "Open material",
     receipt: {
       glyph: "ٱلْفَاتِحَةُ",
       label: "Page 1 · Juz 1",
