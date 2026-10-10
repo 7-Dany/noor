@@ -35,6 +35,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^10",
+    "@netlify/vite-plugin-react-router": "^4.0.0",
     "@react-router/dev": "^8.4.0",
     "@shadcn/lint": "^0.2.0",
     "@types/node": "^26.6.4",

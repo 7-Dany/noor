@@ -12,6 +12,7 @@ dist
 dist-ssr
 build
 .react-router
+.netlify
 *.local
 .env
 
