@@ -23,22 +23,22 @@ export type Chapter = {
   sections?: readonly Section[]
 }
 
-// Placeholder copy and counts from the earlier prototype: replace with the
-// real chapter data. Stable references, like MATERIALS.
+// Noor Al-Bayan chapter structure from the founder. Titles and order are
+// real; lesson counts without sections underneath are provisional until the
+// content pass fills them in. Stable references, like MATERIALS.
 const CHAPTERS: Record<string, readonly Chapter[]> = {
   "noor-al-bayan": [
     {
       id: "letters",
       tone: "terracotta",
       title: "Letters",
-      summary:
-        "Meet the 30 letters, their shapes, and master each one in Quranic words.",
-      glyph: "ب",
-      lessons: 31,
+      summary: "The alphabet first: names, shapes, and sounds.",
+      glyph: "ا",
+      lessons: 2,
       sections: [
         {
-          id: "basics",
-          title: "The basics",
+          id: "first-steps",
+          title: "First steps",
           summary: "Know the alphabet before you read it.",
           lessons: [
             { id: "alphabet", title: "The Alphabet", kind: "Lesson" },
@@ -47,6 +47,24 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
               title: "Shapes & Positions",
               kind: "Lesson",
             },
+          ],
+        },
+      ],
+    },
+    {
+      id: "letter-groups",
+      tone: "blue",
+      title: "Letters groups",
+      summary:
+        "Letters that look or sound alike, learned in groups so they stick.",
+      glyph: "ب",
+      lessons: 2,
+      sections: [
+        {
+          id: "confusables",
+          title: "Easily mixed letters",
+          summary: "Side by side until the difference is obvious.",
+          lessons: [
             { id: "similar-writing", title: "Similar Writing", kind: "Lesson" },
             {
               id: "similar-pronunciation",
@@ -55,6 +73,24 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
             },
           ],
         },
+      ],
+    },
+    {
+      id: "ta-marbutah",
+      tone: "rose",
+      title: "Ta marbutah",
+      summary: "The tied ta: how it sounds in joining and in pause.",
+      glyph: "ة",
+      lessons: 2,
+    },
+    {
+      id: "letters-in-words",
+      tone: "ink",
+      title: "Letters in quranic words",
+      summary: "Every letter drilled inside real Quranic words.",
+      glyph: "ق",
+      lessons: 29,
+      sections: [
         {
           id: "letters-in-words",
           title: "Letters in Quranic words",
@@ -129,6 +165,15 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
       ],
     },
     {
+      id: "fatha-shapes",
+      tone: "terracotta",
+      title: "Fatha letters shapes",
+      summary:
+        "How each letter's shape carries a fatha, from first to last form.",
+      glyph: "بَ",
+      lessons: 3,
+    },
+    {
       id: "harakat",
       tone: "blue",
       title: "Harakat",
@@ -171,8 +216,16 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
       ],
     },
     {
-      id: "tanween",
+      id: "madd",
       tone: "rose",
+      title: "Madd",
+      summary: "Stretching sounds: alif, waw, yaa.",
+      glyph: "و",
+      lessons: 3,
+    },
+    {
+      id: "tanween",
+      tone: "ink",
       title: "Tanween",
       summary: "Double vowels: tanween fatha, kasra, dumma.",
       glyph: "مً",
@@ -180,18 +233,10 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
     },
     {
       id: "sukoon",
-      tone: "ink",
+      tone: "terracotta",
       title: "Sukoon",
       summary: "Letters at rest: reading with sukoon.",
       glyph: "مْ",
-      lessons: 3,
-    },
-    {
-      id: "madd",
-      tone: "terracotta",
-      title: "Madd",
-      summary: "Stretching sounds: alif, waw, yaa.",
-      glyph: "و",
       lessons: 3,
     },
     {
@@ -203,36 +248,44 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
       lessons: 4,
     },
     {
-      id: "hamza-laam",
+      id: "two-hamza",
       tone: "rose",
-      title: "Hamza & Laam",
-      summary: "Two hamzas, two laams: joining rules.",
+      title: "Two Hamza",
+      summary: "Hamzat al-wasl and hamzat al-qat: sounded or dropped.",
       glyph: "ء",
-      lessons: 2,
+      lessons: 1,
     },
     {
-      id: "reading-passages",
+      id: "two-lam",
       tone: "ink",
-      title: "Reading Passages",
-      summary: "Reading fluency, part by part.",
-      glyph: "ق",
-      lessons: 8,
+      title: "Two lam",
+      summary: "Solar and lunar laam: when the laam melts into what follows.",
+      glyph: "ل",
+      lessons: 1,
     },
     {
-      id: "games",
+      id: "arabic-passages",
       tone: "terracotta",
-      title: "Games",
-      summary: "Playful drills for the class.",
-      glyph: "ل",
-      lessons: 3,
+      title: "Arabic passages",
+      summary: "Connected reading, passage by passage toward fluency.",
+      glyph: "ع",
+      lessons: 8,
     },
     {
       id: "general-topics",
       tone: "blue",
-      title: "General Topics",
+      title: "General topics",
       summary: "Extra topics for the teacher.",
       glyph: "ن",
       lessons: 2,
+    },
+    {
+      id: "games",
+      tone: "rose",
+      title: "Games",
+      summary: "Playful drills for the class.",
+      glyph: "؟",
+      lessons: 3,
     },
   ],
 }

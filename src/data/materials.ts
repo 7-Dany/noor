@@ -28,7 +28,7 @@ export const MATERIALS: readonly Material[] = [
     title: "Noor Al-Bayan",
     note: "Material one,",
     summary:
-      "Ten chapters, about 167 lessons: letters, harakat, madd, sukoon, shaddah, tanween and hamza, plus 43 reading passages and games.",
+      "Fifteen chapters, about 167 lessons: letters, harakat, madd, sukoon, shaddah, tanween and hamza, plus 43 reading passages and games.",
     watermark: "ن",
     stats: [
       { value: "10", label: "Chapters" },
