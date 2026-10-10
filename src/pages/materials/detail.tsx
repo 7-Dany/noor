@@ -95,7 +95,7 @@ function MaterialDetailPage({ material }: { material: Material }) {
                   <span aria-hidden="true">
                     {pad(i + 1, chapters.length)}
                   </span>
-                  <span className="ms-auto inline-flex items-center gap-1.5">
+                  <span className="inline-flex items-center gap-1.5">
                     <span>{chapter.lessons} lessons</span>
                     <HugeiconsIcon
                       icon={ArrowRight01Icon}
