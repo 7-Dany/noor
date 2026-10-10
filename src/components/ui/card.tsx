@@ -35,7 +35,7 @@ const cardVariants = cva("group/card relative flex flex-col rounded-xl", {
       material:
         "isolate overflow-hidden bg-linear-155 from-(--tone-from) to-(--tone-to) px-5 pt-5 pb-6 text-tone-foreground shadow-card md:min-h-100 md:px-7 md:pt-5.5 md:pb-7 data-[size=sm]:min-h-0",
       chapter:
-        "isolate min-h-24 overflow-hidden border bg-card px-4 py-3.5 text-card-foreground transition duration-200 motion-reduce:transition-none in-[a]:hover:-translate-y-0.5 in-[a]:hover:border-(--tone-text)/50",
+        "isolate min-h-20 overflow-hidden border bg-card px-4 py-3 text-card-foreground transition duration-200 motion-reduce:transition-none in-[a]:hover:-translate-y-0.5 in-[a]:hover:border-(--tone-text)/50",
       price:
         "min-h-107.5 bg-linear-155 from-(--tone-from) to-(--tone-to) px-5 pt-4 pb-5.5 text-tone-foreground shadow-xl shadow-foreground/10 sm:px-6.5 lg:h-107.5 dark:shadow-black/30",
       deck: [
