@@ -1,7 +1,5 @@
 import { Link } from "react-router"
 
-import { HugeiconsIcon } from "@hugeicons/react"
-import { ArrowRight01Icon } from "@hugeicons/core-free-icons"
 import { SunMoon } from "@/components/icons"
 import {
   Breadcrumb,
@@ -95,14 +93,6 @@ function MaterialDetailPage({ material }: { material: Material }) {
                   <span aria-hidden="true">
                     {pad(i + 1, chapters.length)}
                   </span>
-                  <span className="inline-flex items-center gap-1.5">
-                    <span>{chapter.lessons} lessons</span>
-                    <HugeiconsIcon
-                      icon={ArrowRight01Icon}
-                      size={14}
-                      aria-hidden="true"
-                    />
-                  </span>
                 </CardHeader>
                   <CardWatermark pattern="chapter">
                     {chapter.glyph}
@@ -111,6 +101,9 @@ function MaterialDetailPage({ material }: { material: Material }) {
                 <CardDescription pattern="chapter" title={chapter.summary}>
                   {chapter.summary}
                 </CardDescription>
+                <p className="mt-1.5 font-mono text-(length:--text-tiny) tracking-eyebrow text-muted-foreground uppercase">
+                  {chapter.lessons} lessons
+                </p>
                 </Card>
               </Link>
             ))}
