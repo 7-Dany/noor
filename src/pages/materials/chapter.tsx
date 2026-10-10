@@ -47,27 +47,25 @@ function ChapterPage({
   return (
     <SitePage width="wide">
       <Breadcrumb tone={chapter.tone} className="mb-4">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink render={<Link to="/materials" />}>
-                Materials
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbLink
-                render={<Link to={`/materials/${material.id}`} />}
-              >
-                {material.title}
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{chapter.title}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-        <Card tone={chapter.tone} pattern="chapter">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink render={<Link to="/materials" />}>
+              Materials
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink render={<Link to={`/materials/${material.id}`} />}>
+              {material.title}
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{chapter.title}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+      <Card tone={chapter.tone} pattern="chapter">
         <CardHeader pattern="chapter">
           <span className="sr-only">
             Chapter {position} of {total}
@@ -76,12 +74,12 @@ function ChapterPage({
             {pad(position, total)}
           </span>
         </CardHeader>
-          <CardWatermark
-            pattern="chapter"
-            className="-translate-x-2 -translate-y-2 scale-110"
-          >
-            {chapter.glyph}
-          </CardWatermark>
+        <CardWatermark
+          pattern="chapter"
+          className="-translate-x-2 -translate-y-2 scale-110"
+        >
+          {chapter.glyph}
+        </CardWatermark>
         <CardTitle pattern="chapter">{chapter.title}</CardTitle>
         <CardDescription
           pattern="chapter"
@@ -90,25 +88,25 @@ function ChapterPage({
         >
           {chapter.summary}
         </CardDescription>
-        </Card>
-        {sections.length > 0 ? (
-          <div className="mt-7">
-            <ChapterSections
-              sections={sections}
-              tone={chapter.tone}
-              completed={completed}
-            />
-          </div>
-        ) : (
-          <Empty className="mt-7">
-            <EmptyHeader>
-              <EmptyTitle>Sections coming soon</EmptyTitle>
-              <EmptyDescription>
-                This chapter is being organized.
-              </EmptyDescription>
-            </EmptyHeader>
-          </Empty>
-        )}
+      </Card>
+      {sections.length > 0 ? (
+        <div className="mt-7">
+          <ChapterSections
+            sections={sections}
+            tone={chapter.tone}
+            completed={completed}
+          />
+        </div>
+      ) : (
+        <Empty className="mt-7">
+          <EmptyHeader>
+            <EmptyTitle>Sections coming soon</EmptyTitle>
+            <EmptyDescription>
+              This chapter is being organized.
+            </EmptyDescription>
+          </EmptyHeader>
+        </Empty>
+      )}
     </SitePage>
   )
 }

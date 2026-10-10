@@ -1,4 +1,5 @@
 import { useRef } from "react"
+import { Link } from "react-router"
 
 import {
   Agenda,
@@ -73,7 +74,7 @@ function ChapterSections({
         data-slot="outline-toc"
         className="rounded-xl border bg-card px-4 py-3 md:hidden"
       >
-        <summary className="cursor-pointer font-mono text-(length:--text-tiny) text-muted-foreground normal-case tracking-normal">
+        <summary className="cursor-pointer font-mono text-(length:--text-tiny) tracking-normal text-muted-foreground normal-case">
           In this chapter · {sections.length} sections
         </summary>
         <div className="pt-2">
@@ -82,7 +83,7 @@ function ChapterSections({
       </details>
       <OutlineNav aria-label="In this chapter" className="hidden md:block">
         <div className="flex items-baseline justify-between gap-3 px-3.5 pb-2">
-          <OutlineNavLabel className="px-0 pb-0 normal-case tracking-normal">
+          <OutlineNavLabel className="px-0 pb-0 tracking-normal normal-case">
             In this chapter
           </OutlineNavLabel>
           <span className="font-mono text-(length:--text-tiny) text-muted-foreground normal-case">
@@ -101,7 +102,7 @@ function ChapterSections({
             <OutlineSection key={section.id} value={section.id}>
               <OutlineSectionHeader>
                 <OutlineSectionTitle>{section.title}</OutlineSectionTitle>
-                <OutlineSectionMeta className="normal-case tracking-normal">
+                <OutlineSectionMeta className="tracking-normal normal-case">
                   {completed
                     ? `${doneCount} / ${count}`
                     : `${count} ${count === 1 ? "lesson" : "lessons"}`}
@@ -117,7 +118,18 @@ function ChapterSections({
                       <AgendaStatus done={completed.includes(lesson.id)} />
                     ) : null}
                     <AgendaIndex>{pad(j + 1, count)}</AgendaIndex>
-                    <AgendaTitle>{lesson.title}</AgendaTitle>
+                    <AgendaTitle>
+                      {lesson.to ? (
+                        <Link
+                          to={lesson.to}
+                          className="hover:underline hover:underline-offset-4"
+                        >
+                          {lesson.title}
+                        </Link>
+                      ) : (
+                        lesson.title
+                      )}
+                    </AgendaTitle>
                     <AgendaMeta>{lesson.kind}</AgendaMeta>
                   </AgendaItem>
                 ))}

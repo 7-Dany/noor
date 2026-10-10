@@ -113,8 +113,8 @@ function StackCard({ material }: { material: Material }) {
             <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
           </Link>
           <DeckControls>
-            <DeckPrevious />
             <DeckNext />
+            <DeckPrevious />
           </DeckControls>
         </div>
       </div>

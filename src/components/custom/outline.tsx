@@ -216,7 +216,9 @@ function OutlineSectionHeader({ className, ...props }: ComponentProps<"div">) {
 function OutlineSectionTitle({ className, ...props }: ComponentProps<"h2">) {
   const titleId = use(OutlineSectionContext)
   if (!titleId) {
-    throw new Error("<OutlineSectionTitle> must be used within <OutlineSection>.")
+    throw new Error(
+      "<OutlineSectionTitle> must be used within <OutlineSection>."
+    )
   }
 
   return (

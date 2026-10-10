@@ -12,6 +12,8 @@ export default [
     route("materials/:id", "routes/site/material-detail.tsx"),
     route("materials/:id/:chapterId", "routes/site/chapter-detail.tsx"),
     route("pricing", "routes/site/pricing.tsx"),
+    // Preview of the first lesson; moves under materials/:id once lessons route.
+    route("lessons/letters", "routes/site/letters.tsx"),
   ]),
   route("login", "routes/auth/login.tsx"),
   route("signup", "routes/auth/signup.tsx"),

@@ -210,6 +210,7 @@
   --text-chapter-watermark: 80px;
   --text-cta-title: clamp(1.6rem, 3vw, 2.1rem);
   --text-hero: clamp(2.375rem, 5.4vw, 3.75rem);
+  --text-specimen: clamp(11rem, 28vw, 14rem);
   /* Leading */
   --leading-hero: 1.08;
   --leading-lead: 1.65;
@@ -284,6 +285,30 @@
   --deck-spread: 6px;
   --deck-tilt-step: 2deg;
   --deck-zoom: 0.88;
+}
+
+/* Large display glyphs: grayscale smoothing and outline-accurate rendering
+   keep curved Arabic strokes clean on rotated, composited cards. */
+@utility text-crisp {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: geometricPrecision;
+}
+
+/* Horizontal rail (see deck-rail.tsx): scrolls without a visible bar and
+   fades its ends, so items slide under the arrows instead of being cut. */
+@utility rail-fade {
+  scrollbar-width: none;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 2.5rem,
+    black calc(100% - 2.5rem),
+    transparent
+  );
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* Sun/moon swap: fades, rotates and scales at once (see sun-moon.tsx). */

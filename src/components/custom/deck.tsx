@@ -3,6 +3,7 @@ import {
   use,
   useCallback,
   useEffect,
+  useEffectEvent,
   useMemo,
   useReducer,
   useRef,
@@ -11,15 +12,23 @@ import {
   type KeyboardEvent,
   type PointerEvent,
   type ReactNode,
+  type RefObject,
   type SyntheticEvent,
 } from "react"
 import { ArrowLeft01Icon, ArrowRight01Icon } from "@hugeicons/core-free-icons"
 
 import { cn } from "cn"
-import { Card, type Tone } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
+import { Card, TONE_CLASSES, type Tone } from "@/components/ui/card"
+import { pad } from "@/lib/utils"
 import { HugeiconsIcon } from "@hugeicons/react"
 
-/* Deck: stacked cards, one on top. Plain HTML only, no outside slots. */
+/* Deck: stacked cards, one on top. Plain HTML only, no outside slots.
+   DeckRail (bottom of this file) is an optional strip that drives the same
+   deck; it only needs a <Deck> or <DeckProvider> above it. */
+
+// Distance one rail arrow press scrolls the track.
+const SCROLL_STEP_PX = 320
 
 // Leave animation length (ms); mirrored as --deck-leave-ms per card.
 const LEAVE_MS = 240
@@ -39,6 +48,10 @@ const RISE_PX = 14 // upward px per card
 const TILT_DEG = 4 // top-card rotation
 const TILT_STEP_DEG = 2.5 // extra rotation per card behind
 const SHRINK_STEP = 0.035 // scale lost per card
+
+// Cards deeper than this stay parked at the last visible pose, invisible and
+// without children, so a deck of any length costs a fixed number of nodes.
+const MAX_DEPTH = 3
 
 type DeckTone = Tone
 
@@ -164,10 +177,16 @@ function DeckProvider({ items, defaultId, children }: DeckProviderProps) {
     return () => window.clearTimeout(timer)
   }, [machine.leavingId, ids])
 
+  // id -> index, built once per `items`, so every card/rail lookup is O(1).
+  const indexById = useMemo(
+    () => new Map(ids.map((id, index) => [id, index])),
+    [ids]
+  )
+
   const stateValue = useMemo(() => {
     const count = ids.length
-    const activeIndex = Math.max(0, ids.indexOf(machine.activeId))
-    const indexOf = (id: string) => ids.indexOf(id)
+    const activeIndex = indexById.get(machine.activeId) ?? 0
+    const indexOf = (id: string) => indexById.get(id) ?? -1
 
     return {
       state: {
@@ -182,7 +201,7 @@ function DeckProvider({ items, defaultId, children }: DeckProviderProps) {
         positionOf: (id: string) => (indexOf(id) - activeIndex + count) % count,
       },
     }
-  }, [items, ids, machine])
+  }, [items, ids, indexById, machine])
 
   // Stable across swipes: dispatch never changes, ids only with `items`.
   const actionsValue = useMemo(
@@ -222,10 +241,11 @@ function useDeckGestures() {
 
   const onKeyDown = useCallback(
     (event: KeyboardEvent) => {
-      if (event.key === "ArrowRight") {
+      // Arabic-first: left advances, right goes back.
+      if (event.key === "ArrowLeft") {
         event.preventDefault()
         actions.next()
-      } else if (event.key === "ArrowLeft") {
+      } else if (event.key === "ArrowRight") {
         event.preventDefault()
         actions.previous()
       }
@@ -315,6 +335,7 @@ function DeckCard({
   tone,
   className,
   style,
+  children,
   ...props
 }: ComponentProps<"article"> & { value: string; tone?: DeckTone }) {
   const { state, meta } = useDeckState()
@@ -325,12 +346,15 @@ function DeckCard({
   const item = state.items[index]
   const position = meta.positionOf(value)
   const isActive = position === 0
+  const isHidden = position > MAX_DEPTH
+  const depth = Math.min(position, MAX_DEPTH)
 
   return (
     <Card
       tone={tone ?? item.tone}
       pattern="deck"
       data-position={position}
+      data-hidden={isHidden ? "" : undefined}
       data-leaving={state.leavingId === value ? "" : undefined}
       role="group"
       aria-roledescription="slide"
@@ -338,10 +362,10 @@ function DeckCard({
       aria-hidden={!isActive}
       style={
         {
-          "--deck-x": `calc(${position} * var(--deck-spread, ${SPREAD_PX}px))`,
-          "--deck-y": `${position * -RISE_PX}px`,
-          "--deck-rotate": `calc(${TILT_DEG}deg + ${position} * var(--deck-tilt-step, ${TILT_STEP_DEG}deg))`,
-          "--deck-scale": `calc(${1 - position * SHRINK_STEP} * var(--deck-zoom, 1))`,
+          "--deck-x": `calc(${depth} * var(--deck-spread, ${SPREAD_PX}px))`,
+          "--deck-y": `${depth * -RISE_PX}px`,
+          "--deck-rotate": `calc(${TILT_DEG}deg + ${depth} * var(--deck-tilt-step, ${TILT_STEP_DEG}deg))`,
+          "--deck-scale": `calc(${1 - depth * SHRINK_STEP} * var(--deck-zoom, 1))`,
           "--deck-z": meta.count - position,
           "--deck-leave-ms": `${LEAVE_MS}ms`,
           ...style,
@@ -349,7 +373,9 @@ function DeckCard({
       }
       className={className}
       {...props}
-    />
+    >
+      {isHidden ? null : children}
+    </Card>
   )
 }
 
@@ -373,6 +399,28 @@ function DeckIndicator({
     >
       {children ? <>{children} </> : null}
       {meta.indexOf(value) + 1} of {meta.count}
+    </p>
+  )
+}
+
+// "02 / 29". `value` is the card it sits in; the figure is data, so it is mono.
+function DeckCounter({
+  value,
+  className,
+  ...props
+}: ComponentProps<"p"> & { value: string }) {
+  const { meta } = useDeckState()
+
+  return (
+    <p
+      data-slot="deck-counter"
+      className={cn(
+        "font-mono text-tiny tracking-widest tabular-nums opacity-85",
+        className
+      )}
+      {...props}
+    >
+      {pad(meta.indexOf(value) + 1, meta.count)} / {pad(meta.count, meta.count)}
     </p>
   )
 }
@@ -406,7 +454,7 @@ function DeckControl({ className, ...props }: ComponentProps<"button">) {
 }
 
 function DeckPrevious({
-  children = <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" />,
+  children = <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />,
   onClick,
   ...props
 }: ComponentProps<"button">) {
@@ -425,7 +473,7 @@ function DeckPrevious({
 }
 
 function DeckNext({
-  children = <HugeiconsIcon icon={ArrowRight01Icon} className="size-4" />,
+  children = <HugeiconsIcon icon={ArrowLeft01Icon} className="size-4" />,
   onClick,
   ...props
 }: ComponentProps<"button">) {
@@ -443,15 +491,157 @@ function DeckNext({
   )
 }
 
+/* DeckRail
+   ├── DeckRailArrow (left)
+   ├── DeckRailTrack → DeckRailItem × n
+   └── DeckRailArrow (right) */
+
+const TrackContext = createContext<RefObject<HTMLDivElement | null> | null>(
+  null
+)
+
+// Must be used inside <DeckRail>.
+function useTrack() {
+  const track = use(TrackContext)
+  if (!track) throw new Error("DeckRail parts must be used within <DeckRail>.")
+  return track
+}
+
+function scrollBehavior(smooth = true): ScrollBehavior {
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  return smooth && !reduced ? "smooth" : "instant"
+}
+
+// Owns the track ref so arrows and the track can find each other.
+function DeckRail({ className, ...props }: ComponentProps<"div">) {
+  const track = useRef<HTMLDivElement>(null)
+
+  return (
+    <TrackContext value={track}>
+      <div
+        data-slot="deck-rail"
+        className={cn("flex items-center gap-2", className)}
+        {...props}
+      />
+    </TrackContext>
+  )
+}
+
+// The scrolling row. Keeps the active item centred; set `dir` to match the
+// content's reading direction.
+function DeckRailTrack({
+  className,
+  ...props
+}: Omit<ComponentProps<"div">, "ref">) {
+  const { state } = useDeckState()
+  const track = useTrack()
+  const settled = useRef(false)
+
+  // Effect Event: always reads the latest motion preference and track, yet
+  // the effect below re-runs only when the active item changes.
+  const centerActive = useEffectEvent((smooth: boolean) => {
+    const element = track.current
+    const active = element?.querySelector<HTMLElement>("[aria-current='true']")
+    if (!element || !active) return
+    const rail = element.getBoundingClientRect()
+    const item = active.getBoundingClientRect()
+    element.scrollBy({
+      left: item.left + item.width / 2 - (rail.left + rail.width / 2),
+      behavior: scrollBehavior(smooth),
+    })
+  })
+
+  useEffect(() => {
+    // First paint jumps into place; later changes glide.
+    centerActive(settled.current)
+    settled.current = true
+  }, [state.activeId])
+
+  return (
+    <div
+      ref={track}
+      data-slot="deck-rail-track"
+      className={cn(
+        "rail-fade flex min-w-0 flex-1 gap-2 overflow-x-auto px-10 py-1.5",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+// One tap target per deck item. Only the active item is a tab stop; arrow
+// keys on the deck move between items.
+function DeckRailItem({
+  value,
+  className,
+  ...props
+}: ComponentProps<"button"> & { value: string }) {
+  const { state, meta } = useDeckState()
+  const { actions } = useDeckActions()
+  const active = state.activeId === value
+  const { tone } = state.items[meta.indexOf(value)]
+
+  return (
+    <button
+      type="button"
+      data-slot="deck-rail-item"
+      data-active={active ? "" : undefined}
+      aria-current={active ? "true" : undefined}
+      tabIndex={active ? 0 : -1}
+      onClick={() => actions.select(value)}
+      className={cn(
+        TONE_CLASSES[tone],
+        "flex h-18 w-15 flex-none cursor-pointer items-center justify-center rounded-lg border bg-card font-quran text-4xl leading-none font-bold text-terracotta-accent text-crisp transition-colors outline-none hover:border-muted-foreground focus-visible:ring-3 focus-visible:ring-ring/50 data-active:border-transparent data-active:bg-linear-160 data-active:from-(--tone-from) data-active:to-(--tone-to) data-active:text-tone-foreground motion-reduce:transition-none",
+        className
+      )}
+      {...props}
+    />
+  )
+}
+
+function DeckRailArrow({
+  direction,
+  ...props
+}: ComponentProps<typeof Button> & { direction: "left" | "right" }) {
+  const track = useTrack()
+
+  return (
+    <Button
+      variant="outline"
+      size="icon-lg"
+      data-slot="deck-rail-arrow"
+      aria-label={`Scroll ${direction}`}
+      onClick={() =>
+        track.current?.scrollBy({
+          left: direction === "left" ? -SCROLL_STEP_PX : SCROLL_STEP_PX,
+          behavior: scrollBehavior(),
+        })
+      }
+      {...props}
+    >
+      <HugeiconsIcon
+        icon={direction === "left" ? ArrowLeft01Icon : ArrowRight01Icon}
+        className="size-4"
+      />
+    </Button>
+  )
+}
+
 export {
   Deck,
   DeckProvider,
   DeckContent,
   DeckCard,
   DeckIndicator,
+  DeckCounter,
   DeckControls,
   DeckPrevious,
   DeckNext,
+  DeckRail,
+  DeckRailTrack,
+  DeckRailItem,
+  DeckRailArrow,
   useDeckState,
   useDeckActions,
   type DeckItem,

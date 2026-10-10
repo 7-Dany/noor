@@ -4,6 +4,8 @@ export type Lesson = {
   id: string
   title: string
   kind: "Lesson" | "Drill" | "Game"
+  // Set once the lesson has a page; lessons without one render as plain rows.
+  to?: string
 }
 
 export type Section = {
@@ -41,7 +43,12 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
           title: "First Steps",
           summary: "Know the alphabet before you read it.",
           lessons: [
-            { id: "alphabet", title: "Letters", kind: "Lesson" },
+            {
+              id: "alphabet",
+              title: "Letters",
+              kind: "Lesson",
+              to: "/lessons/letters",
+            },
             {
               id: "shapes-positions",
               title: "Letter shapes and positions",

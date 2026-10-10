@@ -23,28 +23,33 @@ import { cn } from "cn"
       </Card> */
 
 // A tone is three CSS vars; add one line here + three vars in index.css.
+// Exported so other tone surfaces (deck rail) reuse the same mapping.
+const TONE_CLASSES = {
+  terracotta: "tone-terracotta",
+  blue: "tone-blue",
+  rose: "tone-rose",
+  ink: "tone-ink",
+} as const
+
 const cardVariants = cva("group/card relative flex flex-col rounded-xl", {
   variants: {
-    tone: {
-      terracotta: "tone-terracotta",
-      blue: "tone-blue",
-      rose: "tone-rose",
-      ink: "tone-ink",
-    },
+    tone: TONE_CLASSES,
     pattern: {
       material:
-        "isolate overflow-hidden bg-linear-155 from-(--tone-from) to-(--tone-to) px-5 pt-5 pb-6 text-tone-foreground shadow-card md:min-h-100 md:px-7 md:pt-5.5 md:pb-7 data-[size=sm]:min-h-0",
+        "isolate overflow-hidden bg-linear-155 from-(--tone-from) to-(--tone-to) px-5 pt-5 pb-6 text-tone-foreground shadow-card data-[size=sm]:min-h-0 md:min-h-100 md:px-7 md:pt-5.5 md:pb-7",
       chapter:
-        "isolate min-h-20 overflow-hidden border bg-card px-4 py-3 text-card-foreground transition duration-200 motion-reduce:transition-none in-[a]:hover:-translate-y-0.5 in-[a]:hover:border-(--tone-text)/50",
+        "isolate min-h-20 overflow-hidden border bg-card px-4 py-3 text-card-foreground transition duration-200 in-[a]:hover:-translate-y-0.5 in-[a]:hover:border-(--tone-text)/50 motion-reduce:transition-none",
       price:
         "min-h-107.5 bg-linear-155 from-(--tone-from) to-(--tone-to) px-5 pt-4 pb-5.5 text-tone-foreground shadow-xl shadow-foreground/10 sm:px-6.5 lg:h-107.5 dark:shadow-black/30",
       deck: [
-        "absolute inset-0 cursor-grab justify-between gap-4 bg-linear-160 from-(--tone-from) to-(--tone-to) px-6.5 py-6 text-tone-foreground shadow-deck dark:shadow-black/40",
+        "absolute inset-0 cursor-grab justify-between gap-4 overflow-hidden bg-linear-160 from-(--tone-from) to-(--tone-to) px-6.5 py-6 text-tone-foreground shadow-deck dark:shadow-black/40",
         "before:absolute before:inset-x-6 before:top-3.5 before:border-t before:border-dashed before:border-tone-foreground/40",
         "z-(--deck-z) translate-x-(--deck-x) translate-y-(--deck-y) scale-(--deck-scale) rotate-(--deck-rotate)",
         "transition duration-700 ease-spring motion-reduce:transition-none",
         // Top card flies off before dropping to the back.
         "data-[leaving]:-translate-x-9/10 data-[leaving]:translate-y-4 data-[leaving]:-rotate-12 data-[leaving]:opacity-0 data-[leaving]:duration-(--deck-leave-ms) data-[leaving]:ease-in",
+        // Cards deeper than the visible stack park invisibly at the back.
+        "data-[hidden]:pointer-events-none data-[hidden]:opacity-0",
       ],
     },
   },
@@ -85,8 +90,7 @@ const cardHeaderVariants = cva(
       pattern: {
         material:
           "border-b border-dashed border-tone-foreground/40 pb-3 text-tiny",
-        chapter:
-          "justify-start text-(length:--text-tiny) text-(--tone-text)",
+        chapter: "justify-start text-(length:--text-tiny) text-(--tone-text)",
         price:
           "mb-3 box-content h-5 border-b border-dashed border-tone-foreground/40 pb-2 text-(length:--text-micro) text-tone-foreground/80",
       },
@@ -226,8 +230,12 @@ const cardWatermarkVariants = cva(
         material:
           "right-3.75 -bottom-2 text-(length:--text-card-watermark) text-tone-foreground/15 group-data-[size=sm]/card:right-6 group-data-[size=sm]/card:bottom-5 group-data-[size=sm]/card:text-(length:--text-card-watermark-lg)",
         deck: "right-3.75 bottom-12 text-(length:--text-deck-watermark) text-tone-foreground/15",
+        // One large glyph, centred in the free space between the header and
+        // the title row, so tall and descending letters both stay inside.
+        specimen:
+          "inset-x-0 top-14 bottom-28 flex items-center justify-center text-(length:--text-specimen) text-tone-foreground/95 text-crisp",
         chapter:
-          "right-3 -bottom-2 text-(length:--text-chapter-watermark) text-(--tone-text)/25 transition-colors duration-200 motion-reduce:transition-none in-[a]:group-hover/card:text-(--tone-text)/40",
+          "right-3 -bottom-2 text-(length:--text-chapter-watermark) text-(--tone-text)/25 transition-colors duration-200 in-[a]:group-hover/card:text-(--tone-text)/40 motion-reduce:transition-none",
       },
     },
     defaultVariants: { pattern: "material" },
@@ -436,6 +444,7 @@ function CardUnit({ className, ...props }: React.ComponentProps<"small">) {
 
 export {
   Card,
+  TONE_CLASSES,
   CardHeader,
   CardFooter,
   CardTitle,

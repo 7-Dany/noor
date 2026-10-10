@@ -37,55 +37,49 @@ function MaterialDetailPage({ material }: { material: Material }) {
 
   return (
     <SitePage width="wide">
-        <Breadcrumb tone={material.tone} className="mb-4">
-          <BreadcrumbList>
-            <BreadcrumbItem>
-              <BreadcrumbLink render={<Link to="/materials" />}>
-                Materials
-              </BreadcrumbLink>
-            </BreadcrumbItem>
-            <BreadcrumbSeparator />
-            <BreadcrumbItem>
-              <BreadcrumbPage>{material.title}</BreadcrumbPage>
-            </BreadcrumbItem>
-          </BreadcrumbList>
-        </Breadcrumb>
-        <Card tone={material.tone} pattern="material" size="sm">
-          <CardHeader pattern="material">
-            <span>
-              Material {position} of {MATERIALS.length}
-            </span>
-            <SunMoon className="size-7.5" />
-          </CardHeader>
-          <CardWatermark>{material.watermark}</CardWatermark>
-          <CardNote>{material.note}</CardNote>
-          <CardTitle pattern="material">{material.title}.</CardTitle>
-          <CardDescription pattern="material">
-            {material.summary}
-          </CardDescription>
-          <CardStats>
-            {material.stats.map((stat) => (
-              <CardStat
-                key={stat.label}
-                value={stat.value}
-                label={stat.label}
-              />
-            ))}
-          </CardStats>
-        </Card>
-        {chapters.length > 0 ? (
-          <section
-            data-slot="chapter-grid"
-            aria-label="Chapters"
-            className="mt-10 grid gap-4 md:grid-cols-2"
-          >
-            {chapters.map((chapter, i) => (
-              <Link
-                key={chapter.id}
-                to={`/materials/${material.id}/${chapter.id}`}
-                className="block rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
-              >
-                <Card tone={chapter.tone} pattern="chapter" className="h-full">
+      <Breadcrumb tone={material.tone} className="mb-4">
+        <BreadcrumbList>
+          <BreadcrumbItem>
+            <BreadcrumbLink render={<Link to="/materials" />}>
+              Materials
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbPage>{material.title}</BreadcrumbPage>
+          </BreadcrumbItem>
+        </BreadcrumbList>
+      </Breadcrumb>
+      <Card tone={material.tone} pattern="material" size="sm">
+        <CardHeader pattern="material">
+          <span>
+            Material {position} of {MATERIALS.length}
+          </span>
+          <SunMoon className="size-7.5" />
+        </CardHeader>
+        <CardWatermark>{material.watermark}</CardWatermark>
+        <CardNote>{material.note}</CardNote>
+        <CardTitle pattern="material">{material.title}.</CardTitle>
+        <CardDescription pattern="material">{material.summary}</CardDescription>
+        <CardStats>
+          {material.stats.map((stat) => (
+            <CardStat key={stat.label} value={stat.value} label={stat.label} />
+          ))}
+        </CardStats>
+      </Card>
+      {chapters.length > 0 ? (
+        <section
+          data-slot="chapter-grid"
+          aria-label="Chapters"
+          className="mt-10 grid gap-4 md:grid-cols-2"
+        >
+          {chapters.map((chapter, i) => (
+            <Link
+              key={chapter.id}
+              to={`/materials/${material.id}/${chapter.id}`}
+              className="block rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+            >
+              <Card tone={chapter.tone} pattern="chapter" className="h-full">
                 <CardHeader pattern="chapter">
                   <span className="sr-only">
                     Chapter {i + 1} of {chapters.length}
@@ -94,25 +88,23 @@ function MaterialDetailPage({ material }: { material: Material }) {
                     {pad(i + 1, chapters.length)}
                   </span>
                 </CardHeader>
-                  <CardWatermark pattern="chapter">
-                    {chapter.glyph}
-                  </CardWatermark>
+                <CardWatermark pattern="chapter">{chapter.glyph}</CardWatermark>
                 <CardTitle pattern="chapter">{chapter.title}</CardTitle>
                 <CardDescription pattern="chapter" title={chapter.summary}>
                   {chapter.summary}
                 </CardDescription>
-                </Card>
-              </Link>
-            ))}
-          </section>
-        ) : (
-          <Empty className="mt-10">
-            <EmptyHeader>
-              <EmptyTitle>Lessons coming soon</EmptyTitle>
-              <EmptyDescription>Check back soon.</EmptyDescription>
-            </EmptyHeader>
-          </Empty>
-        )}
+              </Card>
+            </Link>
+          ))}
+        </section>
+      ) : (
+        <Empty className="mt-10">
+          <EmptyHeader>
+            <EmptyTitle>Lessons coming soon</EmptyTitle>
+            <EmptyDescription>Check back soon.</EmptyDescription>
+          </EmptyHeader>
+        </Empty>
+      )}
     </SitePage>
   )
 }
