@@ -78,7 +78,7 @@ function ChapterPage({
         </CardHeader>
           <CardWatermark
             pattern="chapter"
-            className="-translate-x-2 -translate-y-3 scale-125"
+            className="-translate-x-2 -translate-y-2 scale-125"
           >
             {chapter.glyph}
           </CardWatermark>
