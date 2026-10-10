@@ -86,7 +86,7 @@ const cardHeaderVariants = cva(
         material:
           "border-b border-dashed border-tone-foreground/40 pb-3 text-tiny",
         chapter:
-          "justify-start text-(length:--text-tiny) text-(--tone-text) *:last:text-muted-foreground",
+          "justify-start text-(length:--text-tiny) text-(--tone-text)",
         price:
           "mb-3 box-content h-5 border-b border-dashed border-tone-foreground/40 pb-2 text-(length:--text-micro) text-tone-foreground/80",
       },

@@ -90,7 +90,7 @@ function MaterialDetailPage({ material }: { material: Material }) {
                   <span className="sr-only">
                     Chapter {i + 1} of {chapters.length}
                   </span>
-                  <span aria-hidden="true">
+                  <span aria-hidden="true" className="text-lg tracking-normal">
                     {pad(i + 1, chapters.length)}
                   </span>
                 </CardHeader>

@@ -72,8 +72,12 @@ function ChapterPage({
             <span className="sr-only">
               Chapter {position} of {total}
             </span>
-            <span aria-hidden="true">{pad(position, total)}</span>
-            <span>{chapter.lessons} lessons</span>
+            <span aria-hidden="true" className="text-lg tracking-normal">
+              {pad(position, total)}
+            </span>
+            <span className="text-muted-foreground">
+              {chapter.lessons} lessons
+            </span>
           </CardHeader>
           <CardWatermark pattern="chapter">{chapter.glyph}</CardWatermark>
         <CardTitle pattern="chapter">{chapter.title}</CardTitle>
