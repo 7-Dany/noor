@@ -141,7 +141,7 @@ const cardDescriptionVariants = cva("", {
       // Narrower than material: lines stop before the watermark glyph.
       deck: "max-w-[28ch] leading-summary text-pretty opacity-92",
       chapter:
-        "mt-1 max-w-lead line-clamp-2 min-h-10 text-(length:--text-caption) leading-summary text-muted-foreground",
+        "mt-1 max-w-lead truncate text-(length:--text-caption) leading-summary text-muted-foreground",
       price:
         "mb-3 text-(length:--text-caption) leading-5 text-tone-foreground/80 lg:truncate",
     },
