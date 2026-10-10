@@ -101,9 +101,6 @@ function MaterialDetailPage({ material }: { material: Material }) {
                 <CardDescription pattern="chapter" title={chapter.summary}>
                   {chapter.summary}
                 </CardDescription>
-                <p className="mt-1.5 font-mono text-(length:--text-tiny) tracking-eyebrow text-muted-foreground uppercase">
-                  {chapter.lessons} lessons
-                </p>
                 </Card>
               </Link>
             ))}
