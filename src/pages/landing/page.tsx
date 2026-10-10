@@ -5,13 +5,14 @@ import {
   CtaDescription,
   CtaTitle,
 } from "@/components/sections/cta"
+import { SitePage } from "@/components/sections/page"
 import { MATERIALS } from "@/data/materials"
 import { HeroHeading } from "@/pages/landing/heading"
 import { Stack } from "@/pages/landing/stack"
 
 export function LandingPage() {
   return (
-    <main className="overflow-x-clip px-4 pt-12 pb-18 sm:px-10 sm:pt-14">
+    <SitePage clip>
       <HeroHeading />
       <Stack items={MATERIALS} />
       <Cta className="mt-18">
@@ -23,6 +24,6 @@ export function LandingPage() {
         </CtaContent>
         <CtaAction to="/materials">Start teaching free</CtaAction>
       </Cta>
-    </main>
+    </SitePage>
   )
 }

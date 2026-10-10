@@ -25,6 +25,7 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from "@/components/ui/empty"
+import { SitePage } from "@/components/sections/page"
 import { getChapters } from "@/data/chapters"
 import { MATERIALS, type Material } from "@/data/materials"
 import { pad } from "@/lib/utils"
@@ -35,8 +36,7 @@ function MaterialDetailPage({ material }: { material: Material }) {
   const chapters = getChapters(material.id)
 
   return (
-    <main className="px-4 pt-12 pb-18 sm:px-10 sm:pt-14">
-      <div className="mx-auto w-full max-w-280">
+    <SitePage width="wide">
         <Breadcrumb tone={material.tone} className="mb-4">
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -114,8 +114,7 @@ function MaterialDetailPage({ material }: { material: Material }) {
             </EmptyHeader>
           </Empty>
         )}
-      </div>
-    </main>
+    </SitePage>
   )
 }
 

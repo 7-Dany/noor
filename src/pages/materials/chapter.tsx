@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/empty"
 import type { Chapter } from "@/data/chapters"
 import type { Material } from "@/data/materials"
+import { SitePage } from "@/components/sections/page"
 import { pad } from "@/lib/utils"
 import { ChapterSections } from "@/pages/materials/sections"
 
@@ -44,9 +45,8 @@ function ChapterPage({
   const sections = chapter.sections ?? []
 
   return (
-    <main className="px-4 pt-12 pb-18 sm:px-10 sm:pt-14">
-      <div className="mx-auto w-full max-w-280">
-        <Breadcrumb tone={chapter.tone} className="mb-4">
+    <SitePage width="wide">
+      <Breadcrumb tone={chapter.tone} className="mb-4">
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink render={<Link to="/materials" />}>
@@ -97,8 +97,7 @@ function ChapterPage({
             </EmptyHeader>
           </Empty>
         )}
-      </div>
-    </main>
+    </SitePage>
   )
 }
 

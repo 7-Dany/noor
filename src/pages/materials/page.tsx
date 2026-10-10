@@ -5,12 +5,13 @@ import {
   CtaDescription,
   CtaTitle,
 } from "@/components/sections/cta"
+import { SitePage } from "@/components/sections/page"
 import { MaterialGrid } from "@/pages/materials/grid"
 import { MaterialsHeading } from "@/pages/materials/heading"
 
 export function MaterialsPage() {
   return (
-    <main className="overflow-x-clip px-4 pt-12 pb-18 sm:px-10 sm:pt-14">
+    <SitePage clip>
       <MaterialsHeading />
       <MaterialGrid />
       <Cta className="mt-18">
@@ -22,6 +23,6 @@ export function MaterialsPage() {
         </CtaContent>
         <CtaAction to="/pricing">See Premium</CtaAction>
       </Cta>
-    </main>
+    </SitePage>
   )
 }
