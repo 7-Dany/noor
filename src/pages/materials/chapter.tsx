@@ -68,16 +68,28 @@ function ChapterPage({
           </BreadcrumbList>
         </Breadcrumb>
         <Card tone={chapter.tone} pattern="chapter">
-          <CardHeader pattern="chapter">
-            <span className="sr-only">
-              Chapter {position} of {total}
-            </span>
-            <span aria-hidden="true">{pad(position, total)}</span>
-            <span>{chapter.lessons} lessons</span>
-          </CardHeader>
-          <CardWatermark pattern="chapter">{chapter.glyph}</CardWatermark>
-          <CardTitle pattern="chapter">{chapter.title}</CardTitle>
-          <CardDescription pattern="chapter">{chapter.summary}</CardDescription>
+        <CardHeader pattern="chapter">
+          <span className="sr-only">
+            Chapter {position} of {total}
+          </span>
+          <span aria-hidden="true" className="text-lg tracking-normal">
+            {pad(position, total)}
+          </span>
+        </CardHeader>
+          <CardWatermark
+            pattern="chapter"
+            className="-translate-x-2 -translate-y-2 scale-110"
+          >
+            {chapter.glyph}
+          </CardWatermark>
+        <CardTitle pattern="chapter">{chapter.title}</CardTitle>
+        <CardDescription
+          pattern="chapter"
+          title={chapter.summary}
+          className="whitespace-normal"
+        >
+          {chapter.summary}
+        </CardDescription>
         </Card>
         {sections.length > 0 ? (
           <div className="mt-7">

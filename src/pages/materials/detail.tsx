@@ -86,22 +86,21 @@ function MaterialDetailPage({ material }: { material: Material }) {
                 className="block rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
               >
                 <Card tone={chapter.tone} pattern="chapter" className="h-full">
-                  <CardHeader pattern="chapter">
-                    <span className="sr-only">
-                      Chapter {i + 1} of {chapters.length}
-                    </span>
-                    <span aria-hidden="true">
-                      {pad(i + 1, chapters.length)}
-                    </span>
-                    <span>{chapter.lessons} lessons</span>
-                  </CardHeader>
+                <CardHeader pattern="chapter">
+                  <span className="sr-only">
+                    Chapter {i + 1} of {chapters.length}
+                  </span>
+                  <span aria-hidden="true" className="text-lg tracking-normal">
+                    {pad(i + 1, chapters.length)}
+                  </span>
+                </CardHeader>
                   <CardWatermark pattern="chapter">
                     {chapter.glyph}
                   </CardWatermark>
-                  <CardTitle pattern="chapter">{chapter.title}</CardTitle>
-                  <CardDescription pattern="chapter">
-                    {chapter.summary}
-                  </CardDescription>
+                <CardTitle pattern="chapter">{chapter.title}</CardTitle>
+                <CardDescription pattern="chapter" title={chapter.summary}>
+                  {chapter.summary}
+                </CardDescription>
                 </Card>
               </Link>
             ))}
