@@ -64,6 +64,7 @@ function ChapterSections({
 }) {
   const tocRef = useRef<HTMLDetailsElement>(null)
   const closeToc = () => tocRef.current?.removeAttribute("open")
+  const total = sections.reduce((n, section) => n + section.lessons.length, 0)
 
   return (
     <Outline items={sections} tone={tone}>
@@ -80,7 +81,14 @@ function ChapterSections({
         </div>
       </details>
       <OutlineNav aria-label="In this chapter" className="hidden md:block">
-        <OutlineNavLabel>In this chapter</OutlineNavLabel>
+        <div className="flex items-baseline justify-between gap-3 px-3.5 pb-2">
+          <OutlineNavLabel className="px-0 pb-0">
+            In this chapter
+          </OutlineNavLabel>
+          <span className="font-mono text-(length:--text-tiny) tracking-eyebrow text-muted-foreground uppercase">
+            {total} lessons
+          </span>
+        </div>
         <SectionLinks sections={sections} />
       </OutlineNav>
       <OutlineContent>

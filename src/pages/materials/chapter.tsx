@@ -12,8 +12,6 @@ import {
   Card,
   CardDescription,
   CardHeader,
-  CardStat,
-  CardStats,
   CardTitle,
   CardWatermark,
 } from "@/components/ui/card"
@@ -74,10 +72,7 @@ function ChapterPage({
           <span className="sr-only">
             Chapter {position} of {total}
           </span>
-          <span
-            aria-hidden="true"
-            className="ms-auto text-lg tracking-normal"
-          >
+          <span aria-hidden="true" className="text-lg tracking-normal">
             {pad(position, total)}
           </span>
         </CardHeader>
@@ -86,13 +81,6 @@ function ChapterPage({
         <CardDescription pattern="chapter" title={chapter.summary}>
           {chapter.summary}
         </CardDescription>
-        <CardStats pattern="chapter">
-          <CardStat
-            pattern="chapter"
-            value={String(chapter.lessons)}
-            label="Lessons"
-          />
-        </CardStats>
         </Card>
         {sections.length > 0 ? (
           <div className="mt-7">
