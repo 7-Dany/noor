@@ -73,7 +73,7 @@ function ChapterSections({
         data-slot="outline-toc"
         className="rounded-xl border bg-card px-4 py-3 md:hidden"
       >
-        <summary className="cursor-pointer font-mono text-(length:--text-tiny) tracking-eyebrow text-muted-foreground uppercase">
+        <summary className="cursor-pointer font-mono text-(length:--text-tiny) text-muted-foreground normal-case tracking-normal">
           In this chapter · {sections.length} sections
         </summary>
         <div className="pt-2">
@@ -82,10 +82,10 @@ function ChapterSections({
       </details>
       <OutlineNav aria-label="In this chapter" className="hidden md:block">
         <div className="flex items-baseline justify-between gap-3 px-3.5 pb-2">
-          <OutlineNavLabel className="px-0 pb-0">
+          <OutlineNavLabel className="px-0 pb-0 normal-case tracking-normal">
             In this chapter
           </OutlineNavLabel>
-          <span className="font-mono text-(length:--text-tiny) tracking-eyebrow text-muted-foreground uppercase">
+          <span className="font-mono text-(length:--text-tiny) text-muted-foreground normal-case">
             {total} lessons
           </span>
         </div>
@@ -101,7 +101,7 @@ function ChapterSections({
             <OutlineSection key={section.id} value={section.id}>
               <OutlineSectionHeader>
                 <OutlineSectionTitle>{section.title}</OutlineSectionTitle>
-                <OutlineSectionMeta>
+                <OutlineSectionMeta className="normal-case tracking-normal">
                   {completed
                     ? `${doneCount} / ${count}`
                     : `${count} ${count === 1 ? "lesson" : "lessons"}`}
