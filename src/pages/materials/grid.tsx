@@ -51,7 +51,11 @@ function MaterialGrid() {
           <CardFooter pattern="material">
             <Link
               to={`/materials/${material.id}`}
-              className={buttonVariants({ variant: "tone", size: "pill" })}
+              className={buttonVariants({
+                variant: "tone",
+                size: "pill",
+                className: "px-5",
+              })}
             >
               {material.cta}
               <HugeiconsIcon icon={ArrowRight01Icon} size={16} />
