@@ -75,7 +75,7 @@ function ChapterPage({
             <span aria-hidden="true" className="text-lg tracking-normal">
               {pad(position, total)}
             </span>
-            <span className="ms-auto text-sm font-semibold tracking-normal text-(--tone-text)">
+            <span className="ms-auto font-normal text-muted-foreground">
               {chapter.lessons} lessons
             </span>
           </CardHeader>
