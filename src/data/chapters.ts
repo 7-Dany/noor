@@ -34,17 +34,34 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
       title: "Letters",
       summary: "The alphabet first: names, shapes, and sounds.",
       glyph: "ا",
-      lessons: 2,
+      lessons: 4,
       sections: [
         {
           id: "first-steps",
           title: "First steps",
           summary: "Know the alphabet before you read it.",
           lessons: [
-            { id: "alphabet", title: "The Alphabet", kind: "Lesson" },
+            { id: "alphabet", title: "Letters", kind: "Lesson" },
             {
               id: "shapes-positions",
-              title: "Shapes & Positions",
+              title: "Letter shapes and positions",
+              kind: "Lesson",
+            },
+          ],
+        },
+        {
+          id: "confusables",
+          title: "Easily mixed letters",
+          summary: "Side by side until the difference is obvious.",
+          lessons: [
+            {
+              id: "similar-writing",
+              title: "Letters with similar writing",
+              kind: "Lesson",
+            },
+            {
+              id: "similar-pronunciation",
+              title: "Letters with similar pronunciation",
               kind: "Lesson",
             },
           ],
@@ -59,21 +76,6 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
         "Letters that look or sound alike, learned in groups so they stick.",
       glyph: "ب",
       lessons: 2,
-      sections: [
-        {
-          id: "confusables",
-          title: "Easily mixed letters",
-          summary: "Side by side until the difference is obvious.",
-          lessons: [
-            { id: "similar-writing", title: "Similar Writing", kind: "Lesson" },
-            {
-              id: "similar-pronunciation",
-              title: "Similar Pronunciation",
-              kind: "Lesson",
-            },
-          ],
-        },
-      ],
     },
     {
       id: "ta-marbutah",

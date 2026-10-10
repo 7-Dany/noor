@@ -23,7 +23,7 @@ function SitePage({
   return (
     <main
       className={cn(
-        "px-4 pt-12 sm:px-10 sm:pt-14",
+        "flex-1 px-4 pt-12 sm:px-10 sm:pt-14",
         bottom === "roomy" ? "pb-20" : "pb-18",
         clip && "overflow-x-clip",
         className
