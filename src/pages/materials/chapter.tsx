@@ -74,7 +74,10 @@ function ChapterPage({
           <span className="sr-only">
             Chapter {position} of {total}
           </span>
-          <span aria-hidden="true" className="text-lg tracking-normal">
+          <span
+            aria-hidden="true"
+            className="ms-auto text-lg tracking-normal"
+          >
             {pad(position, total)}
           </span>
         </CardHeader>
