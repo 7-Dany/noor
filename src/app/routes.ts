@@ -6,14 +6,15 @@ import {
 } from "@react-router/dev/routes"
 
 export default [
-  layout("routes/site-layout.tsx", [
-    index("routes/home.tsx"),
-    route("materials", "routes/materials.tsx"),
-    route("materials/:id", "routes/material-detail.tsx"),
-    route("pricing", "routes/pricing.tsx"),
+  layout("routes/site/_layout.tsx", [
+    index("routes/site/home.tsx"),
+    route("materials", "routes/site/materials.tsx"),
+    route("materials/:id", "routes/site/material-detail.tsx"),
+    route("materials/:id/:chapterId", "routes/site/chapter-detail.tsx"),
+    route("pricing", "routes/site/pricing.tsx"),
   ]),
-  route("login", "routes/login.tsx"),
-  route("signup", "routes/signup.tsx"),
-  route("action/theme/set", "routes/theme.ts"),
-  route("*", "routes/$.tsx"),
+  route("login", "routes/auth/login.tsx"),
+  route("signup", "routes/auth/signup.tsx"),
+  route("action/theme/set", "routes/system/theme.ts"),
+  route("*", "routes/system/not-found.tsx"),
 ] satisfies RouteConfig
