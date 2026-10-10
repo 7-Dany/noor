@@ -35,7 +35,7 @@ const cardVariants = cva("group/card relative flex flex-col rounded-xl", {
       material:
         "isolate min-h-100 overflow-hidden bg-linear-155 from-(--tone-from) to-(--tone-to) px-7 pt-5.5 pb-7 text-tone-foreground shadow-card data-[size=sm]:min-h-0",
       chapter:
-        "isolate min-h-44 overflow-hidden border bg-card px-5 pt-4.5 pb-5 text-card-foreground",
+        "isolate min-h-24 overflow-hidden border bg-card px-4 py-3.5 text-card-foreground transition duration-200 motion-reduce:transition-none in-[a]:hover:-translate-y-0.5 in-[a]:hover:border-(--tone-text)/50",
       price:
         "min-h-107.5 bg-linear-155 from-(--tone-from) to-(--tone-to) px-5 pt-4 pb-5.5 text-tone-foreground shadow-xl shadow-foreground/10 sm:px-6.5 lg:h-107.5 dark:shadow-black/30",
       deck: [
@@ -85,7 +85,8 @@ const cardHeaderVariants = cva(
       pattern: {
         material:
           "border-b border-dashed border-tone-foreground/40 pb-3 text-tiny",
-        chapter: "text-(length:--text-tiny) text-(--tone-text)",
+        chapter:
+          "justify-start text-(length:--text-tiny) text-(--tone-text) *:last:text-muted-foreground",
         price:
           "mb-3 box-content h-5 border-b border-dashed border-tone-foreground/40 pb-2 text-(length:--text-micro) text-tone-foreground/80",
       },
@@ -112,7 +113,7 @@ const cardTitleVariants = cva("font-serif", {
     pattern: {
       material:
         "mt-1.5 mb-3.5 text-card-title leading-display font-medium italic",
-      chapter: "mt-2 text-2xl leading-tight font-medium",
+      chapter: "mt-1 text-xl leading-tight font-medium",
       price: "text-3xl leading-9",
     },
   },
@@ -140,7 +141,7 @@ const cardDescriptionVariants = cva("", {
       // Narrower than material: lines stop before the watermark glyph.
       deck: "max-w-[28ch] leading-summary text-pretty opacity-92",
       chapter:
-        "mt-1.5 max-w-lead text-(length:--text-caption) leading-summary text-muted-foreground",
+        "mt-1 max-w-lead truncate text-(length:--text-caption) leading-summary text-muted-foreground",
       price:
         "mb-3 text-(length:--text-caption) leading-5 text-tone-foreground/80 lg:truncate",
     },
@@ -226,7 +227,7 @@ const cardWatermarkVariants = cva(
           "right-3.75 -bottom-2 text-(length:--text-card-watermark) text-tone-foreground/15 group-data-[size=sm]/card:right-6 group-data-[size=sm]/card:bottom-5 group-data-[size=sm]/card:text-(length:--text-card-watermark-lg)",
         deck: "right-3.75 bottom-12 text-(length:--text-deck-watermark) text-tone-foreground/15",
         chapter:
-          "top-[calc(50%_-_14px)] right-4.75 -translate-y-1/2 text-(length:--text-chapter-watermark) text-(--tone-text)/15",
+          "right-3 -bottom-2 text-(length:--text-chapter-watermark) text-(--tone-text)/25 transition-colors duration-200 motion-reduce:transition-none in-[a]:group-hover/card:text-(--tone-text)/40",
       },
     },
     defaultVariants: { pattern: "material" },
@@ -258,38 +259,84 @@ function CardNote({ className, ...props }: React.ComponentProps<"p">) {
   )
 }
 
-function CardStats({ className, ...props }: React.ComponentProps<"div">) {
+const cardStatsVariants = cva("flex", {
+  variants: {
+    pattern: {
+      material: "mt-auto pt-6.5",
+      chapter: "mt-auto pt-5",
+    },
+  },
+  defaultVariants: { pattern: "material" },
+})
+
+function CardStats({
+  className,
+  pattern,
+  ...props
+}: React.ComponentProps<"div"> & VariantProps<typeof cardStatsVariants>) {
   return (
     <div
       data-slot="card-stats"
-      className={cn("mt-auto flex pt-6.5", className)}
+      className={cn(cardStatsVariants({ pattern }), className)}
       {...props}
     />
   )
 }
 
+const cardStatVariants = cva("", {
+  variants: {
+    pattern: {
+      material:
+        "pr-5.5 not-first:border-l not-first:border-dashed not-first:border-tone-foreground/40 not-first:pl-5.5",
+      chapter:
+        "pr-4 not-first:border-l not-first:border-dashed not-first:border-border not-first:pl-4 last:pr-0",
+    },
+  },
+  defaultVariants: { pattern: "material" },
+})
+
+const cardStatValueVariants = cva("font-serif leading-none", {
+  variants: {
+    pattern: {
+      material: "text-stat",
+      chapter: "text-2xl text-card-foreground",
+    },
+  },
+  defaultVariants: { pattern: "material" },
+})
+
+const cardStatLabelVariants = cva(
+  "font-mono text-micro tracking-eyebrow uppercase",
+  {
+    variants: {
+      pattern: {
+        material: "mt-1.5 opacity-85",
+        chapter: "mt-1 text-muted-foreground",
+      },
+    },
+    defaultVariants: { pattern: "material" },
+  }
+)
+
 function CardStat({
   value,
   label,
+  pattern,
   className,
   ...props
-}: Omit<React.ComponentProps<"div">, "children"> & {
-  value: string
-  label: string
-}) {
+}: Omit<React.ComponentProps<"div">, "children"> &
+  VariantProps<typeof cardStatVariants> & {
+    value: string
+    label: string
+  }) {
   return (
     <div
       data-slot="card-stat"
-      className={cn(
-        "pr-5.5 not-first:border-l not-first:border-dashed not-first:border-tone-foreground/40 not-first:pl-5.5",
-        className
-      )}
+      className={cn(cardStatVariants({ pattern }), className)}
       {...props}
     >
-      <p className="font-serif text-stat leading-none">{value}</p>
-      <p className="mt-1.5 font-mono text-micro tracking-eyebrow uppercase opacity-85">
-        {label}
-      </p>
+      <p className={cardStatValueVariants({ pattern })}>{value}</p>
+      <p className={cardStatLabelVariants({ pattern })}>{label}</p>
     </div>
   )
 }

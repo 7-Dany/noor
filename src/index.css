@@ -207,7 +207,7 @@
   --text-card-watermark: 190px;
   --text-card-watermark-lg: 240px;
   --text-deck-watermark: 166px;
-  --text-chapter-watermark: 120px;
+  --text-chapter-watermark: 80px;
   --text-cta-title: clamp(1.6rem, 3vw, 2.1rem);
   --text-hero: clamp(2.375rem, 5.4vw, 3.75rem);
   /* Leading */
@@ -251,6 +251,11 @@
   }
   body {
     @apply bg-background font-sans text-foreground;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
   }
 }
 

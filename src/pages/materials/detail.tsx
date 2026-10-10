@@ -12,7 +12,6 @@ import {
 import {
   Card,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardNote,
   CardStat,
@@ -81,27 +80,30 @@ function MaterialDetailPage({ material }: { material: Material }) {
             className="mt-10 grid gap-4 md:grid-cols-2"
           >
             {chapters.map((chapter, i) => (
-              <Card key={chapter.id} tone={chapter.tone} pattern="chapter">
-                <CardHeader pattern="chapter">
-                  <span
-                    aria-hidden="true"
-                    className="font-serif text-3xl leading-none"
-                  >
-                    {pad(i + 1, chapters.length)}
-                  </span>
-                  <span className="sr-only">
-                    Chapter {i + 1} of {chapters.length}
-                  </span>
-                </CardHeader>
-                <CardWatermark pattern="chapter">{chapter.glyph}</CardWatermark>
-                <CardTitle pattern="chapter">{chapter.title}</CardTitle>
-                <CardDescription pattern="chapter">
-                  {chapter.summary}
-                </CardDescription>
-                <CardFooter pattern="chapter">
-                  {chapter.lessons} lessons
-                </CardFooter>
-              </Card>
+              <Link
+                key={chapter.id}
+                to={`/materials/${material.id}/${chapter.id}`}
+                className="block rounded-xl outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+              >
+                <Card tone={chapter.tone} pattern="chapter" className="h-full">
+                  <CardHeader pattern="chapter">
+                    <span className="sr-only">
+                      Chapter {i + 1} of {chapters.length}
+                    </span>
+                    <span aria-hidden="true">
+                      {pad(i + 1, chapters.length)}
+                    </span>
+                    <span>{chapter.lessons} lessons</span>
+                  </CardHeader>
+                  <CardWatermark pattern="chapter">
+                    {chapter.glyph}
+                  </CardWatermark>
+                  <CardTitle pattern="chapter">{chapter.title}</CardTitle>
+                  <CardDescription pattern="chapter">
+                    {chapter.summary}
+                  </CardDescription>
+                </Card>
+              </Link>
             ))}
           </section>
         ) : (
