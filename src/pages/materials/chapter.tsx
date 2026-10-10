@@ -76,7 +76,10 @@ function ChapterPage({
             {pad(position, total)}
           </span>
         </CardHeader>
-          <CardWatermark pattern="chapter" className="-translate-y-1 scale-110">
+          <CardWatermark
+            pattern="chapter"
+            className="-translate-x-1 -translate-y-2 scale-125"
+          >
             {chapter.glyph}
           </CardWatermark>
         <CardTitle pattern="chapter">{chapter.title}</CardTitle>
