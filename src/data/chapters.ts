@@ -86,6 +86,15 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
       lessons: 2,
     },
     {
+      id: "fatha-letter-shapes",
+      tone: "terracotta",
+      title: "Letter Shapes Memorization with Fatha",
+      summary:
+        "Commit every fatha-carrying letter shape to memory, from first form to last.",
+      glyph: "بَ",
+      lessons: 3,
+    },
+    {
       id: "letters-in-words",
       tone: "ink",
       title: "Letters in Quranic Words",
@@ -165,15 +174,6 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
           ],
         },
       ],
-    },
-    {
-      id: "fatha-letter-shapes",
-      tone: "terracotta",
-      title: "Letter Shapes Memorization with Fatha",
-      summary:
-        "Commit every fatha-carrying letter shape to memory, from first form to last.",
-      glyph: "بَ",
-      lessons: 3,
     },
     {
       id: "harakat",
