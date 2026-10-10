@@ -33,7 +33,7 @@ const cardVariants = cva("group/card relative flex flex-col rounded-xl", {
     },
     pattern: {
       material:
-        "isolate min-h-100 overflow-hidden bg-linear-155 from-(--tone-from) to-(--tone-to) px-7 pt-5.5 pb-7 text-tone-foreground shadow-card data-[size=sm]:min-h-0",
+        "isolate overflow-hidden bg-linear-155 from-(--tone-from) to-(--tone-to) px-5 pt-5 pb-6 text-tone-foreground shadow-card md:min-h-100 md:px-7 md:pt-5.5 md:pb-7 data-[size=sm]:min-h-0",
       chapter:
         "isolate min-h-24 overflow-hidden border bg-card px-4 py-3.5 text-card-foreground transition duration-200 motion-reduce:transition-none in-[a]:hover:-translate-y-0.5 in-[a]:hover:border-(--tone-text)/50",
       price:
@@ -141,7 +141,7 @@ const cardDescriptionVariants = cva("", {
       // Narrower than material: lines stop before the watermark glyph.
       deck: "max-w-[28ch] leading-summary text-pretty opacity-92",
       chapter:
-        "mt-1 max-w-lead truncate text-(length:--text-caption) leading-summary text-muted-foreground",
+        "mt-1 max-w-lead line-clamp-2 min-h-10 text-(length:--text-caption) leading-summary text-muted-foreground",
       price:
         "mb-3 text-(length:--text-caption) leading-5 text-tone-foreground/80 lg:truncate",
     },

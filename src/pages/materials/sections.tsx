@@ -1,3 +1,5 @@
+import { useRef } from "react"
+
 import {
   Agenda,
   AgendaIndex,
@@ -28,6 +30,29 @@ import { pad } from "@/lib/utils"
 // Nav on the left, lesson sections on the right. `sections` must be a stable
 // reference. `completed` (lesson ids) is passed only when progress tracking
 // applies (Premium): without it no status marks or done counts render.
+// Shared section links, rendered twice: the sticky desktop rail and the
+// collapsed phone disclosure. Closes the disclosure on jump.
+function SectionLinks({
+  sections,
+  onNavigate,
+}: {
+  sections: readonly Section[]
+  onNavigate?: () => void
+}) {
+  return (
+    <OutlineNavList>
+      {sections.map((section, i) => (
+        <OutlineNavItem key={section.id}>
+          <OutlineNavLink value={section.id} onClick={onNavigate}>
+            <OutlineNavIndex>{pad(i + 1, sections.length)}</OutlineNavIndex>
+            {section.title}
+          </OutlineNavLink>
+        </OutlineNavItem>
+      ))}
+    </OutlineNavList>
+  )
+}
+
 function ChapterSections({
   sections,
   tone,
@@ -37,20 +62,26 @@ function ChapterSections({
   tone: Tone
   completed?: readonly string[]
 }) {
+  const tocRef = useRef<HTMLDetailsElement>(null)
+  const closeToc = () => tocRef.current?.removeAttribute("open")
+
   return (
     <Outline items={sections} tone={tone}>
-      <OutlineNav aria-label="Sections">
+      <details
+        ref={tocRef}
+        data-slot="outline-toc"
+        className="rounded-xl border bg-card px-4 py-3 md:hidden"
+      >
+        <summary className="cursor-pointer font-mono text-(length:--text-tiny) tracking-eyebrow text-muted-foreground uppercase">
+          In this chapter · {sections.length} sections
+        </summary>
+        <div className="pt-2">
+          <SectionLinks sections={sections} onNavigate={closeToc} />
+        </div>
+      </details>
+      <OutlineNav aria-label="In this chapter" className="hidden md:block">
         <OutlineNavLabel>In this chapter</OutlineNavLabel>
-        <OutlineNavList>
-          {sections.map((section, i) => (
-            <OutlineNavItem key={section.id}>
-              <OutlineNavLink value={section.id}>
-                <OutlineNavIndex>{pad(i + 1, sections.length)}</OutlineNavIndex>
-                {section.title}
-              </OutlineNavLink>
-            </OutlineNavItem>
-          ))}
-        </OutlineNavList>
+        <SectionLinks sections={sections} />
       </OutlineNav>
       <OutlineContent>
         {sections.map((section) => {

@@ -74,7 +74,7 @@ function BreadcrumbLink({
     props: mergeProps<"a">(
       {
         className: cn(
-          "inline-flex min-h-8 items-center rounded-sm transition-colors outline-none hover:text-foreground hover:underline hover:decoration-dashed hover:decoration-1 hover:underline-offset-8 focus-visible:ring-3 focus-visible:ring-ring/50",
+          "inline-flex min-h-11 items-center rounded-sm transition-colors outline-none hover:text-foreground hover:underline hover:decoration-dashed hover:decoration-1 hover:underline-offset-8 focus-visible:ring-3 focus-visible:ring-ring/50",
           className
         ),
       },
@@ -91,8 +91,6 @@ function BreadcrumbPage({ className, ...props }: React.ComponentProps<"span">) {
   return (
     <span
       data-slot="breadcrumb-page"
-      role="link"
-      aria-disabled="true"
       aria-current="page"
       className={cn(
         "max-w-[26ch] truncate font-serif text-base font-normal tracking-normal text-foreground normal-case italic group-data-[tone]/breadcrumb:text-(--tone-text)",

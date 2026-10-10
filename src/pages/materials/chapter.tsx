@@ -76,8 +76,10 @@ function ChapterPage({
             <span>{chapter.lessons} lessons</span>
           </CardHeader>
           <CardWatermark pattern="chapter">{chapter.glyph}</CardWatermark>
-          <CardTitle pattern="chapter">{chapter.title}</CardTitle>
-          <CardDescription pattern="chapter">{chapter.summary}</CardDescription>
+        <CardTitle pattern="chapter">{chapter.title}</CardTitle>
+        <CardDescription pattern="chapter" title={chapter.summary}>
+          {chapter.summary}
+        </CardDescription>
         </Card>
         {sections.length > 0 ? (
           <div className="mt-7">
