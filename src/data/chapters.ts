@@ -167,10 +167,10 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
       ],
     },
     {
-      id: "fatha-shapes",
+      id: "letter-shapes",
       tone: "terracotta",
-      title: "Letters with Fatha",
-      summary: "How each letter carries a fatha in every position.",
+      title: "Memorizing Letter Shapes",
+      summary: "Commit every letter shape to memory, from first form to last.",
       glyph: "بَ",
       lessons: 3,
     },
