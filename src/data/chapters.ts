@@ -38,7 +38,7 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
       sections: [
         {
           id: "first-steps",
-          title: "First steps",
+          title: "First Steps",
           summary: "Know the alphabet before you read it.",
           lessons: [
             { id: "alphabet", title: "Letters", kind: "Lesson" },
@@ -51,7 +51,7 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
         },
         {
           id: "confusables",
-          title: "Easily mixed letters",
+          title: "Easily Mixed Letters",
           summary: "Side by side until the difference is obvious.",
           lessons: [
             {
@@ -71,7 +71,7 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
     {
       id: "letter-groups",
       tone: "blue",
-      title: "Letters groups",
+      title: "Letter Groups",
       summary:
         "Letters that look or sound alike, learned in groups so they stick.",
       glyph: "ب",
@@ -80,22 +80,22 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
     {
       id: "ta-marbutah",
       tone: "rose",
-      title: "Ta marbutah",
-      summary: "The tied ta: how it sounds in joining and in pause.",
+      title: "Ta Marbutah",
+      summary: "The tied ta: its sound when joining and in pause.",
       glyph: "ة",
       lessons: 2,
     },
     {
       id: "letters-in-words",
       tone: "ink",
-      title: "Letters in quranic words",
+      title: "Letters in Quranic Words",
       summary: "Every letter drilled inside real Quranic words.",
       glyph: "ق",
       lessons: 29,
       sections: [
         {
           id: "letters-in-words",
-          title: "Letters in Quranic words",
+          title: "Letters in Quranic Words",
           summary: "One letter at a time, in real words.",
           lessons: [
             { id: "ba", title: "Ba (ب)", kind: "Drill" },
@@ -108,7 +108,7 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
         },
         {
           id: "letters-in-words-2",
-          title: "Letters in Quranic words, part 2",
+          title: "Letters in Quranic words, Part 2",
           summary: "Continuing through the alphabet.",
           lessons: [
             { id: "dal", title: "Dal (د)", kind: "Drill" },
@@ -121,7 +121,7 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
         },
         {
           id: "letters-in-words-3",
-          title: "Letters in Quranic words, part 3",
+          title: "Letters in Quranic words, Part 3",
           summary: "Continuing through the alphabet.",
           lessons: [
             { id: "sad", title: "Sad (ص)", kind: "Drill" },
@@ -134,7 +134,7 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
         },
         {
           id: "letters-in-words-4",
-          title: "Letters in Quranic words, part 4",
+          title: "Letters in Quranic words, Part 4",
           summary: "Continuing through the alphabet.",
           lessons: [
             { id: "fa", title: "Fa (ف)", kind: "Drill" },
@@ -147,7 +147,7 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
         },
         {
           id: "letters-in-words-5",
-          title: "Letters in Quranic words, part 5",
+          title: "Letters in Quranic words, Part 5",
           summary: "The last letters of the alphabet.",
           lessons: [
             { id: "haa", title: "Haa (ه)", kind: "Drill" },
@@ -160,8 +160,8 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
           title: "Review",
           summary: "Mix everything together.",
           lessons: [
-            { id: "mixed-review", title: "Mixed review", kind: "Drill" },
-            { id: "letter-hunt", title: "Letter hunt", kind: "Game" },
+            { id: "mixed-review", title: "Mixed Review", kind: "Drill" },
+            { id: "letter-hunt", title: "Letter Hunt", kind: "Game" },
           ],
         },
       ],
@@ -169,9 +169,8 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
     {
       id: "fatha-shapes",
       tone: "terracotta",
-      title: "Fatha letters shapes",
-      summary:
-        "How each letter's shape carries a fatha, from first to last form.",
+      title: "Letters with Fatha",
+      summary: "How each letter carries a fatha in every position.",
       glyph: "بَ",
       lessons: 3,
     },
@@ -188,8 +187,8 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
           title: "Fatha",
           summary: "The short a sound.",
           lessons: [
-            { id: "fatha-basics", title: "Fatha basics", kind: "Lesson" },
-            { id: "fatha-in-words", title: "Fatha in words", kind: "Drill" },
+            { id: "fatha-basics", title: "Fatha Basics", kind: "Lesson" },
+            { id: "fatha-in-words", title: "Fatha in Words", kind: "Drill" },
           ],
         },
         {
@@ -197,8 +196,8 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
           title: "Kasra",
           summary: "The short i sound.",
           lessons: [
-            { id: "kasra-basics", title: "Kasra basics", kind: "Lesson" },
-            { id: "kasra-in-words", title: "Kasra in words", kind: "Drill" },
+            { id: "kasra-basics", title: "Kasra Basics", kind: "Lesson" },
+            { id: "kasra-in-words", title: "Kasra in Words", kind: "Drill" },
           ],
         },
         {
@@ -206,11 +205,11 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
           title: "Dumma",
           summary: "The short u sound.",
           lessons: [
-            { id: "dumma-basics", title: "Dumma basics", kind: "Lesson" },
-            { id: "dumma-in-words", title: "Dumma in words", kind: "Drill" },
+            { id: "dumma-basics", title: "Dumma Basics", kind: "Lesson" },
+            { id: "dumma-in-words", title: "Dumma in Words", kind: "Drill" },
             {
               id: "all-three-together",
-              title: "All three together",
+              title: "All Three Together",
               kind: "Drill",
             },
           ],
@@ -252,7 +251,7 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
     {
       id: "two-hamza",
       tone: "rose",
-      title: "Two Hamza",
+      title: "Two Hamzas",
       summary: "Hamzat al-wasl and hamzat al-qat: sounded or dropped.",
       glyph: "ء",
       lessons: 1,
@@ -260,15 +259,16 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
     {
       id: "two-lam",
       tone: "ink",
-      title: "Two lam",
-      summary: "Solar and lunar laam: when the laam melts into what follows.",
+      title: "Two Lams",
+      summary:
+        "Solar and lunar laam: when the laam melts into the following letter.",
       glyph: "ل",
       lessons: 1,
     },
     {
       id: "arabic-passages",
       tone: "terracotta",
-      title: "Arabic passages",
+      title: "Arabic Passages",
       summary: "Connected reading, passage by passage toward fluency.",
       glyph: "ع",
       lessons: 8,
@@ -276,7 +276,7 @@ const CHAPTERS: Record<string, readonly Chapter[]> = {
     {
       id: "general-topics",
       tone: "blue",
-      title: "General topics",
+      title: "General Topics",
       summary: "Extra topics for the teacher.",
       glyph: "ن",
       lessons: 2,
