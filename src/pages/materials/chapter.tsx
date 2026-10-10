@@ -78,7 +78,11 @@ function ChapterPage({
         </CardHeader>
           <CardWatermark pattern="chapter">{chapter.glyph}</CardWatermark>
         <CardTitle pattern="chapter">{chapter.title}</CardTitle>
-        <CardDescription pattern="chapter" title={chapter.summary}>
+        <CardDescription
+          pattern="chapter"
+          title={chapter.summary}
+          className="whitespace-normal"
+        >
           {chapter.summary}
         </CardDescription>
         </Card>
